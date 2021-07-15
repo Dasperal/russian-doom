@@ -16,6 +16,7 @@
 #include "rd_menu.h"
 
 #include "deh_str.h"
+#include "d_name.h"
 #include "doomkeys.h"
 #include "i_video.h"
 #include "jn.h"
@@ -287,6 +288,7 @@ void RD_Menu_DrawMenu(Menu_t* menu, int menuTime, int currentItPos)
     int x;
     int y;
     const MenuItem_t *item;
+    Translation_CR_t subheaderTranslation;
 
     if (menu->drawFunc != NULL)
     {
@@ -294,12 +296,17 @@ void RD_Menu_DrawMenu(Menu_t* menu, int menuTime, int currentItPos)
     }
     x = english_language ? menu->x_eng : menu->x_rus;
     y = menu->y;
+    subheaderTranslation =
+            RD_GameType == gt_Doom    ? CR_YELLOW :
+            RD_GameType == gt_Heretic ? CR_WHITE2DARKGOLD_HERETIC :
+            RD_GameType == gt_Hexen   ? CR_GRAY2DARKGOLD_HEXEN :
+          /*RD_GameType == gt_Strife*/  CR_GOLD2GRAY_STRIFE;
 
     if(english_language)
     {
         if(menu->title_eng)
         {
-            char* title_eng = DEH_String((char *) menu->title_eng);
+            char* title_eng = RD_GameType != gt_Hexen ? DEH_String((char *) menu->title_eng) : (char *) menu->title_eng;
             if(menu->replaceableBigFont)
             {
                 RD_M_DrawTextB(title_eng, 160 - RD_M_TextBWidth(title_eng) / 2 + wide_delta, 4);
@@ -314,7 +321,7 @@ void RD_Menu_DrawMenu(Menu_t* menu, int menuTime, int currentItPos)
     {
         if(menu->title_rus)
         {
-            char* title_rus = DEH_String((char *) menu->title_rus);
+            char* title_rus = RD_GameType != gt_Hexen ? DEH_String((char *) menu->title_rus) : (char *) menu->title_rus;
             RD_M_DrawTextBigRUS(title_rus, 160 - RD_M_TextBigRUSWidth(title_rus) / 2 + wide_delta, 4);
         }
     }
@@ -328,31 +335,35 @@ void RD_Menu_DrawMenu(Menu_t* menu, int menuTime, int currentItPos)
             // and where to use big or small vertical spacing.
             if (english_language)
             {
+                char* text_eng = RD_GameType != gt_Hexen ? DEH_String((char *) item->text_eng) : (char *) item->text_eng;
                 if (menu->bigFont)
                 {
                     if(menu->replaceableBigFont)
                     {
-                        RD_M_DrawTextB(DEH_String((char *) item->text_eng), x + wide_delta, y);
+                        RD_M_DrawTextB(text_eng, x + wide_delta, y);
                     }
                     else
                     {
-                        RD_M_DrawTextBigENG(DEH_String((char *) item->text_eng), x + wide_delta, y);
+                        RD_M_DrawTextBigENG(text_eng, x + wide_delta, y);
                     }
                 }
                 else
                 {
-                    RD_M_DrawTextSmallENG(DEH_String((char *) item->text_eng), x + wide_delta, y, CR_NONE);
+                    RD_M_DrawTextSmallENG(text_eng, x + wide_delta, y,
+                                          item->type == ITT_TITLE ? subheaderTranslation : CR_NONE);
                 }
             }
             else
             {
+                char* text_rus = RD_GameType != gt_Hexen ? DEH_String((char *) item->text_rus) : (char *) item->text_rus;
                 if (menu->bigFont)
                 {
-                    RD_M_DrawTextBigRUS(DEH_String((char *) item->text_rus), x + wide_delta, y);
+                    RD_M_DrawTextBigRUS(text_rus, x + wide_delta, y);
                 }
                 else
                 {
-                    RD_M_DrawTextSmallRUS(DEH_String((char *) item->text_rus), x + wide_delta, y, CR_NONE);
+                    RD_M_DrawTextSmallRUS(text_rus, x + wide_delta, y,
+                                          item->type == ITT_TITLE ? subheaderTranslation : CR_NONE);
                 }
             }
         }
@@ -408,7 +419,8 @@ boolean RD_Menu_Responder(int key, int charTyped)
             {
                 CurrentItPos++;
             }
-        } while (CurrentMenu->items[CurrentItPos].type == ITT_EMPTY);
+        } while (CurrentMenu->items[CurrentItPos].type == ITT_EMPTY ||
+                 CurrentMenu->items[CurrentItPos].type == ITT_TITLE);
         RD_Menu_StartSound(MENU_SOUND_CURSOR_MOVE);
         return true;
     }
@@ -424,7 +436,8 @@ boolean RD_Menu_Responder(int key, int charTyped)
             {
                 CurrentItPos--;
             }
-        } while (CurrentMenu->items[CurrentItPos].type == ITT_EMPTY);
+        } while (CurrentMenu->items[CurrentItPos].type == ITT_EMPTY ||
+                 CurrentMenu->items[CurrentItPos].type == ITT_TITLE);
         RD_Menu_StartSound(MENU_SOUND_CURSOR_MOVE);
         return true;
     }
@@ -541,28 +554,40 @@ boolean RD_Menu_Responder(int key, int charTyped)
 
         for (i = CurrentItPos + 1; i < CurrentMenu->itemCount; i++)
         {
-            const char *textString = english_language ? CurrentMenu->items[i].text_eng
-                                                      : CurrentMenu->items[i].text_rus;
-            if (textString)
+            if (CurrentMenu->items[i].type != ITT_TITLE && CurrentMenu->items[i].type != ITT_EMPTY)
             {
-                if (toupper(charTyped) == toupper(DEH_String((char *) textString)[0]))
+                const char *textString = english_language ?
+                    (RD_GameType != gt_Hexen ? DEH_String((char *) CurrentMenu->items[i].text_eng) :
+                                               CurrentMenu->items[i].text_eng) :
+                    (RD_GameType != gt_Hexen ? DEH_String((char *) CurrentMenu->items[i].text_rus) :
+                                               CurrentMenu->items[i].text_rus);
+                if (textString)
                 {
-                    CurrentItPos = i;
-                    return true;
+                    if (toupper(charTyped) == toupper(textString[0]))
+                    {
+                        CurrentItPos = i;
+                        return true;
+                    }
                 }
             }
         }
 
         for (i = 0; i <= CurrentItPos; i++)
         {
-            const char *textString = english_language ? CurrentMenu->items[i].text_eng
-                                                      : CurrentMenu->items[i].text_rus;
-            if (textString)
+            if (CurrentMenu->items[i].type != ITT_TITLE && CurrentMenu->items[i].type != ITT_EMPTY)
             {
-                if (toupper(charTyped) == toupper(DEH_String((char *) textString)[0]))
+                const char *textString = english_language ?
+                    (RD_GameType != gt_Hexen ? DEH_String((char *) CurrentMenu->items[i].text_eng) :
+                                               CurrentMenu->items[i].text_eng) :
+                    (RD_GameType != gt_Hexen ? DEH_String((char *) CurrentMenu->items[i].text_rus) :
+                                               CurrentMenu->items[i].text_rus);
+                if (textString)
                 {
-                    CurrentItPos = i;
-                    return true;
+                    if (toupper(charTyped) == toupper(textString[0]))
+                    {
+                        CurrentItPos = i;
+                        return true;
+                    }
                 }
             }
         }
