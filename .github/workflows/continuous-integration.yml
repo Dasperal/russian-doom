@@ -62,6 +62,7 @@ jobs:
             display_name: "MSVC"
             name: "cl"
             cmake_gen: "Visual Studio 16 2019" # Visual Studio 17 2022
+            vcpkg-version: 'latest'
         exclude:
           - # Disable x86 build on linux (require crosscompiling)
             os:
@@ -133,107 +134,21 @@ jobs:
     env:
       VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
     steps:
-      - name: Setup MSYS env
-        if: |
-          matrix.os.name == 'Windows' &&
-          matrix.compiler.display_name != 'MSVC'
-        timeout-minutes: 10
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: ${{ matrix.compiler.msys_msystem_prefix }}${{ matrix.arch.bits }}
-          update: true
-          install: >-
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-pkgconf
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-${{ matrix.compiler.name }}
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-gdb
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-ninja
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-cmake
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-SDL2
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-SDL2_net
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-SDL2_mixer
-            ${{ matrix.compiler.msys_package_prefix }}-${{ matrix.arch.msys_name }}-libsamplerate
-            git
-
-      - name: Install MSVC XP toolset
-        if: |
-          matrix.os.runner == 'windows-2022' &&
-          matrix.arch.name == 'x86' &&
-          matrix.compiler.display_name == 'MSVC'
-        run: |
-          echo "Installing Microsoft.VisualStudio.Component.WinXP"
-          "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer" modify \
-              --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" \
-              --add Microsoft.VisualStudio.Component.WinXP \
-              --nocache --norestart --quiet
-          echo "Installation of Microsoft.VisualStudio.Component.WinXP finished"
-
-      - name: Get GitHub Action Cache url and token
-        if: |
-          matrix.os.name == 'Windows' &&
-          matrix.compiler.display_name == 'MSVC'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-
-      - name: Setup MSVC env
-        if: |
-          matrix.os.name == 'Windows' &&
-          matrix.compiler.display_name == 'MSVC'
-        run: |
-          cd $VCPKG_INSTALLATION_ROOT
-          ./bootstrap-vcpkg.sh -disableMetrics
-
-#         For classic mode:
-#         vcpkg integrate install
-#         vcpkg install --triplet=${{ matrix.arch.msvc_triplet }} sdl2 sdl2-mixer[libflac,libmodplug,mpg123,opusfile] sdl2-net libsamplerate
-
-      - name: Setup Linux env
-        if: matrix.os.name == 'Linux'
-        run: |
-          sudo apt-get update --fix-missing
-          sudo apt-get full-upgrade --fix-missing
-          sudo apt-get install ${{ matrix.compiler.name }} gdb ninja-build python3 cmake \
-                               libsdl2-dev libsdl2-net-dev libsdl2-mixer-dev libsamplerate-dev
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Configure
-        id: configure
-        env:
-          CC: ${{ matrix.compiler.name }}
-        run: |
-          if [[ '${{ matrix.compiler.display_name }}' == 'MSVC' ]]
-          then
-              msvc_gen_opts='${{ matrix.arch.msvc_gen_opts }}'
-              msvc_cmake_toolchain="-D CMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
-          fi
-          if [[ '${{ matrix.os.name }}' == 'Linux' ]]
-          then
-              build_portable='-D ID_BUILD_PORTABLE=ON'
-          fi
-          rev_number=$(git rev-list --count HEAD)
-          cmake -G "${{ matrix.compiler.cmake_gen }}" \
-                $msvc_gen_opts \
-                $msvc_cmake_toolchain \
-                ${{ matrix.cmake_opts }} \
-                -D ID_BUILD_VERSION_OVERWRITE="r$rev_number" \
-                -D ID_GIT_FORCE_HASH_SUFFIX=ON \
-                -D CMAKE_BUILD_TYPE=RelWithDebInfo \
-                $build_portable \
-                -D ID_TEST_WITH_GDB="ON"\
-                -S . -B build
-          sha_short=$(echo ${{ github.sha }} | cut -c1-7)
-          echo "sha_short=$sha_short" >> $GITHUB_OUTPUT
-          echo "rev_number=r$rev_number" >> $GITHUB_OUTPUT
-
-      - name: Build
-        run: |
-          export MAKEFLAGS=--keep-going
-          cmake --build build --config RelWithDebInfo --parallel 2
+      - name: Setup env, Build and Test
+        uses: ./.github/actions/id_build
+        timeout-minutes: 15
+        with:
+          shell: ${{ matrix.shell }}
+          cmake-generator: ${{ matrix.compiler.cmake_gen }}
+          cmake-extra-options: ${{ matrix.compiler.msvc_gen_opts }}
+          compiler: ${{ matrix.compiler.name }}
+          msys-msystem: ${{ matrix.compiler.msys_msystem_prefix != '' && format('{0}{1}', matrix.compiler.msys_msystem_prefix, matrix.arch.bits) || '' }}
+          vcpkg-version: ${{ matrix.compiler.vcpkg-version }}
+          portable: true
 
       - name: Test Windows
         if: ${{ matrix.os.name == 'Windows' }}

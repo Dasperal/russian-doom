@@ -1,0 +1,161 @@
+name: 'ID build'
+description: 'Setup build env and build Inter Doom'
+inputs:
+  shell:
+    description: 'Shell for run steps'
+    required: true
+    default: 'bash'
+  cmake-generator:
+    description: 'Cmake generator specified by the -G key'
+    required: true
+  cmake-extra-options:
+    description: 'Extra options passed to cmake after specifying generator'
+    required: false
+  compiler:
+    description: 'Compiler executable/package name'
+    required: true
+  msys-msystem:
+    description: 'MSYS: Msystem'
+    required: false
+  vcpkg-version:
+    description: 'latest = use latest version; Or tag'
+    required: false
+  portable:
+    description: 'Portable installation on Linux'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare
+      id: prepare
+      shell: bash
+      run: |
+        case '${{ inputs.msys-msystem }}' in
+        'MINGW32')
+          echo "msys-prefix=i686" >> $GITHUB_OUTPUT
+          ;;
+        MINGW64)
+          echo "msys-prefix=x86_64" >> $GITHUB_OUTPUT
+          ;;
+        CLANG32)
+          echo "msys-prefix=clang-i686" >> $GITHUB_OUTPUT
+          ;;
+        CLANG64)
+          echo "msys-prefix=clang-x86_64" >> $GITHUB_OUTPUT
+          ;;
+        UCRT64)
+          echo "msys-prefix=ucrt-x86_64" >> $GITHUB_OUTPUT
+          ;;
+        *)
+          ;;
+        esac
+
+    - name: Setup MSYS env
+      if: |
+        runner.os == 'Windows' &&
+        inputs.compiler != 'cl'
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ inputs.msys-msystem }}
+        update: true
+        install: >-
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-pkgconf
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-${{ inputs.compiler }}
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-gdb
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-ninja
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-cmake
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-SDL2
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-SDL2_net
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-SDL2_mixer
+          mingw-w64-${{ steps.prepare.outputs.msys-prefix }}-libsamplerate
+          git
+
+    - name: Install MSVC XP toolset
+      if: |
+        runner.name == 'windows-2022' &&
+        runner.arch == 'X86' &&
+        inputs.compiler == 'cl'
+      shell: ${{ inputs.shell }}
+      run: |
+        echo "Installing Microsoft.VisualStudio.Component.WinXP"
+        "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vs_installer" modify \
+            --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise" \
+            --add Microsoft.VisualStudio.Component.WinXP \
+            --nocache --norestart --quiet
+        echo "Installation of Microsoft.VisualStudio.Component.WinXP finished"
+
+    - name: Get GitHub Action Cache url and token
+      if: |
+        runner.os == 'Windows' &&
+        inputs.compiler == 'cl' &&
+        inputs.vcpkg-version
+      uses: actions/github-script@v6
+      with:
+        script: |
+          core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+          core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+    - name: Setup VCPKG env
+      if: |
+        runner.os == 'Windows' &&
+        inputs.compiler == 'cl' &&
+        inputs.vcpkg-version
+      shell: ${{ inputs.shell }}
+      run: |
+        cd $VCPKG_INSTALLATION_ROOT
+        if [[ '${{ inputs.vcpkg-version }}' != 'latest' ]]
+        then
+          git checkout ${{ inputs.vcpkg-version }}
+        fi
+        ./bootstrap-vcpkg.sh -disableMetrics
+
+#       For classic mode:
+#       vcpkg integrate install
+#       vcpkg install --triplet=${{ matrix.arch.msvc_triplet }} sdl2 sdl2-mixer[libflac,libmodplug,mpg123,opusfile] sdl2-net libsamplerate
+
+    - name: Setup Linux env
+      if: runner.os == 'Linux'
+      shell: ${{ inputs.shell }}
+      run: |
+        sudo apt-get update --fix-missing
+        sudo apt-get full-upgrade --fix-missing
+        sudo apt-get install ${{ matrix.compiler.name }} gdb ninja-build python3 cmake
+        if [[ '${{ inputs.vcpkg-version }}' == '' ]]
+        then
+          sudo apt-get install libsdl2-dev libsdl2-net-dev libsdl2-mixer-dev libsamplerate-dev
+        fi
+
+    - name: Configure
+      id: configure
+      shell: ${{ inputs.shell }}
+      env:
+        CC: ${{ inputs.compiler }}
+      run: |
+        if [[ '${{ inputs.vcpkg-version }}' != '' ]]
+        then
+            msvc_cmake_toolchain="-D CMAKE_TOOLCHAIN_FILE=$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+        fi
+        if [[ '${{ inputs.portable }}' == 'true' ]]
+        then
+            build_portable='-D ID_BUILD_PORTABLE=ON'
+        fi
+        rev_number=$(git rev-list --count HEAD)
+        cmake -G "${{ inputs.cmake-generator }}" \
+              ${{ inputs.cmake-extra-options }} \
+              $msvc_cmake_toolchain \
+              -D ID_BUILD_VERSION_OVERWRITE="r$rev_number" \
+              -D ID_GIT_FORCE_HASH_SUFFIX=ON \
+              -D CMAKE_BUILD_TYPE=RelWithDebInfo \
+              $build_portable \
+              -D ID_TEST_WITH_GDB="ON"\
+              -S . -B build
+        sha_short=$(echo ${{ github.sha }} | cut -c1-7)
+        echo "sha_short=$sha_short" >> $GITHUB_OUTPUT
+        echo "rev_number=r$rev_number" >> $GITHUB_OUTPUT
+
+    - name: Build
+      shell: ${{ inputs.shell }}
+      run: |
+        export MAKEFLAGS=--keep-going
+        cmake --build build --config RelWithDebInfo --parallel 2
