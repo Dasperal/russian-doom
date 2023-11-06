@@ -218,20 +218,12 @@ jobs:
           ctest --output-on-failure
 
       - name: Install
-        if: |
-          github.repository == 'Russian-Doom/russian-doom' &&
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/master' &&
-          runner.os == 'Windows'
+        if: runner.os == 'Windows'
         run: |
           cmake --install build --config RelWithDebInfo --prefix "./build/install"
 
       - name: Package Zip
-        if: |
-          github.repository == 'Russian-Doom/russian-doom' &&
-          github.event_name == 'push' &&
-          github.ref == 'refs/heads/master' &&
-          runner.os == 'Windows'
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
           name: russian-doom-${{ steps.configure.outputs.version }}-windows-${{ matrix.config.build_suffix }}
