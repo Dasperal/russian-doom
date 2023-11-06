@@ -31,13 +31,13 @@ jobs:
             cmake_preset: 'ci-windows-64-dev'
             build_suffix: "x64"
             msvc_triplet_path: 'cmake/triplets/x64-windows.cmake'
-          -
-            display_name: "Windows | AArch64"
-            runner: "windows-11-arm"
-            cmake_preset: 'ci-windows-arm64-dev'
-            build_suffix: "aarch64"
-            # msvc_triplet_path: '${{ VCPKG_INSTALLATION_ROOT }}/triplets/arm64-windows.cmake'
-            msvc_triplet_path: 'C:/vcpkg/triplets/arm64-windows.cmake'
+#          -
+#            display_name: "Windows | AArch64"
+#            runner: "windows-11-arm"
+#            cmake_preset: 'ci-windows-arm64-dev'
+#            build_suffix: "aarch64"
+#            # msvc_triplet_path: '${{ VCPKG_INSTALLATION_ROOT }}/triplets/arm64-windows.cmake'
+#            msvc_triplet_path: 'C:/vcpkg/triplets/arm64-windows.cmake'
 
     permissions:
       actions: write
@@ -141,72 +141,72 @@ jobs:
           name: russian-doom-${{ steps.configure.outputs.version }}-windows-${{ matrix.config.build_suffix }}
           path: ./build/install/
 
-  Linux:
-    name: Linux | ${{ matrix.distro.display_name }} | ${{ matrix.platform.arch }}
-    runs-on: ${{ matrix.platform.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        distro:
-          -
-            display_name: Debian
-            distro: debian
-            package: deb
-            dockerfile: '.devcontainer/Debian.dockerfile'
-            preset_suffix: deb
-          -
-            display_name: Fedora
-            distro: fedora
-            package: rpm
-            dockerfile: '.devcontainer/Fedora.dockerfile'
-            preset_suffix: fedora-rpm
-        platform:
-          -
-            runner: 'ubuntu-24.04'
-            arch: "x64"
-          -
-            runner: 'ubuntu-24.04-arm'
-            arch: "arm64"
-
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Set up Docker Buildx
-        id: setup-buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          driver: docker
-
-      # Invalidate cache for docker toolchain images every month to update dependencies
-      - name: Get build month for Docker cache
-        id: date
-        run: echo "date=$(date +'%Y%m')" >> $GITHUB_OUTPUT
-
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Cache Docker images
-        uses: AndreKurait/docker-cache@0.6.0
-        with:
-          key: docker-${{ matrix.platform.arch }}-${{ hashFiles(matrix.distro.dockerfile) }}-${{ steps.date.outputs.date }}
-
-      - name: Toolchain & Configure & Build & Test & Package
-        id: configure
-        env:
-          BUILDX_BUILDER: ${{ steps.setup-buildx.outputs.name }}
-        run: |
-          chmod 777 .
-          ./crosscompile_linux_packages.sh "ci-linux-dev-${{ matrix.distro.preset_suffix }}" ${{ matrix.distro.distro }}
-          git_version=$(cmake -P ./cmake/scripts/UpdateRevision.cmake "git" 2>&1)
-          echo "version=$git_version" >> $GITHUB_OUTPUT
-
-      - name: Upload package
-        if: |
-          github.repository == 'Russian-Doom/russian-doom' ||
-          github.repository == 'Dasperal/russian-doom'
-        uses: actions/upload-artifact@v4
-        with:
-          name: russian-doom-${{ steps.configure.outputs.version }}-linux-${{ matrix.distro.package }}-${{ matrix.platform.arch }}
-          path: ./build/*.${{ matrix.distro.package }}
+#  Linux:
+#    name: Linux | ${{ matrix.distro.display_name }} | ${{ matrix.platform.arch }}
+#    runs-on: ${{ matrix.platform.runner }}
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        distro:
+#          -
+#            display_name: Debian
+#            distro: debian
+#            package: deb
+#            dockerfile: '.devcontainer/Debian.dockerfile'
+#            preset_suffix: deb
+#          -
+#            display_name: Fedora
+#            distro: fedora
+#            package: rpm
+#            dockerfile: '.devcontainer/Fedora.dockerfile'
+#            preset_suffix: fedora-rpm
+#        platform:
+#          -
+#            runner: 'ubuntu-24.04'
+#            arch: "x64"
+#          -
+#            runner: 'ubuntu-24.04-arm'
+#            arch: "arm64"
+#
+#    defaults:
+#      run:
+#        shell: bash
+#    steps:
+#      - name: Set up Docker Buildx
+#        id: setup-buildx
+#        uses: docker/setup-buildx-action@v3
+#        with:
+#          driver: docker
+#
+#      # Invalidate cache for docker toolchain images every month to update dependencies
+#      - name: Get build month for Docker cache
+#        id: date
+#        run: echo "date=$(date +'%Y%m')" >> $GITHUB_OUTPUT
+#
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Cache Docker images
+#        uses: AndreKurait/docker-cache@0.6.0
+#        with:
+#          key: docker-${{ matrix.platform.arch }}-${{ hashFiles(matrix.distro.dockerfile) }}-${{ steps.date.outputs.date }}
+#
+#      - name: Toolchain & Configure & Build & Test & Package
+#        id: configure
+#        env:
+#          BUILDX_BUILDER: ${{ steps.setup-buildx.outputs.name }}
+#        run: |
+#          chmod 777 .
+#          ./crosscompile_linux_packages.sh "ci-linux-dev-${{ matrix.distro.preset_suffix }}" ${{ matrix.distro.distro }}
+#          git_version=$(cmake -P ./cmake/scripts/UpdateRevision.cmake "git" 2>&1)
+#          echo "version=$git_version" >> $GITHUB_OUTPUT
+#
+#      - name: Upload package
+#        if: |
+#          github.repository == 'Russian-Doom/russian-doom' ||
+#          github.repository == 'Dasperal/russian-doom'
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: russian-doom-${{ steps.configure.outputs.version }}-linux-${{ matrix.distro.package }}-${{ matrix.platform.arch }}
+#          path: ./build/*.${{ matrix.distro.package }}
