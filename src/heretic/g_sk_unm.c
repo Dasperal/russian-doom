@@ -26,7 +26,7 @@ O(MT_MUMMY, speed, + 9)            /* Golem (12 to 21) */                       
 O(MT_MUMMYGHOST, speed, + 9)       /* Golem Ghost (12 to 21) */                 \
 O(MT_MUMMYLEADER, speed, + 9)      /* Nitrogolem (12 to 21) */                  \
 O(MT_MUMMYLEADERGHOST, speed, + 9) /* Nitrogolem Ghost (12 to 21) */            \
-O(MT_CLINK, speed, + 7)            /* Sabreclaw (14 to 21) */                   \
+O(MT_CLINK, speed, + 14)           /* Sabreclaw (14 to 28) */                   \
 O(MT_KNIGHT, speed, + 7)           /* Undead Warrior (12 to 19) */              \
 O(MT_KNIGHTGHOST, speed, + 7)      /* Undead Warrior Ghost (12 to 19) */        \
 O(MT_BEAST, speed, + 7)            /* Weredragon (14 to 21) */                  \

@@ -1237,7 +1237,10 @@ void A_MummyAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(2));
+        if(gameskill == sk_ultranm)
+            P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        else
+            P_DamageMobj(actor->target, actor, actor, HITDICE(2));
         S_StartSound(actor, sfx_mumat2);
         return;
     }
@@ -2030,7 +2033,10 @@ void A_ClinkAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        damage = ((P_Random() % 7) + 3);
+        if(gameskill == sk_ultranm)
+            damage = ((P_Random() % 13) + 3);
+        else
+            damage = ((P_Random() % 7) + 3);
         P_DamageMobj(actor->target, actor, actor, damage);
     }
 }
