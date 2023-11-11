@@ -22,6 +22,7 @@
 
 
 #include <stdlib.h>
+#include "d_mode.h"
 #include "m_random.h"
 #include "i_system.h"
 #include "p_local.h"
@@ -861,7 +862,8 @@ void A_Chase (mobj_t *actor)
     // check for missile attack
     if (actor->info->missilestate)
     {
-        if (gameskill < sk_nightmare && !fastparm && actor->movecount)
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type == MT_VILE))
+        && !fastparm && actor->movecount)
         {
             goto nomissile;
         }
