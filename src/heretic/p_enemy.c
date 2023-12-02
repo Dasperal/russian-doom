@@ -23,6 +23,7 @@
 #include "hr_local.h"
 #include "i_system.h"
 #include "i_timer.h"
+#include "info.h"
 #include "p_local.h"
 #include "s_sound.h"
 #include "v_video.h"
@@ -347,12 +348,24 @@ boolean P_Move(mobj_t * actor)
 
 boolean P_TryWalk(mobj_t * actor)
 {
-    if (!P_Move(actor))
+    if(!P_Move(actor))
     {
-        return (false);
+        return false;
     }
-    actor->movecount = P_Random() & 15;
-    return (true);
+
+    // actor->movecount = P_Random() & (gameskill < sk_ultranm ? 15 : 3);
+    if(gameskill == sk_ultranm)
+    {
+        actor->movecount = P_Random() & (actor->type == MT_WIZARD
+                                      || actor->type == MT_SNAKE
+                                         ? 3 : 1);
+    }
+    else
+    {
+        actor->movecount = P_Random() & 15;
+    }
+
+    return true;
 }
 
 /*
@@ -755,7 +768,7 @@ void A_Chase(mobj_t *actor, player_t *player, pspdef_t *psp)
     if (actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+        if(gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type != MT_SORCERER2))
             P_NewChaseDir(actor);
         return;
     }
@@ -776,7 +789,8 @@ void A_Chase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
     if (actor->info->missilestate)
     {
-        if (gameskill < sk_nightmare && actor->movecount)
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type != MT_SORCERER2))
+        && actor->movecount)
             goto nomissile;
         if (!P_CheckMissileRange(actor))
             goto nomissile;
