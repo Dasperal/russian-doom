@@ -16,6 +16,7 @@
 #include "l_sk_unm.h"
 #include "g_sk_unm.h"
 
+#include "doomtype.h"
 #include "info.h"
 #include "m_fixed.h"
 
@@ -42,3 +43,8 @@ O(MT_CENTAUR_FX, damage, + 1)                 /* Slaughtaur fireball (4 to 5) */
 O(MT_SERPENTFX, damage, + 1)                  /* Stalker fireball (4 to 5) */
 
 UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES)
+
+boolean UNM_is_slow_monster(mobjtype_t type)
+{
+    return type == MT_CENTAURLEADER || type == MT_BISHOP;
+}
