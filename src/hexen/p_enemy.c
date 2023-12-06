@@ -31,6 +31,7 @@
 // External Data
 extern fixed_t FloatBobOffsets[64];
 
+extern boolean UNM_is_slow_monster(mobjtype_t type);
 
 //----------------------------------------------------------------------------
 //
@@ -316,12 +317,15 @@ boolean P_Move(mobj_t * actor)
 
 boolean P_TryWalk(mobj_t * actor)
 {
-    if (!P_Move(actor))
+    if(!P_Move(actor))
     {
-        return (false);
+        return false;
     }
-    actor->movecount = P_Random() & 15;
-    return (true);
+    if(gameskill == sk_ultranm)
+        actor->movecount = P_Random() % 3;
+    else
+        actor->movecount = P_Random() & 15;
+    return true;
 }
 
 /*
@@ -748,10 +752,10 @@ void A_Chase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // don't attack twice in a row
 //
-    if (actor->flags & MF_JUSTATTACKED)
+    if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+        if(gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
             P_NewChaseDir(actor);
         return;
     }
@@ -772,11 +776,12 @@ void A_Chase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // check for missile attack
 //
-    if (actor->info->missilestate)
+    if(actor->info->missilestate)
     {
-        if (gameskill < sk_nightmare && actor->movecount)
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
+        && actor->movecount)
             goto nomissile;
-        if (!P_CheckMissileRange(actor))
+        if(!P_CheckMissileRange(actor))
             goto nomissile;
         P_SetMobjState(actor, actor->info->missilestate);
         actor->flags |= MF_JUSTATTACKED;
@@ -2078,10 +2083,10 @@ void A_SerpentChase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // don't attack twice in a row
 //
-    if (actor->flags & MF_JUSTATTACKED)
+    if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+        if(gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
             P_NewChaseDir(actor);
         return;
     }
@@ -2279,10 +2284,10 @@ void A_SerpentWalk(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // don't attack twice in a row
 //
-    if (actor->flags & MF_JUSTATTACKED)
+    if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+        if(gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
             P_NewChaseDir(actor);
         return;
     }
@@ -4656,10 +4661,10 @@ void A_FastChase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // don't attack twice in a row
 //
-    if (actor->flags & MF_JUSTATTACKED)
+    if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+        if(gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
             P_NewChaseDir(actor);
         return;
     }
@@ -4696,11 +4701,12 @@ void A_FastChase(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 // check for missile attack
 //
-    if (actor->info->missilestate)
+    if(actor->info->missilestate)
     {
-        if (gameskill < sk_nightmare && actor->movecount)
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && UNM_is_slow_monster(actor->type)))
+           && actor->movecount)
             goto nomissile;
-        if (!P_CheckMissileRange(actor))
+        if(!P_CheckMissileRange(actor))
             goto nomissile;
         P_SetMobjState(actor, actor->info->missilestate);
         actor->flags |= MF_JUSTATTACKED;
