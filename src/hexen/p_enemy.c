@@ -322,7 +322,18 @@ boolean P_TryWalk(mobj_t * actor)
         return false;
     }
     if(gameskill == sk_ultranm)
-        actor->movecount = P_Random() % 3;
+    {
+        switch(actor->type)
+        {
+            case MT_WRAITH:
+            case MT_WRAITHB:
+            case MT_DEMON:
+            case MT_DEMON2:
+                actor->movecount = P_Random() & 1;
+            default:
+                actor->movecount = P_Random() % 3;
+        }
+    }
     else
         actor->movecount = P_Random() & 15;
     return true;
