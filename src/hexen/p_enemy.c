@@ -186,36 +186,47 @@ boolean P_CheckMeleeRange2(mobj_t * actor)
 
 boolean P_CheckMissileRange(mobj_t * actor)
 {
-    fixed_t dist;
-
-    if (!P_CheckSight(actor, actor->target))
+    if(!P_CheckSight(actor, actor->target))
     {
-        return (false);
+        return false;
     }
-    if (actor->flags & MF_JUSTHIT)
-    {                           // The target just hit the enemy, so fight back!
+
+    if(actor->flags & MF_JUSTHIT)
+    {
+        // The target just hit the enemy, so fight back!
         actor->flags &= ~MF_JUSTHIT;
-        return (true);
+        return true;
     }
-    if (actor->reactiontime)
-    {                           // Don't attack yet
-        return (false);
+
+    if(actor->reactiontime)
+    {
+        // Don't attack yet
+        return false;
     }
-    dist = (P_AproxDistance(actor->x - actor->target->x,
-                            actor->y - actor->target->y) >> FRACBITS) - 64;
-    if (!actor->info->meleestate)
-    {                           // No melee attack, so fire more frequently
+
+    fixed_t dist = (P_AproxDistance(actor->x - actor->target->x,
+                                    actor->y - actor->target->y) >> FRACBITS) - 64;
+    if(!actor->info->meleestate)
+    {
+        // No melee attack, so fire more frequently
         dist -= 128;
     }
-    if (dist > 200)
+
+    const int dist_cap = (gameskill == sk_ultranm
+                       && actor->type != MT_ICEGUY
+                       && actor->type != MT_KORAX
+                       && actor->type != MT_SORCBOSS) ? 140 : 200;
+    if(dist > dist_cap)
     {
-        dist = 200;
+        dist = dist_cap;
     }
-    if (P_Random() < dist)
+
+    if(P_Random() < dist)
     {
-        return (false);
+        return false;
     }
-    return (true);
+
+    return true;
 }
 
 /*
