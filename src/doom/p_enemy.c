@@ -226,14 +226,12 @@ boolean P_CheckMeleeRange (mobj_t *actor)
 
 static boolean P_CheckMissileRange (mobj_t *actor)
 {
-    fixed_t dist;
-
-    if (!P_CheckSight(actor, actor->target))
+    if(!P_CheckSight(actor, actor->target))
     {
         return false;
     }
 
-    if (actor->flags & MF_JUSTHIT)
+    if(actor->flags & MF_JUSTHIT)
     {
         // the target just hit the enemy,
         // so fight back!
@@ -241,23 +239,23 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         return true;
     }
 
-    if (actor->reactiontime)
+    if(actor->reactiontime)
     {
         return false;  // do not attack yet
     }
 
     // OPTIMIZE: get this from a global checksight
-    dist = P_AproxDistance (actor->x-actor->target->x, 
-                            actor->y-actor->target->y) - 64*FRACUNIT;
+    fixed_t dist = P_AproxDistance(actor->x-actor->target->x,
+                                   actor->y-actor->target->y) - 64*FRACUNIT;
 
-    if (!actor->info->meleestate)
+    if(!actor->info->meleestate)
     {
         dist -= 128*FRACUNIT;  // no melee attack, so fire more
     }
 
     dist >>= FRACBITS;
 
-    if (actor->type == MT_VILE)
+    if(actor->type == MT_VILE)
     {
         if (dist > 14*64)
         {
@@ -265,7 +263,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         }
     }
 
-    if (actor->type == MT_UNDEAD)
+    if(actor->type == MT_UNDEAD)
     {
         if (dist < 196)
         {
@@ -274,24 +272,48 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         dist >>= 1;
     }
 
-    if (actor->type == MT_CYBORG
+    if(actor->type == MT_CYBORG
     || actor->type == MT_SPIDER
     || actor->type == MT_SKULL)
     {
         dist >>= 1;
     }
 
-    if (dist > 200)
+    if(dist > 200)
     {
         dist = 200;
     }
 
-    if (actor->type == MT_CYBORG && dist > 160)
+    if(actor->type == MT_CYBORG && dist > 160)
     {
         dist = 160;
     }
 
-    if (P_Random () < dist)
+    if(gameskill == sk_ultranm)
+    {
+        if((actor->type == MT_TROOP || actor->type == MT_CYBORG) && dist < 80)
+        {
+            dist = 80;
+        }
+        else if(actor->type == MT_SKULL && dist < 60)
+        {
+            dist = 60;
+        }
+        else if(actor->type == MT_HEAD && dist < 70)
+        {
+            dist = 70;
+        }
+        else if((actor->type == MT_BRUISER || actor->type == MT_KNIGHT) && dist < 100)
+        {
+            dist = 100;
+        }
+        else if(actor->type == MT_BABY && dist < 180)
+        {
+            dist = 180;
+        }
+    }
+
+    if(P_Random() < dist)
     {
         return false;
     }
