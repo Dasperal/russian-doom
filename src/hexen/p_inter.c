@@ -2134,8 +2134,15 @@ void P_DamageMobj
         P_KillMobj(source, target);
         return;
     }
-    if ((P_Random() < target->info->painchance)
-        && !(target->flags & MF_SKULLFLY))
+
+    int pain_chance = target->info->painchance;
+    if(gameskill == sk_ultranm && inflictor && inflictor->type == MT_MWAND_MISSILE)
+    {
+        pain_chance = (pain_chance >> 3) + 1;
+    }
+
+    if((P_Random() < pain_chance)
+    && !(target->flags & MF_SKULLFLY))
     {
         if (inflictor && (inflictor->type >= MT_LIGHTNING_FLOOR
                           && inflictor->type <= MT_LIGHTNING_ZAP))
