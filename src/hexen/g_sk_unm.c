@@ -17,7 +17,7 @@
 #include "g_sk_unm.h"
 
 #include "doomtype.h"
-#include "info.h"
+#include "h2def.h"
 #include "m_fixed.h"
 
 #define ENUMERATE_UNM_CHANGES(O)                                                           \
@@ -51,7 +51,12 @@ O(MT_WRAITHFX1, damage, + 1)                  /* Reiver fireball (5 to 6) */    
 O(MT_CENTAUR_FX, damage, + 1)                 /* Slaughtaur fireball (4 to 5) */           \
 O(MT_SERPENTFX, damage, + 1)                  /* Stalker fireball (4 to 5) */
 
-UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES)
+#define ENUMERATE_UNM_MANA_USAGE_CHANGES(O) \
+O(Wraithverge_mana_usage, WeaponManaUse[PCLASS_CLERIC][WP_FOURTH], + 15) /* Wraithverge (18 to 33) */
+
+extern int WeaponManaUse[NUMCLASSES][NUMWEAPONS];
+
+UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, ENUMERATE_UNM_MANA_USAGE_CHANGES)
 
 boolean UNM_is_slow_monster(mobjtype_t type)
 {

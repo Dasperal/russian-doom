@@ -206,7 +206,7 @@ weaponinfo_t WeaponInfo[NUMWEAPONS][NUMCLASSES] = {
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
 
-static int WeaponManaUse[NUMCLASSES][NUMWEAPONS] = {
+int WeaponManaUse[NUMCLASSES][NUMWEAPONS] = {
     {0, 2, 3, 14},
     {0, 1, 4, 18},
     {0, 3, 5, 15},

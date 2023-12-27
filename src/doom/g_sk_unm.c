@@ -48,4 +48,6 @@ O(MT_ARACHPLAZ, damage, + 2)             /* Arachnotron (5 to 7) */         \
 O(MT_TRACER, damage, + 2)                /* Revenant (10 to 12) */          \
 O(MT_FATSHOT, damage, + 4)               /* Mancubus (8 to 12) */
 
-UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES)
+#define SKIP(O)
+
+UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, SKIP)
