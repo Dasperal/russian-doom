@@ -235,6 +235,14 @@ boolean P_CheckMissileRange(mobj_t * actor)
         dist = dist_cap;
     }
 
+    if(gameskill == sk_ultranm
+    && actor->type != MT_MINOTAUR
+    && actor->type != MT_SORCERER2
+    && dist < 85)
+    {
+        dist = 85;
+    }
+
     if(P_Random() < dist)
     {
         return false;
