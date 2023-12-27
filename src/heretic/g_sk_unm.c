@@ -50,4 +50,6 @@ O(MT_MNTRFX2, damage, + 2)         /* Minotaur firewall 1 (4 to 6) */           
 O(MT_MNTRFX3, damage, + 2)         /* Minotaur firewall 2 (4 to 6) */            \
 O(MT_SRCRFX1, damage, + 2)         /* D'sparil's Serpent firewall (10 to 12) */
 
-UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES)
+#define SKIP(O)
+
+UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, SKIP)
