@@ -42,11 +42,11 @@ O(MT_ARACHPLAZ, speed, + (5 * FRACUNIT)) /* Arachnotron (25 to 30) */       \
 O(MT_FATSHOT, speed, + (5 * FRACUNIT))   /* Mancubus (20 to 25) */          \
 /* Monster's damage */                                                      \
 O(MT_TROOPSHOT, damage, + 1)             /* Imp (3 to 4) */                 \
-O(MT_HEADSHOT, damage, + 2)              /* Cacodemon (5 to 7) */           \
-O(MT_BRUISERSHOT, damage, + 2)           /* Knight / Baron (8 to 10) */     \
-O(MT_ARACHPLAZ, damage, + 2)             /* Arachnotron (5 to 7) */         \
-O(MT_TRACER, damage, + 2)                /* Revenant (10 to 12) */          \
-O(MT_FATSHOT, damage, + 4)               /* Mancubus (8 to 12) */
+O(MT_HEADSHOT, damage, + 1)              /* Cacodemon (5 to 6) */           \
+O(MT_BRUISERSHOT, damage, + 1)           /* Knight / Baron (8 to 9) */     \
+O(MT_ARACHPLAZ, damage, + 1)             /* Arachnotron (5 to 6) */         \
+O(MT_TRACER, damage, + 1)                /* Revenant (10 to 11) */          \
+O(MT_FATSHOT, damage, + 1)               /* Mancubus (8 to 9) */
 
 #define SKIP(O)
 
