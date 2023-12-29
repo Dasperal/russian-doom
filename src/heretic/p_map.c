@@ -447,7 +447,20 @@ boolean PIT_CheckThing(mobj_t * thing)
             return (true);
         }
         // Do damage
-        damage = ((P_Random() % 8) + 1) * tmthing->damage;
+        if(gameskill == sk_ultranm && thing->type == MT_PLAYER)
+        {
+            int min_multiplier = (tmthing->damage / 4);
+            if(min_multiplier > 3)
+            {
+                min_multiplier = 3;
+            }
+
+            damage = ((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage;
+        }
+        else
+        {
+            damage = ((P_Random() % 8) + 1) * tmthing->damage;
+        }
         if (damage)
         {
             if (!(thing->flags & MF_NOBLOOD) && P_Random() < 192)
