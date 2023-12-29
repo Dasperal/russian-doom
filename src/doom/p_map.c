@@ -422,7 +422,20 @@ static boolean PIT_CheckThing (mobj_t *thing)
         }
 
         // damage / explode
-        damage = ((P_Random()%8)+1)*tmthing->info->damage;
+        if(gameskill == sk_ultranm && thing->type == MT_PLAYER)
+        {
+            int min_multiplier = (tmthing->info->damage / 4);
+            if(min_multiplier > 3)
+            {
+                min_multiplier = 3;
+            }
+
+            damage = ((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->info->damage;
+        }
+        else
+        {
+            damage = ((P_Random() % 8) + 1) * tmthing->info->damage;
+        }
         P_DamageMobj (thing, tmthing, tmthing->target, damage);
 
         // don't traverse any more
