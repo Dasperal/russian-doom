@@ -950,70 +950,66 @@ void A_FaceTarget (mobj_t *actor)
 // A_PosAttack
 // -----------------------------------------------------------------------------
 
-void A_PosAttack (mobj_t *actor)
+void A_PosAttack(mobj_t *actor)
 {
-    int angle;
     int damage;
-    int slope;
 
-    if (!actor->target)
+    if(!actor->target)
     {
         return;
     }
 
-    A_FaceTarget (actor);
-    angle = actor->angle;
-    slope = P_AimLineAttack (actor, angle, MISSILERANGE);
+    A_FaceTarget(actor);
+    int angle = actor->angle;
+    int slope = P_AimLineAttack (actor, angle, MISSILERANGE);
 
-    S_StartSound (actor, sfx_pistol);
+    S_StartSound(actor, sfx_pistol);
     angle += P_SubRandom() << 20;
     
-    if (gameskill == sk_ultranm)
+    if(gameskill == sk_ultranm)
     {
-        damage = ((P_Random()%5)+1)*4;
+        damage = ((P_Random()%5)+2)*3;
     }
     else
     {
         damage = ((P_Random()%5)+1)*3;
     }
 
-    P_LineAttack (actor, angle, MISSILERANGE, slope, damage);
+    P_LineAttack(actor, angle, MISSILERANGE, slope, damage);
 }
 
 // -----------------------------------------------------------------------------
 // A_SPosAttack
 // -----------------------------------------------------------------------------
 
-void A_SPosAttack (mobj_t *actor)
+void A_SPosAttack(mobj_t *actor)
 {
-    int bangle;
     int damage;
-    int slope;
 
-    if (!actor->target)
+    if(!actor->target)
     {
         return;
     }
 
-    S_StartSound (actor, sfx_shotgn);
-    A_FaceTarget (actor);
-    bangle = actor->angle;
-    slope = P_AimLineAttack (actor, bangle, MISSILERANGE);
+    S_StartSound(actor, sfx_shotgn);
+    A_FaceTarget(actor);
+    int bangle = actor->angle;
+    int slope = P_AimLineAttack(actor, bangle, MISSILERANGE);
 
-    for (int i = 0 ; i < 3 ; i++)
+    for(int i = 0 ; i < 3 ; i++)
     {
         int angle = bangle + (P_SubRandom() << 20);
 
-        if (gameskill == sk_ultranm)
+        if(gameskill == sk_ultranm)
         {
-            damage = ((P_Random()%5)+1)*4;
+            damage = ((P_Random()%5)+2)*3;
         }
         else
         {
             damage = ((P_Random()%5)+1)*3;
         }
 
-        P_LineAttack (actor, angle, MISSILERANGE, slope, damage);
+        P_LineAttack(actor, angle, MISSILERANGE, slope, damage);
     }        
 }
 
@@ -1021,34 +1017,31 @@ void A_SPosAttack (mobj_t *actor)
 // A_CPosAttack
 // -----------------------------------------------------------------------------
 
-void A_CPosAttack (mobj_t *actor)
+void A_CPosAttack(mobj_t *actor)
 {
-    int		angle;
-    int		bangle;
-    int		damage;
-    int		slope;
+    int	damage;
 
-    if (!actor->target)
+    if(!actor->target)
     {
         return;
     }
 
-    S_StartSound (actor, sfx_shotgn);
-    A_FaceTarget (actor);
-    bangle = actor->angle;
-    slope = P_AimLineAttack (actor, bangle, MISSILERANGE);
-    angle = bangle + (P_SubRandom() << 20);
+    S_StartSound(actor, sfx_shotgn);
+    A_FaceTarget(actor);
+    int	bangle = actor->angle;
+    int	slope = P_AimLineAttack(actor, bangle, MISSILERANGE);
+    int	angle = bangle + (P_SubRandom() << 20);
 
-    if (gameskill == sk_ultranm)
+    if(gameskill == sk_ultranm)
     {
-        damage = ((P_Random()%5)+1)*4;
+        damage = ((P_Random()%5)+2)*3;
     }
     else
     {
         damage = ((P_Random()%5)+1)*3;
     }
 
-    P_LineAttack (actor, angle, MISSILERANGE, slope, damage);
+    P_LineAttack(actor, angle, MISSILERANGE, slope, damage);
 }
 
 // -----------------------------------------------------------------------------
