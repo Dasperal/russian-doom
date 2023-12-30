@@ -1728,10 +1728,24 @@ void A_Explode(mobj_t *actor, player_t *player, pspdef_t *psp)
             actor->args[0] = 1; // don't play bounce
             break;
         case MT_SORCFX1:       // Sorcerer spell 1
-            damage = 30;
+            if(gameskill == sk_ultranm)
+            {
+                damage = 60;
+            }
+            else
+            {
+                damage = 30;
+            }
             break;
         case MT_SORCFX4:       // Sorcerer spell 4
-            damage = 20;
+            if(gameskill == sk_ultranm)
+            {
+                damage = 36;
+            }
+            else
+            {
+                damage = 20;
+            }
             break;
         case MT_TREEDESTRUCTIBLE:
             damage = 10;
