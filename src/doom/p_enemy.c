@@ -307,10 +307,6 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         {
             dist = 100;
         }
-        else if(actor->type == MT_BABY && dist < 180)
-        {
-            dist = 180;
-        }
     }
 
     if(P_Random() < dist)
@@ -439,14 +435,21 @@ static boolean P_Move (mobj_t*	actor)
 // If a door is in the way, an OpenDoor call is made to start it opening.
 // -----------------------------------------------------------------------------
 
-static boolean P_TryWalk (mobj_t *actor)
+static boolean P_TryWalk(mobj_t *actor)
 {	
-    if (!P_Move (actor))
+    if(!P_Move(actor))
     {
         return false;
     }
 
-    actor->movecount = P_Random()&15;
+    if(gameskill == sk_ultranm && actor->type == MT_BABY)
+    {
+        actor->movecount = P_Random() & 3;
+    }
+    else
+    {
+        actor->movecount = P_Random() & 15;
+    }
     return true;
 }
 
@@ -860,7 +863,7 @@ void A_Chase (mobj_t *actor)
     if (actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if (gameskill != sk_nightmare && gameskill != sk_ultranm && !fastparm)
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type == MT_BABY)) && !fastparm)
         {
             P_NewChaseDir (actor);
         }
@@ -884,7 +887,8 @@ void A_Chase (mobj_t *actor)
     // check for missile attack
     if (actor->info->missilestate)
     {
-        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type == MT_VILE))
+        if((gameskill < sk_nightmare || (gameskill == sk_ultranm &&
+                                        (actor->type == MT_VILE || actor->type == MT_BABY)))
         && !fastparm && actor->movecount)
         {
             goto nomissile;
