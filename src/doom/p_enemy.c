@@ -291,7 +291,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
 
     if(gameskill == sk_ultranm)
     {
-        if((actor->type == MT_TROOP || actor->type == MT_CYBORG) && dist < 80)
+        if((actor->type == MT_TROOP || actor->type == MT_CYBORG || actor->type == MT_PAIN) && dist < 80)
         {
             dist = 80;
         }
@@ -303,7 +303,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         {
             dist = 70;
         }
-        else if((actor->type == MT_BRUISER || actor->type == MT_KNIGHT) && dist < 100)
+        else if((actor->type == MT_BRUISER || actor->type == MT_KNIGHT || actor->type == MT_FATSO) && dist < 100)
         {
             dist = 100;
         }
