@@ -5024,6 +5024,7 @@ void A_KoraxChase(mobj_t* actor, player_t* player, pspdef_t* psp)
     int teleport_health = gameskill == sk_ultranm
                         ? (actor->info->spawnhealth >> 2) * 3
                         : actor->info->spawnhealth >> 1;
+    // Teleport away (second stage)
     if(!actor->special2.i && actor->health <= teleport_health)
     {
         lastfound = 0;
@@ -5051,10 +5052,10 @@ void A_KoraxChase(mobj_t* actor, player_t* player, pspdef_t* psp)
         S_StartSound(NULL, SFX_KORAX_ACTIVE);
     }
 
-    // Teleport away
+    // Teleport
     if(actor->health < teleport_health)
     {
-        if(P_Random() < 10)
+        if(P_Random() < (gameskill == sk_ultranm ? 17 : 10))
         {
             lastfound = actor->special1.i;
             spot = P_FindMobjFromTID(KORAX_TELEPORT_TID, &lastfound);
