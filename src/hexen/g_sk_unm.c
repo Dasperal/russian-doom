@@ -43,13 +43,17 @@ O(MT_SERPENTFX, speed, + (3 * FRACUNIT))     /* Stalker fireball (15 to 18) */  
 O(MT_ICEGUY_FX, speed, + (3 * FRACUNIT))     /* Wendige fireball 1 (14 to 17) */           \
 O(MT_ICEGUY_FX2, speed, + (3 * FRACUNIT))    /* Wendige fireball 2 (10 to 13) */           \
 /* Monster's damage */                                                                     \
-O(MT_FIREDEMON_FX6, damage, + 1)              /* Fire Gargolye fireball (1 to 2) */        \
-O(MT_DEMON2FX1, damage, + 1)                  /* Brown Chaos Serpent fireball (5 to 6) */  \
-O(MT_BISH_FX, damage, + 1)                    /* Dark Bishop fireball (1 to 2) */          \
-O(MT_DEMONFX1, damage, + 1)                   /* Green Chaos Serpent fireball (5 to 6) */  \
-O(MT_WRAITHFX1, damage, + 1)                  /* Reiver fireball (5 to 6) */               \
-O(MT_CENTAUR_FX, damage, + 1)                 /* Slaughtaur fireball (4 to 5) */           \
-O(MT_SERPENTFX, damage, + 1)                  /* Stalker fireball (4 to 5) */
+O(MT_FIREDEMON_FX6, damage, + 1)             /* Fire Gargolye fireball (1 to 2) */         \
+O(MT_DEMON2FX1, damage, + 1)                 /* Brown Chaos Serpent fireball (5 to 6) */   \
+O(MT_BISH_FX, damage, + 1)                   /* Dark Bishop fireball (1 to 2) */           \
+O(MT_DEMONFX1, damage, + 1)                  /* Green Chaos Serpent fireball (5 to 6) */   \
+O(MT_WRAITHFX1, damage, + 1)                 /* Reiver fireball (5 to 6) */                \
+O(MT_CENTAUR_FX, damage, + 1)                /* Slaughtaur fireball (4 to 5) */            \
+O(MT_SERPENTFX, damage, + 1)                 /* Stalker fireball (4 to 5) */               \
+/* Monster's health */                                                                     \
+O(MT_KORAX, spawnhealth, + 13000)            /* Korax health (5000 to 18000) */            \
+/* Monster's painchance */                                                                 \
+O(MT_KORAX, painchance, - 16)                /* Korax painchance (20 to 4) */
 
 #define ENUMERATE_UNM_MANA_USAGE_CHANGES(O) \
 O(Wraithverge_mana_usage, WeaponManaUse[PCLASS_CLERIC][WP_FOURTH], + 15) /* Wraithverge (18 to 33) */
