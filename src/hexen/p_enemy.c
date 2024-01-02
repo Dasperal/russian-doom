@@ -5015,18 +5015,20 @@ void KSpiritInit(mobj_t * spirit, mobj_t * korax);
 #define KORAX_FIRST_TELEPORT_TID	(248)
 #define KORAX_TELEPORT_TID			(249)
 
-void A_KoraxChase(mobj_t *actor, player_t *player, pspdef_t *psp)
+void A_KoraxChase(mobj_t* actor, player_t* player, pspdef_t* psp)
 {
-    mobj_t *spot;
+    mobj_t* spot;
     int lastfound;
     byte args[3] = {0, 0, 0};
 
-    if ((!actor->special2.i) &&
-        (actor->health <= (actor->info->spawnhealth / 2)))
+    int teleport_health = gameskill == sk_ultranm
+                        ? (actor->info->spawnhealth >> 2) * 3
+                        : actor->info->spawnhealth >> 1;
+    if(!actor->special2.i && actor->health <= teleport_health)
     {
         lastfound = 0;
         spot = P_FindMobjFromTID(KORAX_FIRST_TELEPORT_TID, &lastfound);
-        if (spot)
+        if(spot)
         {
             P_Teleport(actor, spot->x, spot->y, spot->angle, true);
         }
@@ -5038,26 +5040,26 @@ void A_KoraxChase(mobj_t *actor, player_t *player, pspdef_t *psp)
         return;
     }
 
-    if (!actor->target)
+    if(!actor->target)
         return;
-    if (P_Random() < 30)
+    if(P_Random() < 30)
     {
         P_SetMobjState(actor, actor->info->missilestate);
     }
-    else if (P_Random() < 30)
+    else if(P_Random() < 30)
     {
         S_StartSound(NULL, SFX_KORAX_ACTIVE);
     }
 
     // Teleport away
-    if (actor->health < (actor->info->spawnhealth >> 1))
+    if(actor->health < teleport_health)
     {
-        if (P_Random() < 10)
+        if(P_Random() < 10)
         {
             lastfound = actor->special1.i;
             spot = P_FindMobjFromTID(KORAX_TELEPORT_TID, &lastfound);
             actor->special1.i = lastfound;
-            if (spot)
+            if(spot)
             {
                 P_Teleport(actor, spot->x, spot->y, spot->angle, true);
             }
@@ -5197,25 +5199,26 @@ void A_KoraxMissile(mobj_t *actor, player_t *player, pspdef_t *psp)
 
 
 // Call action code scripts (250-254)
-void A_KoraxCommand(mobj_t *actor, player_t *player, pspdef_t *psp)
+void A_KoraxCommand(mobj_t* actor, player_t* player, pspdef_t* psp)
 {
     byte args[5];
-    fixed_t x, y, z;
-    angle_t ang;
     int numcommands;
 
     S_StartSound(actor, SFX_KORAX_COMMAND);
 
     // Shoot stream of lightning to ceiling
-    ang = (actor->angle - ANG90) >> ANGLETOFINESHIFT;
-    x = actor->x + FixedMul(KORAX_COMMAND_OFFSET, finecosine[ang]);
-    y = actor->y + FixedMul(KORAX_COMMAND_OFFSET, finesine[ang]);
-    z = actor->z + KORAX_COMMAND_HEIGHT;
+    angle_t ang = (actor->angle - ANG90) >> ANGLETOFINESHIFT;
+    fixed_t x = actor->x + FixedMul(KORAX_COMMAND_OFFSET, finecosine[ang]);
+    fixed_t y = actor->y + FixedMul(KORAX_COMMAND_OFFSET, finesine[ang]);
+    fixed_t z = actor->z + KORAX_COMMAND_HEIGHT;
     P_SpawnMobj(x, y, z, MT_KORAX_BOLT);
 
     args[0] = args[1] = args[2] = args[3] = args[4] = 0;
 
-    if (actor->health <= (actor->info->spawnhealth >> 1))
+    int teleport_health = gameskill == sk_ultranm
+                        ? (actor->info->spawnhealth >> 2) * 3
+                        : actor->info->spawnhealth >> 1;
+    if(actor->health <= teleport_health)
     {
         numcommands = 5;
     }
@@ -5224,7 +5227,7 @@ void A_KoraxCommand(mobj_t *actor, player_t *player, pspdef_t *psp)
         numcommands = 4;
     }
 
-    switch (P_Random() % numcommands)
+    switch(P_Random() % numcommands)
     {
         case 0:
             CheckACSPresent(250);
