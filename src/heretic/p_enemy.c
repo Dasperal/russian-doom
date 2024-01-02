@@ -1656,7 +1656,7 @@ void A_MinotaurAtk1(mobj_t *actor, player_t *player_, pspdef_t *psp)
     S_StartSound(actor, sfx_stfpow);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        P_DamageMobj(actor->target, actor, actor, gameskill == sk_ultranm ? HITDICE(8) : HITDICE(4));
         if ((player = actor->target->player) != NULL)
         {                       // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
@@ -1759,7 +1759,7 @@ void A_MinotaurAtk2(mobj_t *actor, player_t *player, pspdef_t *psp)
     S_StartSound(actor, sfx_minat2);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        P_DamageMobj(actor->target, actor, actor, gameskill == sk_ultranm ? HITDICE(9) : HITDICE(5));
         return;
     }
     mo = P_SpawnMissile(actor, actor->target, MT_MNTRFX1);
@@ -1794,7 +1794,7 @@ void A_MinotaurAtk3(mobj_t *actor, player_t *player_, pspdef_t *psp)
     }
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        P_DamageMobj(actor->target, actor, actor, gameskill == sk_ultranm ? HITDICE(9) : HITDICE(5));
         if ((player = actor->target->player) != NULL)
         {                       // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
