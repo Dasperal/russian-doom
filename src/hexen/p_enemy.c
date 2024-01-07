@@ -5141,9 +5141,30 @@ void KSpiritInit(mobj_t * spirit, mobj_t * korax)
     tail->special1.m = NULL;         // last tail bit
 }
 
-void A_KoraxDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
+void A_KoraxDecide(mobj_t* actor, player_t* player, pspdef_t* psp)
 {
-    if (P_Random() < 220)
+    int korax_missile_chance = 220;
+    if(gameskill == sk_ultranm)
+    {
+        if(actor->health > (actor->info->spawnhealth >> 2) * 3 + 1)
+        {
+            korax_missile_chance = 220;
+        }
+        else if(actor->health > (actor->info->spawnhealth >> 1) + 1)
+        {
+            korax_missile_chance = 190;
+        }
+        else if(actor->health > (actor->info->spawnhealth >> 2) + 1)
+        {
+            korax_missile_chance = 220;
+        }
+        else
+        {
+            korax_missile_chance = 170;
+        }
+    }
+
+    if(P_Random() < korax_missile_chance)
     {
         P_SetMobjState(actor, S_KORAX_MISSILE1);
     }
