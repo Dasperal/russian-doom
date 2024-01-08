@@ -24,6 +24,7 @@
 #include "i_swap.h"
 #include "p_local.h"
 #include "s_sound.h"
+#include "rd_rushexen.h"
 
 // Macros
 // Types
@@ -5249,7 +5250,56 @@ void A_KoraxCommand(mobj_t* actor, player_t* player, pspdef_t* psp)
         numcommands = 4;
     }
 
-    switch(P_Random() % numcommands)
+    int num_random_command;
+    if(!hasUnknownPWads && gameskill == sk_ultranm && numcommands == 5)
+    {
+        int random = P_Random();
+        if(actor->health > actor->info->spawnhealth >> 1)
+        {
+            if(random > 221)
+                num_random_command = 0;
+            else if(random > 187)
+                num_random_command = 1;
+            else if(random > 111)
+                num_random_command = 2;
+            else if(random > 77)
+                num_random_command = 3;
+            else
+                num_random_command = 4;
+        }
+        else if(actor->health > actor->info->spawnhealth >> 2)
+        {
+            if(random > 204)
+                num_random_command = 0;
+            else if(random > 153)
+                num_random_command = 1;
+            else if(random > 102)
+                num_random_command = 2;
+            else if(random > 51)
+                num_random_command = 3;
+            else
+                num_random_command = 4;
+        }
+        else
+        {
+            if(random > 220)
+                num_random_command = 0;
+            else if(random > 185)
+                num_random_command = 1;
+            else if(random > 150)
+                num_random_command = 2;
+            else if(random > 115)
+                num_random_command = 3;
+            else
+                num_random_command = 4;
+        }
+    }
+    else
+    {
+        num_random_command = P_Random() % numcommands;
+    }
+
+    switch(num_random_command)
     {
         case 0:
             CheckACSPresent(250);
@@ -5262,6 +5312,11 @@ void A_KoraxCommand(mobj_t* actor, player_t* player, pspdef_t* psp)
         case 2:
             CheckACSPresent(252);
             P_StartACS(252, 0, args, actor, NULL, 0);
+            if(!hasUnknownPWads && gameskill == sk_ultranm && numcommands == 5)
+            {
+                CheckACSPresent(254);
+                P_StartACS(254, 0, args, actor, NULL, 0);
+            }
             break;
         case 3:
             CheckACSPresent(253);
