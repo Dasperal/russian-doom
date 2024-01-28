@@ -829,9 +829,14 @@ static mobj_t *P_SpawnMobjSafe (const fixed_t x, const fixed_t y, const fixed_t 
         mobj->health = info->spawnhealth;
     }
 
-    if (gameskill != sk_nightmare && gameskill != sk_ultranm)
+    if(gameskill < sk_nightmare)
     {
         mobj->reactiontime = info->reactiontime;
+    }
+    else if(gameskill == sk_ultranm
+    && (type == MT_POSSESSED || type == MT_SHOTGUY || type == MT_CHAINGUY || type == MT_SPIDER || type == MT_WOLFSS))
+    {
+        mobj->reactiontime = 4;
     }
 
     mobj->lastlook = safe ? Crispy_Random () % MAXPLAYERS : P_Random () % MAXPLAYERS;
