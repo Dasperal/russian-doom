@@ -1180,9 +1180,18 @@ void P_DamageMobj (mobj_t *target, const mobj_t *inflictor, mobj_t *source, int 
         return;
     }
 
-    if ((P_Random () < target->info->painchance) && !(target->flags & MF_SKULLFLY))
+    if((P_Random() < target->info->painchance) && !(target->flags & MF_SKULLFLY))
     {
-        target->flags |= MF_JUSTHIT;  // fight back!
+        if(gameskill != sk_ultranm
+        || (target->type != MT_TROOP
+            && target->type != MT_HEAD
+            && target->type != MT_BRUISER
+            && target->type != MT_KNIGHT
+            && target->type != MT_FATSO)
+        || P_Random() < 128)
+        {
+            target->flags |= MF_JUSTHIT;  // fight back!
+        }
         P_SetMobjState (target, target->info->painstate);
     }
 
