@@ -1740,7 +1740,7 @@ void A_Explode(mobj_t *actor, player_t *player, pspdef_t *psp)
         case MT_SORCFX1:       // Sorcerer spell 1
             if(gameskill == sk_ultranm)
             {
-                damage = 60;
+                damage = 90;
             }
             else
             {
@@ -1750,7 +1750,7 @@ void A_Explode(mobj_t *actor, player_t *player, pspdef_t *psp)
         case MT_SORCFX4:       // Sorcerer spell 4
             if(gameskill == sk_ultranm)
             {
-                damage = 36;
+                damage = 60;
             }
             else
             {
@@ -1761,7 +1761,7 @@ void A_Explode(mobj_t *actor, player_t *player, pspdef_t *psp)
             damage = 10;
             break;
         case MT_DRAGON_FX2:
-            damage = 80;
+            damage = 100;
             damageSelf = false;
             break;
         case MT_MSTAFF_FX:
