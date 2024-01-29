@@ -1187,10 +1187,20 @@ void P_DamageMobj (mobj_t *target, const mobj_t *inflictor, mobj_t *source, int 
             && target->type != MT_HEAD
             && target->type != MT_BRUISER
             && target->type != MT_KNIGHT
-            && target->type != MT_FATSO)
-        || P_Random() < 128)
+            && target->type != MT_FATSO))
         {
             target->flags |= MF_JUSTHIT;  // fight back!
+        }
+        else
+        {
+            if(P_Random() < 128)
+            {
+                target->flags |= MF_JUSTHIT;  // set flag
+            }
+            else
+            {
+                target->flags &= ~MF_JUSTHIT; // clear flag
+            }
         }
         P_SetMobjState (target, target->info->painstate);
     }
