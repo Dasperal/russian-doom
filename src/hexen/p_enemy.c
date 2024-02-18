@@ -2759,9 +2759,9 @@ void A_BishopMissileSeek(mobj_t *actor, player_t *player, pspdef_t *psp)
 //
 //============================================================================
 
-void A_BishopDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
+void A_BishopDecide(mobj_t* actor, player_t* player, pspdef_t* psp)
 {
-    if (P_Random() < 220)
+    if(P_Random() < ((gameskill == sk_ultranm) ? 125 : 220))
     {
         return;
     }
