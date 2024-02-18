@@ -3763,7 +3763,7 @@ void A_FiredChase(mobj_t *actor, player_t *player, pspdef_t *psp)
         dist = P_AproxDistance(actor->x - target->x, actor->y - target->y);
         if (dist < FIREDEMON_ATTACK_RANGE)
         {
-            if (P_Random() < 30)
+            if(P_Random() < ((gameskill == sk_ultranm) ? 75 : 30))
             {
                 ang =
                     R_PointToAngle2(actor->x, actor->y, target->x, target->y);
@@ -3793,7 +3793,7 @@ void A_FiredChase(mobj_t *actor, player_t *player, pspdef_t *psp)
     // Do missile attack
     if (!(actor->flags & MF_JUSTATTACKED))
     {
-        if (P_CheckMissileRange(actor) && (P_Random() < 20))
+        if(P_CheckMissileRange(actor) && (P_Random() < ((gameskill == sk_ultranm) ? 65 : 20)))
         {
             P_SetMobjState(actor, actor->info->missilestate);
             actor->flags |= MF_JUSTATTACKED;
