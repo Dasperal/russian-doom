@@ -1428,10 +1428,23 @@ void P_DamageMobj
         P_KillMobj(source, target);
         return;
     }
-    if ((P_Random() < target->info->painchance)
-        && !(target->flags & MF_SKULLFLY))
+    if((P_Random() < target->info->painchance) && !(target->flags & MF_SKULLFLY))
     {
-        target->flags |= MF_JUSTHIT;    // fight back!
+        if(gameskill != sk_ultranm)
+        {
+            target->flags |= MF_JUSTHIT;  // fight back!
+        }
+        else
+        {
+            if(P_Random() < 128)
+            {
+                target->flags |= MF_JUSTHIT;  // set flag
+            }
+            else
+            {
+                target->flags &= ~MF_JUSTHIT; // clear flag
+            }
+        }
         P_SetMobjState(target, target->info->painstate);
     }
     target->reactiontime = 0;   // we're awake now...
