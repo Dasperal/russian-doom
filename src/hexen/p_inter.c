@@ -2141,15 +2141,27 @@ void P_DamageMobj
         pain_chance = (pain_chance >> 3) + 1;
     }
 
-    if((P_Random() < pain_chance)
-    && !(target->flags & MF_SKULLFLY))
+    if((P_Random() < pain_chance) && !(target->flags & MF_SKULLFLY))
     {
-        if (inflictor && (inflictor->type >= MT_LIGHTNING_FLOOR
-                          && inflictor->type <= MT_LIGHTNING_ZAP))
+        if(inflictor && (inflictor->type >= MT_LIGHTNING_FLOOR && inflictor->type <= MT_LIGHTNING_ZAP))
         {
-            if (P_Random() < 96)
+            if(P_Random() < 96)
             {
-                target->flags |= MF_JUSTHIT;    // fight back!
+                if(gameskill != sk_ultranm)
+                {
+                    target->flags |= MF_JUSTHIT;  // fight back!
+                }
+                else
+                {
+                    if(P_Random() < 128)
+                    {
+                        target->flags |= MF_JUSTHIT;  // set flag
+                    }
+                    else
+                    {
+                        target->flags &= ~MF_JUSTHIT; // clear flag
+                    }
+                }
                 P_SetMobjState(target, target->info->painstate);
             }
             else
@@ -2169,7 +2181,21 @@ void P_DamageMobj
         }
         else
         {
-            target->flags |= MF_JUSTHIT;        // fight back!
+            if(gameskill != sk_ultranm)
+            {
+                target->flags |= MF_JUSTHIT;  // fight back!
+            }
+            else
+            {
+                if(P_Random() < 128)
+                {
+                    target->flags |= MF_JUSTHIT;  // set flag
+                }
+                else
+                {
+                    target->flags &= ~MF_JUSTHIT; // clear flag
+                }
+            }
             P_SetMobjState(target, target->info->painstate);
             if (inflictor && inflictor->type == MT_POISONCLOUD)
             {
