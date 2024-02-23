@@ -48,7 +48,9 @@ O(MT_WIZFX1, damage, + 1)          /* Disciple of D'Sparil fireball (3 to 4) */ 
 O(MT_MNTRFX1, damage, + 1)         /* Minotaur 5 fireballs (3 to 4) */           \
 O(MT_MNTRFX2, damage, + 2)         /* Minotaur firewall 1 (4 to 6) */            \
 O(MT_MNTRFX3, damage, + 2)         /* Minotaur firewall 2 (4 to 6) */            \
-O(MT_SRCRFX1, damage, + 2)         /* D'sparil's Serpent firewall (10 to 12) */
+O(MT_SRCRFX1, damage, + 2)         /* D'sparil's Serpent firewall (10 to 12) */  \
+/* Monster's painchance */                                                       \
+O(MT_HEAD, painchance, - 22)       /* Iron Lich (32 to 10) */
 
 #define SKIP(O)
 
