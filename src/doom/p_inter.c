@@ -1182,12 +1182,7 @@ void P_DamageMobj (mobj_t *target, const mobj_t *inflictor, mobj_t *source, int 
 
     if((P_Random() < target->info->painchance) && !(target->flags & MF_SKULLFLY))
     {
-        if(gameskill != sk_ultranm
-        || (target->type != MT_TROOP
-            && target->type != MT_HEAD
-            && target->type != MT_BRUISER
-            && target->type != MT_KNIGHT
-            && target->type != MT_FATSO))
+        if(gameskill != sk_ultranm || target->type == MT_VILE)
         {
             target->flags |= MF_JUSTHIT;  // fight back!
         }
