@@ -2066,7 +2066,7 @@ void A_ClinkAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     if (P_CheckMeleeRange(actor))
     {
         if(gameskill == sk_ultranm)
-            damage = ((P_Random() % 13) + 3);
+            damage = ((P_Random() % 13) + 6);
         else
             damage = ((P_Random() % 7) + 3);
         P_DamageMobj(actor->target, actor, actor, damage);
