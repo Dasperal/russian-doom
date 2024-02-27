@@ -1315,7 +1315,7 @@ void A_MummyAttack2(mobj_t *actor, player_t *player, pspdef_t *psp)
 
 void A_MummyFX1Seek(mobj_t *actor, player_t *player, pspdef_t *psp)
 {
-    P_SeekerMissile(actor, ANG1_X * 10, ANG1_X * 20);
+    P_SeekerMissile(actor, ANG1_X * 10, ANG1_X * (gameskill == sk_ultranm ? 36 : 20));
 }
 
 //----------------------------------------------------------------------------
