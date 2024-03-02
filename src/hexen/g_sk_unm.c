@@ -24,7 +24,9 @@
 /* Monster's speed */                                                                        \
 O(MT_FIREDEMON, speed, + 7)                  /* Affrit (13 to 20) */                         \
 O(MT_ETTIN, speed, + 5)                      /* Ettin (13 to 18) */                          \
+O(MT_ETTIN_MASH, speed, + 5)                 /* Phantasmal Ettin (13 to 18) */               \
 O(MT_CENTAUR, speed, + 8)                    /* Centaur (13 to 21) */                        \
+O(MT_CENTAUR_MASH, speed, + 8)               /* Phantasmal Centaur (13 to 21) */             \
 O(MT_CENTAURLEADER, speed, + 7)              /* Slaughtaur (10 to 17) */                     \
 O(MT_DEMON, speed, + 5)                      /* Green Chaos Serpent (13 to 18) */            \
 O(MT_DEMON2, speed, + 5)                     /* Brown Chaos Serpent (13 to 18) */            \
