@@ -1701,8 +1701,9 @@ void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
         actor->momy = FixedMul(MNTR_CHARGE_SPEED, finesine[angle]);
         actor->special1.i = 35 / 2;       // Charge duration
     }
-    else if (target->z == target->floorz
-             && dist < 9 * 64 * FRACUNIT && P_Random() < 220)
+    else if ((target->z == target->floorz
+              && dist < 9 * 64 * FRACUNIT && P_Random() < 220)
+         || (gameskill == sk_ultranm && P_Random() > 200))
     {                           // Floor fire attack
         P_SetMobjState(actor, S_MNTR_ATK3_1);
         actor->special2.i = 0;
