@@ -447,6 +447,10 @@ static boolean P_TryWalk(mobj_t *actor)
     {
         actor->movecount = P_Random() & 3;
     }
+    else if(gameskill == sk_ultranm && (actor->type == MT_UNDEAD || actor->type == MT_HEAD))
+    {
+        actor->movecount = P_Random() & 1;
+    }
     else
     {
         actor->movecount = P_Random() & 15;
