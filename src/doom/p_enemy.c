@@ -893,7 +893,8 @@ void A_Chase (mobj_t *actor)
     if (actor->info->missilestate)
     {
         if((gameskill < sk_nightmare || (gameskill == sk_ultranm &&
-                                        (actor->type == MT_VILE || actor->type == MT_BABY)))
+                                        (actor->type == MT_VILE || actor->type == MT_BABY || actor->type == MT_UNDEAD
+                                         || actor->type == MT_HEAD)))
         && !fastparm && actor->movecount)
         {
             goto nomissile;
