@@ -865,12 +865,18 @@ void A_Chase (mobj_t *actor)
     }
 
     // do not attack twice in a row
-    if (actor->flags & MF_JUSTATTACKED)
+    if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if((gameskill < sk_nightmare || (gameskill == sk_ultranm && actor->type == MT_BABY)) && !fastparm)
+        if((gameskill < sk_nightmare
+            || (gameskill == sk_ultranm
+                && (actor->type == MT_BABY
+                    || actor->type == MT_UNDEAD
+                    || actor->type == MT_HEAD
+                    || actor->type == MT_FATSO)))
+        && !fastparm)
         {
-            P_NewChaseDir (actor);
+            P_NewChaseDir(actor);
         }
 
         return;
