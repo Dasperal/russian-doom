@@ -25,15 +25,15 @@
 O(MT_FIREDEMON, speed, + 7)                  /* Affrit (13 to 20) */                         \
 O(MT_ETTIN, speed, + 5)                      /* Ettin (13 to 18) */                          \
 O(MT_ETTIN_MASH, speed, + 5)                 /* Phantasmal Ettin (13 to 18) */               \
-O(MT_CENTAUR, speed, + 8)                    /* Centaur (13 to 21) */                        \
-O(MT_CENTAUR_MASH, speed, + 8)               /* Phantasmal Centaur (13 to 21) */             \
-O(MT_CENTAURLEADER, speed, + 7)              /* Slaughtaur (10 to 17) */                     \
-O(MT_DEMON, speed, + 5)                      /* Green Chaos Serpent (13 to 18) */            \
-O(MT_DEMON2, speed, + 5)                     /* Brown Chaos Serpent (13 to 18) */            \
-O(MT_DEMON_MASH, speed, + 5)                 /* Phantasmal Green Chaos Serpent (13 to 18) */ \
-O(MT_DEMON2_MASH, speed, + 5)                /* Phantasmal Brown Chaos Serpent (13 to 18) */ \
+O(MT_CENTAUR, speed, + 9)                    /* Centaur (13 to 22) */                        \
+O(MT_CENTAUR_MASH, speed, + 9)               /* Phantasmal Centaur (13 to 22) */             \
+O(MT_CENTAURLEADER, speed, + 10)             /* Slaughtaur (10 to 20) */                     \
+O(MT_DEMON, speed, + 7)                      /* Green Chaos Serpent (13 to 19) */            \
+O(MT_DEMON2, speed, + 7)                     /* Brown Chaos Serpent (13 to 19) */            \
+O(MT_DEMON_MASH, speed, + 7)                 /* Phantasmal Green Chaos Serpent (13 to 19) */ \
+O(MT_DEMON2_MASH, speed, + 7)                /* Phantasmal Brown Chaos Serpent (13 to 19) */ \
 O(MT_BISHOP, speed, + 12)                    /* Dark Bishop (10 to 22) */                    \
-O(MT_ICEGUY, speed, + 6)                     /* Wendige (14 to 20) */                        \
+O(MT_ICEGUY, speed, + 9)                     /* Wendige (14 to 23) */                        \
 O(MT_WRAITH, speed, + 13)                    /* Reiver (11 to 24) */                         \
 O(MT_WRAITHB, speed, + 13)                   /* Reiver (buried) (11 to 24) */                \
 /* Monster's missiles speed */                                                               \
