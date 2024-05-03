@@ -2590,7 +2590,7 @@ void A_CentaurAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     if(P_CheckMeleeRange(actor))
     {
         if(gameskill == sk_ultranm)
-            P_DamageMobj(actor->target, actor, actor, P_Random() % 14 + 3);
+            P_DamageMobj(actor->target, actor, actor, P_Random() % 19 + 9);
         else
             P_DamageMobj(actor->target, actor, actor, P_Random() % 7 + 3);
     }
@@ -3621,7 +3621,7 @@ void A_EttinAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     if(P_CheckMeleeRange(actor))
     {
         if(gameskill == sk_ultranm)
-            P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+            P_DamageMobj(actor->target, actor, actor, HITDICE(5));
         else
             P_DamageMobj(actor->target, actor, actor, HITDICE(2));
     }
