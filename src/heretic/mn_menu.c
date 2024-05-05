@@ -79,6 +79,7 @@ static void M_RD_PerfCounter(Direction_t direction);
 static void M_RD_Smoothing();
 static void M_RD_PorchFlashing();
 static void M_RD_DiminishedLighting();
+static void M_RD_FOV(Direction_t direction);
 
 // Page2
 static void M_RD_WindowBorder();
@@ -562,7 +563,7 @@ static MenuItem_t Rendering1Items[] = {
     I_SWITCH("PIXEL SCALING:",            "GBRCTKMYJT CUKF;BDFYBT:",         M_RD_Smoothing),          // ПИКСЕЛЬНОЕ СГЛАЖИВАНИЕ
     I_SWITCH("PORCH PALETTE CHANGING:",   "BPVTYTYBT GFKBNHS RHFTD 'RHFYF:", M_RD_PorchFlashing),      // ИЗМЕНЕНИЕ ПАЛИТРЫ КРАЕВ ЭКРАНА
     I_SWITCH("DIMINISHED LIGHTING:",      "EUFCFYBT JCDTOTYBZ:",             M_RD_DiminishedLighting), // УГАСАНИЕ ОСВЕЩЕНИЯ
-    I_EMPTY,
+    I_LRFUNC("FIELD OF VIEW:",            "GJKT PHTYBZ:",                    M_RD_FOV),                // ПОЛЕ ЗРЕНИЯ
     I_EMPTY,
     I_EMPTY,
     I_EMPTY,
@@ -2056,6 +2057,9 @@ static void DrawRenderingMenu1(void)
         // Diminished lighting
         RD_M_DrawTextSmallENG(smoothlight ? "SMOOTH" : "ORIGINAL", 169 + wide_delta, 122, CR_NONE);
 
+        // FOV
+        M_snprintf(num, 4, "%d", field_of_view);
+        RD_M_DrawTextSmallENG(num, 132 + wide_delta, 132, CR_GRAY);
 
         // Informative message
         if (rendering_resolution_temp != rendering_resolution
@@ -2063,14 +2067,14 @@ static void DrawRenderingMenu1(void)
         ||  opengles_renderer_temp != opengles_renderer)
         {
             RD_M_DrawTextSmallENG("THE PROGRAM MUST BE RESTARTED",
-                                  51 + wide_delta, 132, MenuTime & 32 ? CR_GREEN : CR_DARKGREEN);
+                                  51 + wide_delta, 142, MenuTime & 32 ? CR_GREEN : CR_DARKGREEN);
         }
 
         // Tip for faster sliding
-        if (CurrentItPos == 5)
+        if (CurrentItPos == 5 || CurrentItPos == 10)
         {
             RD_M_DrawTextSmallENG("HOLD RUN BUTTON FOR FASTER SLIDING",
-                                  39 + wide_delta, 142, CR_DARKGREEN);
+                                  39 + wide_delta, 152, CR_DARKGREEN);
         }
     }
     else
@@ -2155,23 +2159,27 @@ static void DrawRenderingMenu1(void)
         // Угасание освещения
         RD_M_DrawTextSmallRUS(smoothlight ? "GKFDYJT" : "JHBUBYFKMYJT", 180 + wide_delta, 122, CR_NONE);
 
+        // FOV
+        M_snprintf(num, 4, "%d", field_of_view);
+        RD_M_DrawTextSmallENG(num, 125 + wide_delta, 132, CR_GRAY);
+
         // Informative message: НЕОБХОДИМ ПЕРЕЗАПУСК ИГРЫ
         if (rendering_resolution_temp != rendering_resolution
         || aspect_ratio_temp != aspect_ratio
         || opengles_renderer_temp != opengles_renderer)
         {
             RD_M_DrawTextSmallRUS("YTJ,[JLBV GTHTPFGECR GHJUHFVVS",
-                                  46 + wide_delta, 132, MenuTime & 32 ? CR_GREEN : CR_DARKGREEN);
+                                  46 + wide_delta, 142, MenuTime & 32 ? CR_GREEN : CR_DARKGREEN);
         }
 
         // Для ускоренного пролистывания
         // удерживайте кнопку бега
-        if (CurrentItPos == 5)
+        if (CurrentItPos == 5 || CurrentItPos == 10)
         {
             RD_M_DrawTextSmallRUS("LKZ ECRJHTYYJUJ GHJKBCNSDFYBZ",
-                                  51 + wide_delta, 142, CR_DARKGREEN);
+                                  51 + wide_delta, 152, CR_DARKGREEN);
             RD_M_DrawTextSmallRUS("ELTH;BDFQNT RYJGRE ,TUF",
-                                  73 + wide_delta, 152, CR_DARKGREEN);
+                                  73 + wide_delta, 162, CR_DARKGREEN);
         }
     }
 }
@@ -2350,6 +2358,11 @@ static void M_RD_DiminishedLighting()
 
     // Recalculate light tables
     R_InitLightTables();
+}
+
+static void M_RD_FOV(const Direction_t direction)
+{
+    RD_Menu_SlideInt(&field_of_view, 45, 120, direction);
 }
 
 static void M_RD_WindowBorder()
@@ -5727,6 +5740,7 @@ static void M_RD_BackToDefaults_Recommended(void)
     preserve_window_aspect_ratio = 1;
     max_fps                      = 200; uncapped_fps = 1;
     show_fps                     = 0;
+    field_of_view                = 90;
     smoothing                    = 0;
     vga_porch_flash              = 0;
     smoothlight                  = 1;
@@ -5888,6 +5902,7 @@ static void M_RD_BackToDefaults_Original(void)
     preserve_window_aspect_ratio = 1;
     max_fps                      = 35; uncapped_fps = 0;
     show_fps                     = 0;
+    field_of_view                = 90;
     smoothing                    = 0;
     vga_porch_flash              = 0;
     smoothlight                  = 0;

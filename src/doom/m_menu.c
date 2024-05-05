@@ -143,6 +143,7 @@ static void M_RD_Change_PerfCounter(Direction_t direction);
 static void M_RD_Change_Smoothing();
 static void M_RD_Change_PorchFlashing();
 static void M_RD_Change_DiminishedLighting();
+static void M_RD_FOV(Direction_t direction);
 
 // Page 2
 static void M_RD_Change_WindowBorder();
@@ -669,7 +670,7 @@ static MenuItem_t Rendering1Items[] = {
     I_SWITCH("Pixel scaling:",            "Gbrctkmyjt cukf;bdfybt:",         M_RD_Change_Smoothing),
     I_SWITCH("Porch palette changing:",   "Bpvtytybt gfkbnhs rhftd 'rhfyf:", M_RD_Change_PorchFlashing),
     I_SWITCH("Diminished lighting:",      "Eufcfybt jcdtotybz:",             M_RD_Change_DiminishedLighting),
-    I_EMPTY,
+    I_LRFUNC("FIELD OF VIEW:",            "GJKT PHTYBZ:",                    M_RD_FOV),                // ПОЛЕ ЗРЕНИЯ
     I_EMPTY,
     I_EMPTY,
     I_SETMENU(NULL, /* Next Page > */ NULL, &Rendering2Menu)  // Далее >
@@ -1743,8 +1744,12 @@ static void M_RD_Draw_Rendering_1 (void)
         // Diminished lighting
         RD_M_DrawTextSmallENG(smoothlight ? "smooth" : "original", 171 + wide_delta, 115, CR_NONE);
 
+        // FOV
+        M_snprintf(num, 4, "%d", field_of_view);
+        RD_M_DrawTextSmallENG(num, 132 + wide_delta, 125, CR_NONE);
+
         // Tip for faster sliding
-        if (CurrentItPos == 5)
+        if (CurrentItPos == 5 || CurrentItPos == 10)
         {
             RD_M_DrawTextSmallCenteredENG("HOLD RUN BUTTON FOR FASTER SLIDING", 145, CR_GRAY);
         }
@@ -1796,7 +1801,7 @@ static void M_RD_Draw_Rendering_1 (void)
         ||  aspect_ratio_temp != aspect_ratio
         ||  opengles_renderer_temp != opengles_renderer)
         {
-            RD_M_DrawTextSmallCenteredRUS("ytj,[jlbv gthtpfgecr ghjuhfvvs", 125, MenuTime & 32 ? CR_WHITE : CR_GRAY);
+            RD_M_DrawTextSmallCenteredRUS("ytj,[jlbv gthtpfgecr ghjuhfvvs", 135, MenuTime & 32 ? CR_WHITE : CR_GRAY);
         }
 
         // Вертикальная синхронизация
@@ -1843,9 +1848,13 @@ static void M_RD_Draw_Rendering_1 (void)
         // Угасание освещения
         RD_M_DrawTextSmallRUS(smoothlight ? "gkfdyjt" : "jhbubyfkmyjt", 186 + wide_delta, 115, CR_NONE);
 
+        // FOV
+        M_snprintf(num, 4, "%d", field_of_view);
+        RD_M_DrawTextSmallENG(num, 125 + wide_delta, 125, CR_NONE);
+
         // Для ускоренного пролистывания
         // удерживайте кнопку бега
-        if (CurrentItPos == 5)
+        if (CurrentItPos == 5 || CurrentItPos == 10)
         {
             RD_M_DrawTextSmallCenteredRUS("LKZ ECRJHTYYJUJ GHJKBCNSDFYBZ", 135, CR_GRAY);
             RD_M_DrawTextSmallCenteredRUS("ELTH;BDFQNT RYJGRE ,TUF", 145, CR_GRAY);
@@ -2062,6 +2071,11 @@ static void M_RD_Change_DiminishedLighting()
 
     // Recalculate light tables
     R_InitLightTables();
+}
+
+static void M_RD_FOV(const Direction_t direction)
+{
+    RD_Menu_SlideInt(&field_of_view, 45, 120, direction);
 }
 
 static void M_RD_Change_WindowBorder()
@@ -6152,6 +6166,7 @@ static void M_RD_BackToDefaults_Recommended()
     preserve_window_aspect_ratio = 1;
     max_fps                      = 200; uncapped_fps = 1;
     show_fps                     = 0;
+    field_of_view                = 90;
     smoothing                    = 0;
     vga_porch_flash              = 0;
     smoothlight                  = 1;
@@ -6347,6 +6362,7 @@ static void M_RD_BackToDefaults_Original()
     preserve_window_aspect_ratio = 1;
     max_fps                      = 35; uncapped_fps = 0;
     show_fps                     = 0;
+    field_of_view                = 90;
     smoothing                    = 0;
     vga_porch_flash              = 0;
     smoothlight                  = 0;

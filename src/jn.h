@@ -144,6 +144,7 @@ extern int vsync;
 extern int uncapped_fps;
 extern int show_fps, real_fps;
 extern int max_fps;
+extern int field_of_view;
 extern int smoothlight;
 extern int show_diskicon;
 extern int screen_wiping;

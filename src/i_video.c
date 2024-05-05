@@ -104,6 +104,9 @@ int usemouse = 1;
 
 int png_screenshots = 1; // [JN] Crispy!
 
+// FOV
+int field_of_view = 90;
+
 // SDL video driver name
 
 char *video_driver = "";
@@ -1932,6 +1935,7 @@ void I_BindVideoVariables(void)
     M_BindIntVariable("preserve_window_aspect_ratio",&preserve_window_aspect_ratio);
     M_BindIntVariable("smoothing",                   &smoothing);
     M_BindIntVariable("max_fps",                     &max_fps);
+    M_BindIntVariable("field_of_view",               &field_of_view);
     M_BindIntVariable("vga_porch_flash",             &vga_porch_flash);
     M_BindIntVariable("startup_delay",               &startup_delay);
     M_BindIntVariable("resize_delay",                &resize_delay);
