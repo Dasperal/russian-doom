@@ -1687,11 +1687,12 @@ void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
     }
     S_StartSound(actor, sfx_minsit);
     dist = P_AproxDistance(actor->x - target->x, actor->y - target->y);
-    if(target->z + target->height > actor->z
-    && target->z + target->height < actor->z + actor->height
-    && dist < 8 * 64 * FRACUNIT
-    && dist > 1 * 64 * FRACUNIT
-    && P_Random() < 150 || (gameskill == sk_ultranm && P_Random() > 216))
+    if((target->z + target->height > actor->z
+        && target->z + target->height < actor->z + actor->height
+        && dist < 8 * 64 * FRACUNIT
+        && dist > 1 * 64 * FRACUNIT
+        && P_Random() < 150)
+    || (gameskill == sk_ultranm && P_Random() > 216))
     {                           // Charge attack
         // Don't call the state function right away
         P_SetMobjStateNF(actor, S_MNTR_ATK4_1);
