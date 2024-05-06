@@ -1797,9 +1797,10 @@ static void M_RD_Draw_Rendering_1 (void)
         }
 
         // Informative message: Необходим перезапуск программы
-        if (rendering_resolution_temp != rendering_resolution 
-        ||  aspect_ratio_temp != aspect_ratio
-        ||  opengles_renderer_temp != opengles_renderer)
+        const boolean restart_required = rendering_resolution_temp != rendering_resolution
+                                        ||  aspect_ratio_temp != aspect_ratio
+                                        ||  opengles_renderer_temp != opengles_renderer;
+        if(restart_required && ((CurrentItPos != 5 && CurrentItPos != 10) || MenuTime & 32))
         {
             RD_M_DrawTextSmallCenteredRUS("ytj,[jlbv gthtpfgecr ghjuhfvvs", 135, MenuTime & 32 ? CR_WHITE : CR_GRAY);
         }
@@ -1819,10 +1820,10 @@ static void M_RD_Draw_Rendering_1 (void)
         RD_Menu_DrawSliderSmallInline(155, 74, 11, (max_fps-40) / 20);
         // Numerical representation of slider position
         M_snprintf(num, 4, "%d", max_fps);
-        RD_M_DrawTextSmallENG(num, 261 + wide_delta, 75, 
+        RD_M_DrawTextSmallENG(num, 261 + wide_delta, 75,
                               max_fps < 60 ? CR_DARKRED :
                               max_fps < 100 ? CR_NONE :
-                              max_fps < 260 ? CR_GREEN : 
+                              max_fps < 260 ? CR_GREEN :
                               max_fps < 999 ? CR_ORANGE : CR_PINK);
 
         // Счетчик производительности
@@ -1854,7 +1855,7 @@ static void M_RD_Draw_Rendering_1 (void)
 
         // Для ускоренного пролистывания
         // удерживайте кнопку бега
-        if (CurrentItPos == 5 || CurrentItPos == 10)
+        if((CurrentItPos == 5 || CurrentItPos == 10) && (!restart_required || !(MenuTime & 32)))
         {
             RD_M_DrawTextSmallCenteredRUS("LKZ ECRJHTYYJUJ GHJKBCNSDFYBZ", 135, CR_GRAY);
             RD_M_DrawTextSmallCenteredRUS("ELTH;BDFQNT RYJGRE ,TUF", 145, CR_GRAY);
