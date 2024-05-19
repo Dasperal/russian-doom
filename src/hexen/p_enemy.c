@@ -2437,7 +2437,14 @@ void A_SerpentMeleeAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     }
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        if(gameskill == sk_ultranm)
+        {
+            P_DamageMobj(actor->target, actor, actor, HITDICE(5) + 14);
+        }
+        else
+        {
+            P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+        }
         S_StartSound(actor, SFX_SERPENT_MELEEHIT);
     }
     if (P_Random() < 96)
