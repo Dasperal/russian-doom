@@ -233,10 +233,12 @@ static boolean P_CheckMissileRange (mobj_t *actor)
 
     if(actor->flags & MF_JUSTHIT)
     {
-        // the target just hit the enemy,
-        // so fight back!
-        actor->flags &= ~MF_JUSTHIT;
-        return true;
+        // the target just hit the enemy, so fight back!
+        if(gameskill < sk_ultranm || actor->type != MT_UNDEAD || P_Random() > 128)
+        {
+            actor->flags &= ~MF_JUSTHIT;
+            return true;
+        }
     }
 
     if(actor->reactiontime)
