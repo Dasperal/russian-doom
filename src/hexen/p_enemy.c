@@ -4001,7 +4001,10 @@ void A_IceGuyMissileExplode(mobj_t *actor, player_t *player, pspdef_t *psp)
 
 #define SORCBALL_INITIAL_SPEED 		7
 #define SORCBALL_TERMINAL_SPEED		25
-#define SORCBALL_SPEED_ROTATIONS 	5
+#define SORCBALL_SPEED_ROTATIONS 	(gameskill < sk_ultranm \
+                                        || (actor->type != MT_SORCBALL1 \
+                                            && actor->type != MT_SORCBALL3) \
+                                    ? 5 : 0)
 #define SORC_DEFENSE_TIME			255
 #define SORC_DEFENSE_HEIGHT			45
 #define BOUNCE_TIME_UNIT			(35/2)
