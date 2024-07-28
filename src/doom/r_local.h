@@ -589,6 +589,10 @@ extern int rendered_segs, rendered_visplanes, rendered_vissprites;
 extern int skyflatnum, skytexture, skytexturemid;
 extern int validcount;
 extern int viewwindowx, viewwindowy;
+
+// [JN] FOV from DOOM Retro and Nugget Doom
+extern float fov_diff;
+
 extern lighttable_t *fixedcolormap;
 extern lighttable_t *scalelight[LIGHTLEVELS][MAXLIGHTSCALE];
 extern lighttable_t *scalelightfixed[MAXLIGHTSCALE];

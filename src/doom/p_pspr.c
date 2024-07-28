@@ -466,6 +466,7 @@ void A_Punch (mobj_t *mobj, player_t *player, pspdef_t *psp)
         {
             slope = (player->lookdir / MLOOKUNIT << FRACBITS) / (screenblocks <= 10 ? 160 : 146);
         }
+        slope /= P_SlopeFOVCorrection();
     }
 
     P_LineAttack (player->mo, angle, MELEERANGE, slope, damage);
@@ -517,6 +518,7 @@ void A_Saw (mobj_t *mobj, player_t *player, pspdef_t *psp)
         {
             slope = (player->lookdir / MLOOKUNIT << FRACBITS) / (screenblocks <= 10 ? 160 : 146);
         }
+        slope /= P_SlopeFOVCorrection();
     }
 
     P_LineAttack (player->mo, angle, MELEERANGE+1, slope, damage);
@@ -699,6 +701,7 @@ static void P_BulletSlope (mobj_t *mo)
             {
                 bulletslope = (mo->player->lookdir / MLOOKUNIT << FRACBITS) / (screenblocks <= 10 ? 160 : 146);
             }
+            bulletslope /= P_SlopeFOVCorrection();
         }
     }
 }
@@ -1022,4 +1025,16 @@ void P_MovePsprites (player_t * player)
 
     player->psprites[ps_flash].sx = player->psprites[ps_weapon].sx;
     player->psprites[ps_flash].sy = player->psprites[ps_weapon].sy;
+}
+
+//
+// P_SlopeFOVCorrection
+// [JN] Do slope correction for hitscan or missile attacks
+// while using non-standard field of view (vid_fov) value.
+//
+double P_SlopeFOVCorrection (void)
+{
+    return
+        field_of_view > 90 ? (fov_diff * fov_diff) :
+        field_of_view < 90 ? (fov_diff) : 1;
 }
