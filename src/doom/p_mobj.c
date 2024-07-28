@@ -1498,6 +1498,7 @@ void P_SpawnPlayerMissile (mobj_t *source, const mobjtype_t type)
             {
                 slope = ((source->player->lookdir / MLOOKUNIT) << FRACBITS) / (screenblocks <= 10 ? 160 : 146);
             }
+            slope /= P_SlopeFOVCorrection();
         }
     }
 
