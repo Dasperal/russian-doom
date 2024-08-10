@@ -56,6 +56,9 @@ static fixed_t lookdirmin, lookdirmax, lookdirs;
 // Bumped light from gun blasts.
 int extralight;
 
+// [JN] FOV from DOOM Retro, Woof! and Nugget Doom
+float  fov_diff;   // [Nugget] Used for some corrections
+
 // [JN] Smooth and vanilla diminished lighting
 int lightzshift, maxlightz;
 
@@ -627,6 +630,9 @@ void R_ExecuteSetViewSize (void)
     viewwidth = scaledviewwidth >> detailshift;
     viewheight = scaledviewheight >> (detailshift && hires);
 
+    // [JN] FOV from DOOM Retro and Nugget Doom
+    fov_diff = (float) 90 / field_of_view;
+
     centery = viewheight / 2;
     centerx = viewwidth / 2;
     centerxfrac = centerx << FRACBITS;
@@ -859,6 +865,12 @@ static void R_SetupFrame (player_t *player)
         viewz = player->viewz;
         viewangle = player->mo->angle + viewangleoffset;
         pitch = player->lookdir / MLOOKUNIT;
+    }
+
+    // [JN] Limit pitch (lookdir amplitude) for higher FOV levels.
+    if (field_of_view > 90)
+    {
+        pitch *= fov_diff * fov_diff;
     }
 
     if (localQuakeHappening[displayplayer] && !paused)
