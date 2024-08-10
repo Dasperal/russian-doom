@@ -382,6 +382,9 @@ extern fixed_t centerxfrac;
 extern fixed_t centeryfrac;
 extern fixed_t projection;
 
+// [JN] FOV from DOOM Retro, Woof! and Nugget Doom
+extern  float fov_diff;
+
 extern int validcount;
 
 extern lighttable_t *scalelight[LIGHTLEVELS][MAXLIGHTSCALE];
