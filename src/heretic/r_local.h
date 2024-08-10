@@ -465,6 +465,9 @@ extern const angle_t R_PointToAngle2 (const fixed_t x1, const fixed_t y1, const 
 extern const angle_t R_PointToAngleCrispy (fixed_t x, fixed_t y);
 extern const angle_t R_PointToAngle (const fixed_t x, const fixed_t y);
 
+// [JN] FOV from DOOM Retro, Woof! and Nugget Doom
+extern  float fov_diff;
+
 extern boolean setsizeneeded;
 extern boolean BorderNeedRefresh;
 extern boolean BorderTopRefresh;
