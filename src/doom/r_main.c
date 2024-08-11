@@ -64,6 +64,7 @@ int extralight;              // bumped light from gun blasts
 int lightzshift, maxlightz;  // [JN] Smooth and vanilla diminished lighting
 
 // [JN] FOV from DOOM Retro and Nugget Doom
+static fixed_t fov_scale;
 float  fov_diff;   // [Nugget] Used for some corrections
 
 //
@@ -371,20 +372,26 @@ static void R_InitTextureMapping (void)
     // Calc focallength
     //  so FIELDOFVIEW angles covers SCREENWIDTH.
 
-    // [crispy] in widescreen mode, make sure the same number of horizontal
-    // pixels shows the same part of the game scene as in regular rendering mode
-    fixed_t focalwidth;
-    focalwidth = (((ORIGWIDTH << hires)>>detailshift)/2)<<FRACBITS;
-    focallength = FixedDiv (aspect_ratio >= 2 ? focalwidth : 
-                            centerxfrac, finetangent[FINEANGLES/4+FIELDOFVIEW/2] );
+//    if(aspect_ratio >= 2)
+//    {
+//        // [crispy] in widescreen mode, make sure the same number of horizontal
+//        // pixels shows the same part of the game scene as in regular rendering mode
+//        fixed_t focalwidth = (((ORIGWIDTH << hires) >> detailshift) / 2) << FRACBITS;
+//        focallength = FixedDiv(FixedDiv(focalwidth, fov_scale),
+//                               finetangent[FINEANGLES/4+FIELDOFVIEW/2]);
+//    }
+//    else
+//    {
+        focallength = FixedDiv(centerxfrac, fov_scale);
+//    }
 
     for (i=0 ; i<FINEANGLES/2 ; i++)
     {
-        if (finetangent[i] > FRACUNIT*2)
+        if (finetangent[i] > fov_scale)
         {
             t = -1;
         }
-        else if (finetangent[i] < -FRACUNIT*2)
+        else if (finetangent[i] < -fov_scale)
         {
             t = viewwidth+1;
         }
@@ -421,7 +428,7 @@ static void R_InitTextureMapping (void)
         // [crispy] calculate sky angle for drawing horizontally linear skies.
         // Taken from GZDoom and refactored for integer math.
         linearskyangle[x] = ((viewwidth / 2 - x) * ((screenwidth<<6) / viewwidth)) 
-                                                 * (ANG90 / (SCREENWIDTH<<6));
+                                                 * (ANG90 / (SCREENWIDTH<<6)) / fov_diff;
     }
 
     // Take out the fencepost cases from viewangletox.
@@ -564,6 +571,7 @@ void R_ExecuteSetViewSize (void)
     int     level;
     fixed_t cosadj;
     fixed_t dy;
+    double	WIDEFOVDELTA;  // [JN] FOV from DOOM Retro and Nugget Doom
 
     setsizeneeded = false;
 
@@ -611,20 +619,25 @@ void R_ExecuteSetViewSize (void)
 
     // [JN] FOV from DOOM Retro and Nugget Doom
     fov_diff = (float) 90 / field_of_view;
+    if(aspect_ratio >= 2)
+    {
+        // fov * 0.82 is vertical FOV for 4:3 aspect ratio
+        WIDEFOVDELTA = (atan(SCREENWIDTH / ((SCREENHEIGHT * 1.2)
+                     / tan(field_of_view * 0.82 * M_PI / 360.0))) * 360.0 / M_PI) - field_of_view;
+    }
+    else
+    {
+        WIDEFOVDELTA = 0;
+    }
 
     centery = viewheight/2;
     centerx = viewwidth/2;
     centerxfrac = centerx << FRACBITS;
     centeryfrac = centery << FRACBITS;
 
-    if (aspect_ratio >= 2)
-    {
-        projection = MIN(centerxfrac, (((320 << hires) >> detailshift) / 2) << FRACBITS);
-    }
-    else
-    {
-        projection = centerxfrac;
-    }
+    // [JN] FOV from DOOM Retro and Nugget Doom
+    fov_scale = finetangent[(int)(FINEANGLES / 4 + (field_of_view + WIDEFOVDELTA) * FINEANGLES / 360 / 2)];
+    projection = FixedDiv(centerxfrac, fov_scale);
 
     if (!detailshift)
     {
@@ -671,8 +684,11 @@ void R_ExecuteSetViewSize (void)
     // planes
     for (i = 0 ; i < viewheight ; i++)
     {
-        const fixed_t num = (viewwidth << (detailshift && !hires)) / 2 * FRACUNIT;
-        const fixed_t num_wide = MIN(viewwidth << detailshift, ORIGWIDTH << !detailshift) / 2 * FRACUNIT;
+        // [JN] FOV from DOOM Retro and Nugget Doom
+        const fixed_t num = FixedMul(FixedDiv(FRACUNIT, fov_scale), (viewwidth<<detailshift)*FRACUNIT/2);
+//        const fixed_t num = FixedMul(FixedDiv(FRACUNIT, fov_scale), (viewwidth<<detailshift)*FRACUNIT/2);
+//        const fixed_t num_wide = FixedMul(FixedDiv(FRACUNIT, fov_scale),
+//                                          MIN(viewwidth << detailshift, ORIGWIDTH << !detailshift) / 2 * FRACUNIT);
 
         for (j = 0; j < lookdirs; j++)
         {
@@ -691,7 +707,8 @@ void R_ExecuteSetViewSize (void)
                 dy = abs(dy);
             }
 
-            yslopes[j][i] = FixedDiv (aspect_ratio >= 2 ? num_wide : num, dy);
+//            yslopes[j][i] = FixedDiv(aspect_ratio >= 2 ? num_wide : num, dy);
+            yslopes[j][i] = FixedDiv(num, dy);
         }
     }
 
