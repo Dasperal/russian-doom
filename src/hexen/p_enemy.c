@@ -2439,7 +2439,7 @@ void A_SerpentMeleeAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     {
         if(gameskill == sk_ultranm)
         {
-            P_DamageMobj(actor->target, actor, actor, HITDICE(5) + 14);
+            P_DamageMobj(actor->target, actor, actor, HITDICE(4) + 26);
         }
         else
         {
