@@ -883,7 +883,9 @@ void A_Chase (mobj_t *actor)
                 && (actor->type == MT_BABY
                     || actor->type == MT_UNDEAD
                     || actor->type == MT_HEAD
-                    || actor->type == MT_FATSO)))
+                    || actor->type == MT_FATSO
+                    || actor->type == MT_CYBORG
+                    || actor->type == MT_VILE)))
         && !fastparm)
         {
             P_NewChaseDir(actor);
