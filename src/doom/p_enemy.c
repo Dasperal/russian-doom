@@ -453,7 +453,7 @@ static boolean P_TryWalk(mobj_t *actor)
         return false;
     }
 
-    if(gameskill == sk_ultranm && actor->type == MT_BABY)
+    if(gameskill == sk_ultranm && (actor->type == MT_BABY || actor->type == MT_CYBORG))
     {
         actor->movecount = P_Random() & 3;
     }
