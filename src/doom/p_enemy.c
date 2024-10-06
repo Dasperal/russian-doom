@@ -241,7 +241,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         }
         // else
         const int rand = P_Random();
-        if(rand > 220 || (actor->type == MT_UNDEAD && rand > 180))
+        if(rand > 220)
         {
             actor->flags &= ~MF_JUSTHIT;
             return true;
