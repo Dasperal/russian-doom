@@ -30,7 +30,7 @@ O(MT_HEAD, speed, + 6)                   /* Cacodemon (8 to 14) */          \
 O(MT_KNIGHT, speed, + 6)                 /* Hell Knight (8 to 14) */        \
 O(MT_BRUISER, speed, + 6)                /* Baron of Hell (8 to 14) */      \
 O(MT_BABY, speed, + 5)                   /* Arachnotron (12 to 17) */       \
-O(MT_UNDEAD, speed, + 4)                 /* Revenant (10 to 14) */          \
+O(MT_UNDEAD, speed, + 6)                 /* Revenant (10 to 16) */          \
 O(MT_FATSO, speed, + 3)                  /* Mancubus (8 to 12) */           \
 O(MT_VILE, speed, + 3)                   /* Archvile (15 to 18) */          \
 O(MT_SPIDER, speed, + 5)                 /* Spider Mastermind (12 to 17) */ \
