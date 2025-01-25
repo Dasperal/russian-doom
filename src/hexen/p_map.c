@@ -666,13 +666,14 @@ boolean PIT_CheckThing(mobj_t * thing)
             thing->type == MT_PLAYER_MAGE ||
             thing->type == MT_PIGPLAYER))
         {
-            int min_multiplier = (tmthing->damage / 4);
+            int min_multiplier = tmthing->damage / 4;
             if(min_multiplier > 3)
             {
                 min_multiplier = 3;
             }
 
-            damage = ((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage;
+            damage = (tmthing->damage > 5 ? 6 : 0)
+                + ((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage;
         }
         else
         {
