@@ -362,6 +362,12 @@ static boolean PIT_CheckThing (mobj_t *thing)
 
         damage = ((P_Random()%8)+1)*tmthing->info->damage;
 
+        if(gameskill == sk_ultranm && tmthing->type == MT_SKULL && thing->type == MT_PAIN)
+        {
+            // [Dasperal] Extra damage from Lost Souls to Pain Elementals
+            damage += 12;
+        }
+
         P_DamageMobj (thing, tmthing, tmthing, damage);
 
         tmthing->flags &= ~MF_SKULLFLY;
