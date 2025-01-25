@@ -24,23 +24,23 @@
 /* Monster's speed */                                                                        \
 O(MT_FIREDEMON, speed, + 7)                  /* Affrit (13 to 20) */                         \
 O(MT_ETTIN, speed, + 5)                      /* Ettin (13 to 18) */                          \
-O(MT_ETTIN_MASH, speed, + 5)                 /* Phantasmal Ettin (13 to 18) */               \
-O(MT_CENTAUR, speed, + 9)                    /* Centaur (13 to 22) */                        \
-O(MT_CENTAUR_MASH, speed, + 9)               /* Phantasmal Centaur (13 to 22) */             \
+O(MT_ETTIN_MASH, speed, + 9)                 /* Phantasmal Ettin (13 to 22) */               \
+O(MT_CENTAUR, speed, + 10)                   /* Centaur (13 to 23) */                        \
+O(MT_CENTAUR_MASH, speed, + 12)              /* Phantasmal Centaur (13 to 25) */             \
 O(MT_CENTAURLEADER, speed, + 10)             /* Slaughtaur (10 to 20) */                     \
-O(MT_DEMON, speed, + 7)                      /* Green Chaos Serpent (13 to 19) */            \
-O(MT_DEMON2, speed, + 7)                     /* Brown Chaos Serpent (13 to 19) */            \
-O(MT_DEMON_MASH, speed, + 7)                 /* Phantasmal Green Chaos Serpent (13 to 19) */ \
-O(MT_DEMON2_MASH, speed, + 7)                /* Phantasmal Brown Chaos Serpent (13 to 19) */ \
+O(MT_DEMON, speed, + 8)                      /* Green Chaos Serpent (13 to 21) */            \
+O(MT_DEMON2, speed, + 8)                     /* Brown Chaos Serpent (13 to 21) */            \
+O(MT_DEMON_MASH, speed, + 12)                /* Phantasmal Green Chaos Serpent (13 to 25) */ \
+O(MT_DEMON2_MASH, speed, + 12)               /* Phantasmal Brown Chaos Serpent (13 to 25) */ \
 O(MT_BISHOP, speed, + 12)                    /* Dark Bishop (10 to 22) */                    \
 O(MT_ICEGUY, speed, + 9)                     /* Wendige (14 to 23) */                        \
 O(MT_WRAITH, speed, + 13)                    /* Reiver (11 to 24) */                         \
 O(MT_WRAITHB, speed, + 13)                   /* Reiver (buried) (11 to 24) */                \
 /* Monster's missiles speed */                                                               \
 O(MT_FIREDEMON_FX6, speed, + (5 * FRACUNIT)) /* Affrit fireball (10 to 15) */                \
-O(MT_DEMON2FX1, speed, + (3 * FRACUNIT))     /* Brown Chaos Serpent fireball (15 to 18) */   \
 O(MT_BISH_FX, speed, + (3 * FRACUNIT))       /* Dark Bishop fireball (10 to 13) */           \
-O(MT_DEMONFX1, speed, + (3 * FRACUNIT))      /* Green Chaos Serpent fireball (15 to 18) */   \
+O(MT_DEMONFX1, speed, + (5 * FRACUNIT))      /* Green Chaos Serpent fireball (15 to 20) */   \
+O(MT_DEMON2FX1, speed, + (5 * FRACUNIT))     /* Brown Chaos Serpent fireball (15 to 20) */   \
 O(MT_WRAITHFX1, speed, + (3 * FRACUNIT))     /* Reiver fireball (14 to 17) */                \
 O(MT_CENTAUR_FX, speed, + (3 * FRACUNIT))    /* Slaughtaur fireball (20 to 23) */            \
 O(MT_SERPENTFX, speed, + (3 * FRACUNIT))     /* Stalker fireball (15 to 18) */               \
