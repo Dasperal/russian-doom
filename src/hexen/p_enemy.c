@@ -2757,7 +2757,7 @@ void A_BishopMissileWeave(mobj_t *actor, player_t *player, pspdef_t *psp)
 
 void A_BishopMissileSeek(mobj_t *actor, player_t *player, pspdef_t *psp)
 {
-    P_SeekerMissile(actor, ANG1 * 2, ANG1 * 3);
+    P_SeekerMissile(actor, ANG1 * 2, ANG1 * (gameskill == sk_ultranm ? 5 : 3));
 }
 
 //============================================================================
