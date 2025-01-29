@@ -39,8 +39,8 @@ O(MT_WRAITHB, speed, + 13)                   /* Reiver (buried) (11 to 24) */   
 /* Monster's missiles speed */                                                               \
 O(MT_FIREDEMON_FX6, speed, + (5 * FRACUNIT)) /* Affrit fireball (10 to 15) */                \
 O(MT_BISH_FX, speed, + (3 * FRACUNIT))       /* Dark Bishop fireball (10 to 13) */           \
-O(MT_DEMONFX1, speed, + (5 * FRACUNIT))      /* Green Chaos Serpent fireball (15 to 20) */   \
-O(MT_DEMON2FX1, speed, + (5 * FRACUNIT))     /* Brown Chaos Serpent fireball (15 to 20) */   \
+O(MT_DEMONFX1, speed, + (3 * FRACUNIT))      /* Green Chaos Serpent fireball (15 to 18) */   \
+O(MT_DEMON2FX1, speed, + (3 * FRACUNIT))     /* Brown Chaos Serpent fireball (15 to 18) */   \
 O(MT_WRAITHFX1, speed, + (3 * FRACUNIT))     /* Reiver fireball (14 to 17) */                \
 O(MT_CENTAUR_FX, speed, + (3 * FRACUNIT))    /* Slaughtaur fireball (20 to 23) */            \
 O(MT_SERPENTFX, speed, + (3 * FRACUNIT))     /* Stalker fireball (15 to 18) */               \
