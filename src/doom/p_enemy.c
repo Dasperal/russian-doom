@@ -453,13 +453,26 @@ static boolean P_TryWalk(mobj_t *actor)
         return false;
     }
 
-    if(gameskill == sk_ultranm && (actor->type == MT_BABY || actor->type == MT_CYBORG))
+    if(gameskill == sk_ultranm)
     {
-        actor->movecount = P_Random() & 3;
-    }
-    else if(gameskill == sk_ultranm && (actor->type == MT_UNDEAD || actor->type == MT_HEAD))
-    {
-        actor->movecount = P_Random() & 1;
+        const int rand = P_Random();
+        if(actor->type == MT_BABY || actor->type == MT_CYBORG)
+        {
+            actor->movecount = rand & 3;
+        }
+        else if(actor->type == MT_UNDEAD || actor->type == MT_HEAD)
+        {
+            actor->movecount = rand & 1;
+        }
+        else
+        {
+            actor->movecount = 0;
+        }
+
+        if(rand > 240)
+        {
+            actor->movecount += 3;
+        }
     }
     else
     {
