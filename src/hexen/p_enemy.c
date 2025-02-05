@@ -344,15 +344,21 @@ boolean P_TryWalk(mobj_t * actor)
     }
     if(gameskill == sk_ultranm)
     {
+        const int rand = P_Random();
         switch(actor->type)
         {
             case MT_WRAITH:
             case MT_WRAITHB:
             case MT_DEMON:
             case MT_DEMON2:
-                actor->movecount = P_Random() & 1;
+                actor->movecount = rand & 1;
             default:
-                actor->movecount = P_Random() % 3;
+                actor->movecount = rand % 3;
+        }
+
+        if(rand > 240)
+        {
+            actor->movecount += 3;
         }
     }
     else
