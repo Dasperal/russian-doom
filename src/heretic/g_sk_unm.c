@@ -30,7 +30,7 @@ O(MT_MUMMYLEADERGHOST, speed, + 9)       /* Nitrogolem Ghost (12 to 21) */      
 O(MT_CLINK, speed, + 14)                 /* Sabreclaw (14 to 28) */                   \
 O(MT_KNIGHT, speed, + 7)                 /* Undead Warrior (12 to 19) */              \
 O(MT_KNIGHTGHOST, speed, + 7)            /* Undead Warrior Ghost (12 to 19) */        \
-O(MT_BEAST, speed, + 7)                  /* Weredragon (14 to 21) */                  \
+O(MT_BEAST, speed, + 10)                 /* Weredragon (14 to 24) */                  \
 O(MT_SNAKE, speed, + 7)                  /* Ophidian (10 to 17) */                    \
 O(MT_WIZARD, speed, + 7)                 /* Disciple of D'Sparil (12 to 19) */        \
 O(MT_HEAD, speed, + 7)                   /* Iron Lich (6 to 13) */                    \
