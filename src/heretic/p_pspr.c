@@ -312,17 +312,17 @@ void P_RepositionMace(mobj_t *mo)
 
 void P_CloseWeapons (void)
 {
-    int spot;
-
-    if (!MaceSpotCount)
-    {                       // No maces placed
+    if(!MaceSpotCount)
+    {
+        // No maces placed
         return;
     }
-    if (!deathmatch && P_Random() < 64)
-    {                       // Sometimes doesn't show up if not in deathmatch
+    if(!deathmatch && gameskill != sk_ultranm && P_Random() < 64)
+    {
+        // Sometimes doesn't show up if not in deathmatch
         return;
     }
-    spot = P_Random() % MaceSpotCount;
+    const int spot = P_Random() % MaceSpotCount;
     P_SpawnMobj(MaceSpots[spot].x, MaceSpots[spot].y, ONFLOORZ, MT_WMACE);
 }
 
