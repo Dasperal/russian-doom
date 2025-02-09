@@ -891,15 +891,7 @@ void A_Chase (mobj_t *actor)
     if(actor->flags & MF_JUSTATTACKED)
     {
         actor->flags &= ~MF_JUSTATTACKED;
-        if((gameskill < sk_nightmare
-            || (gameskill == sk_ultranm
-                && (actor->type == MT_BABY
-                    || actor->type == MT_UNDEAD
-                    || actor->type == MT_HEAD
-                    || actor->type == MT_FATSO
-                    || actor->type == MT_CYBORG
-                    || actor->type == MT_VILE)))
-        && !fastparm)
+        if((gameskill < sk_nightmare || gameskill == sk_ultranm) && !fastparm)
         {
             P_NewChaseDir(actor);
         }
