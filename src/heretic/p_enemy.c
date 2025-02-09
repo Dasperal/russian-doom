@@ -378,7 +378,7 @@ boolean P_TryWalk(mobj_t * actor)
         actor->movecount = rand & (actor->type == MT_WIZARD
                                       || actor->type == MT_SNAKE
                                          ? 3 : 1);
-        if(rand > 240)
+        if(rand > 236)
         {
             actor->movecount += 3;
         }
