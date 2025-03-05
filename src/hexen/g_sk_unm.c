@@ -49,7 +49,7 @@ O(MT_ICEGUY_FX2, speed, + (3 * FRACUNIT))    /* Wendige fireball 2 (10 to 13) */
 /* Monster's damage */                                                                       \
 O(MT_FIREDEMON_FX6, damage, + 1)             /* Fire Gargolye fireball (1 to 2) */           \
 O(MT_DEMON2FX1, damage, + 1)                 /* Brown Chaos Serpent fireball (5 to 6) */     \
-O(MT_BISH_FX, damage, + 1)                   /* Dark Bishop fireball (1 to 2) */             \
+O(MT_BISH_FX, damage, + 2)                   /* Dark Bishop fireball (1 to 3) */             \
 O(MT_DEMONFX1, damage, + 1)                  /* Green Chaos Serpent fireball (5 to 6) */     \
 O(MT_WRAITHFX1, damage, + 1)                 /* Reiver fireball (5 to 6) */                  \
 O(MT_CENTAUR_FX, damage, + 1)                /* Slaughtaur fireball (4 to 5) */              \
