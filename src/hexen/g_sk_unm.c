@@ -55,6 +55,9 @@ O(MT_DEMONFX1, damage, + 1)                  /* Green Chaos Serpent fireball (5 
 O(MT_WRAITHFX1, damage, + 1)                 /* Reiver fireball (5 to 6) */                  \
 O(MT_CENTAUR_FX, damage, + 1)                /* Slaughtaur fireball (4 to 5) */              \
 O(MT_SERPENTFX, damage, + 1)                 /* Stalker fireball (4 to 5) */                 \
+O(MT_MNTRFX1, damage, + 2)                   /* Minotaur 5 fireballs (3 to 5) */             \
+O(MT_MNTRFX2, damage, + 2)                   /* Minotaur firewall 1 (4 to 6) */              \
+O(MT_MNTRFX3, damage, + 2)                   /* Minotaur firewall 2 (4 to 6) */              \
 /* Monster's health */                                                                       \
 O(MT_KORAX, spawnhealth, + 13000)            /* Korax health (5000 to 18000) */              \
 /* Monster's painchance */                                                                   \
