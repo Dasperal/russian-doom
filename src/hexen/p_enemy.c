@@ -1405,11 +1405,13 @@ void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
         return;
     dist = P_AproxDistance(actor->x - target->x, actor->y - target->y);
 
-    if (target->z + target->height > actor->z
+    if((target->z + target->height > actor->z
         && target->z + target->height < actor->z + actor->height
         && dist < 16 * 64 * FRACUNIT
-        && dist > 1 * 64 * FRACUNIT && P_Random() < 230)
-    {                           // Charge attack
+        && dist > 1 * 64 * FRACUNIT && P_Random() < 230) ||
+       (gameskill == sk_ultranm && P_Random() > 216))
+    {
+        // Charge attack
         // Don't call the state function right away
         P_SetMobjStateNF(actor, S_MNTR_ATK4_1);
         actor->flags |= MF_SKULLFLY;
@@ -1419,14 +1421,16 @@ void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
         actor->momy = FixedMul(MNTR_CHARGE_SPEED, finesine[angle]);
         actor->args[4] = 35 / 2;        // Charge duration
     }
-    else if (target->z == target->floorz
-             && dist < 9 * 64 * FRACUNIT && P_Random() < 100)
-    {                           // Floor fire attack
+    else if((target->z == target->floorz && dist < 9 * 64 * FRACUNIT && P_Random() < 100) ||
+            (gameskill == sk_ultranm && P_Random() > 180))
+    {
+        // Floor fire attack
         P_SetMobjState(actor, S_MNTR_ATK3_1);
         actor->special2.i = 0;
     }
     else
-    {                           // Swing attack
+    {
+        // Swing attack
         A_FaceTarget(actor, player, psp);
         // Don't need to call P_SetMobjState because the current state
         // falls through to the swing attack
