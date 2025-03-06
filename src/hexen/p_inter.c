@@ -1948,6 +1948,10 @@ void P_DamageMobj
             case MT_BISH_FX:
                 // Bishops are just too nasty
                 damage >>= 1;
+                if(gameskill == sk_ultranm)
+                {
+                    damage += 2;
+                }
                 break;
             case MT_SHARDFX1:
                 switch (inflictor->special2.i)
