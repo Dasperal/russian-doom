@@ -36,6 +36,7 @@ O(MT_BISHOP, speed, + 12)                    /* Dark Bishop (10 to 22) */       
 O(MT_ICEGUY, speed, + 9)                     /* Wendige (14 to 23) */                        \
 O(MT_WRAITH, speed, + 13)                    /* Reiver (11 to 24) */                         \
 O(MT_WRAITHB, speed, + 13)                   /* Reiver (buried) (11 to 24) */                \
+O(MT_MINOTAUR, speed, + 5)                   /* Maulotaur (16 to 21) */                      \
 /* Monster's missiles speed */                                                               \
 O(MT_FIREDEMON_FX6, speed, + (5 * FRACUNIT)) /* Affrit fireball (10 to 15) */                \
 O(MT_BISH_FX, speed, + (3 * FRACUNIT))       /* Dark Bishop fireball (10 to 13) */           \
