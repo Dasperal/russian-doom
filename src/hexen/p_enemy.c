@@ -1381,7 +1381,7 @@ void A_MinotaurAtk1(mobj_t *actor, player_t *player, pspdef_t *psp)
     S_StartSound(actor, SFX_MAULATOR_HAMMER_SWING);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        P_DamageMobj(actor->target, actor, actor, gameskill == sk_ultranm ? HITDICE(9) : HITDICE(4));
     }
 }
 
