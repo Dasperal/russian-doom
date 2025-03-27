@@ -1713,8 +1713,8 @@ void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
         actor->momy = FixedMul(MNTR_CHARGE_SPEED, finesine[angle]);
         actor->special1.i = 35 / 2;       // Charge duration
     }
-    else if((is_firewall_attack_distance && P_Random() < (gameskill == sk_ultranm ? 200 : 220))
-            || (gameskill == sk_ultranm && !is_firewall_attack_distance && P_Random() > 180))
+    else if((is_firewall_attack_distance && P_Random() < (gameskill == sk_ultranm ? 175 : 220))
+            || (gameskill == sk_ultranm && !is_firewall_attack_distance && P_Random() > 160))
     {
         // Floor fire attack
         P_SetMobjState(actor, S_MNTR_ATK3_1);
