@@ -1683,43 +1683,46 @@ void A_MinotaurAtk1(mobj_t *actor, player_t *player_, pspdef_t *psp)
 
 void A_MinotaurDecide(mobj_t *actor, player_t *player, pspdef_t *psp)
 {
-    angle_t angle;
-    mobj_t *target;
-    int dist;
-
-    target = actor->target;
-    if (!target)
+    mobj_t* target = actor->target;
+    if(!target)
     {
         return;
     }
     S_StartSound(actor, sfx_minsit);
-    dist = P_AproxDistance(actor->x - target->x, actor->y - target->y);
-    if((target->z + target->height > actor->z
+    const int dist = P_AproxDistance(actor->x - target->x, actor->y - target->y);
+    const boolean is_chardge_attack_distance =
+        target->z + target->height > actor->z
         && target->z + target->height < actor->z + actor->height
         && dist < 8 * 64 * FRACUNIT
-        && dist > 1 * 64 * FRACUNIT
-        && P_Random() < 150)
-    || (gameskill == sk_ultranm && P_Random() > 216))
-    {                           // Charge attack
+        && dist > 1 * 64 * FRACUNIT;
+
+    const boolean is_firewall_attack_distance =
+        target->z == target->floorz
+        && dist < 9 * 64 * FRACUNIT;
+
+    if((is_chardge_attack_distance && P_Random() < 150)
+       || (gameskill == sk_ultranm && !is_chardge_attack_distance && P_Random() > 200))
+    {
+        // Charge attack
         // Don't call the state function right away
         P_SetMobjStateNF(actor, S_MNTR_ATK4_1);
         actor->flags |= MF_SKULLFLY;
         A_FaceTarget(actor, player, psp);
-        angle = actor->angle >> ANGLETOFINESHIFT;
+        angle_t angle = actor->angle >> ANGLETOFINESHIFT;
         actor->momx = FixedMul(MNTR_CHARGE_SPEED, finecosine[angle]);
         actor->momy = FixedMul(MNTR_CHARGE_SPEED, finesine[angle]);
         actor->special1.i = 35 / 2;       // Charge duration
     }
-    else if ((target->z == target->floorz
-              && dist < 9 * 64 * FRACUNIT
-              && P_Random() < (gameskill == sk_ultranm ? 200 : 220))
-         || (gameskill == sk_ultranm && P_Random() > 180))
-    {                           // Floor fire attack
+    else if((is_firewall_attack_distance && P_Random() < (gameskill == sk_ultranm ? 200 : 220))
+            || (gameskill == sk_ultranm && !is_firewall_attack_distance && P_Random() > 180))
+    {
+        // Floor fire attack
         P_SetMobjState(actor, S_MNTR_ATK3_1);
         actor->special2.i = 0;
     }
     else
-    {                           // Swing attack
+    {
+        // Swing attack
         A_FaceTarget(actor, player, psp);
         // Don't need to call P_SetMobjState because the current state
         // falls through to the swing attack
