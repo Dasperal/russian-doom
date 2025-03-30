@@ -469,9 +469,9 @@ static boolean P_TryWalk(mobj_t *actor)
             actor->movecount = 0;
         }
 
-        if(rand > 236)
+        if(rand > 234)
         {
-            actor->movecount += 3;
+            actor->movecount += 4;
         }
     }
     else
