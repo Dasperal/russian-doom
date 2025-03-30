@@ -33,7 +33,7 @@ O(MT_KNIGHTGHOST, speed, + 7)            /* Undead Warrior Ghost (12 to 19) */  
 O(MT_BEAST, speed, + 10)                 /* Weredragon (14 to 24) */                  \
 O(MT_SNAKE, speed, + 7)                  /* Ophidian (10 to 17) */                    \
 O(MT_WIZARD, speed, + 7)                 /* Disciple of D'Sparil (12 to 19) */        \
-O(MT_HEAD, speed, + 7)                   /* Iron Lich (6 to 13) */                    \
+O(MT_HEAD, speed, + 9)                   /* Iron Lich (6 to 15) */                    \
 O(MT_MINOTAUR, speed, + 5)               /* Maolotaur (16 to 21) */                   \
 O(MT_SORCERER1, speed, + 5)              /* D'Sparil (riding) (16 to 21) */           \
 O(MT_SORCERER2, speed, + 6)              /* D'Sparil (walking) (14 to 20) */          \
