@@ -375,12 +375,10 @@ boolean P_TryWalk(mobj_t * actor)
     if(gameskill == sk_ultranm)
     {
         const int rand = P_Random();
-        actor->movecount = rand & (actor->type == MT_WIZARD
-                                      || actor->type == MT_SNAKE
-                                         ? 3 : 1);
-        if(rand > 236)
+        actor->movecount = rand & (actor->type == MT_WIZARD || actor->type == MT_SNAKE ? 3 : 1);
+        if(rand > 234)
         {
-            actor->movecount += 3;
+            actor->movecount += 4;
         }
     }
     else
