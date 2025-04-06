@@ -456,7 +456,11 @@ static boolean P_TryWalk(mobj_t *actor)
     if(gameskill == sk_ultranm)
     {
         const int rand = P_Random();
-        if(actor->type == MT_BABY || actor->type == MT_CYBORG)
+        if (actor->type == MT_CYBORG)
+        {
+            actor->movecount = rand % 5;
+        }
+        else if(actor->type == MT_BABY)
         {
             actor->movecount = rand & 3;
         }
