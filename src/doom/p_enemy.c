@@ -458,7 +458,7 @@ static boolean P_TryWalk(mobj_t *actor)
         const int rand = P_Random();
         if (actor->type == MT_CYBORG)
         {
-            actor->movecount = rand % 5;
+            actor->movecount = rand & 7;
         }
         else if(actor->type == MT_BABY)
         {
