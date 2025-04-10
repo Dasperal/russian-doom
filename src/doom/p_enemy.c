@@ -449,7 +449,7 @@ static boolean P_TryWalk(mobj_t *actor)
         return false;
     }
 
-    if(gameskill == sk_ultranm)
+    if(gameskill == sk_ultranm && actor->type != MT_VILE)
     {
         const int rand = P_Random();
         if (actor->type == MT_CYBORG)
