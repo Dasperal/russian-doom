@@ -27,6 +27,7 @@ O(MT_CHAINGUY, speed, + 4)               /* Chaingunner (8 to 12) */        \
 O(MT_TROOP, speed, + 5)                  /* Imp (8 to 13) */                \
 O(MT_SKULL, speed, + 6)                  /* Lost Soul (8 to 14) */          \
 O(MT_HEAD, speed, + 6)                   /* Cacodemon (8 to 14) */          \
+O(MT_PAIN, speed, + 4)                   /* Pain Elemental (8 to 12) */     \
 O(MT_KNIGHT, speed, + 6)                 /* Hell Knight (8 to 14) */        \
 O(MT_BRUISER, speed, + 6)                /* Baron of Hell (8 to 14) */      \
 O(MT_BABY, speed, + 5)                   /* Arachnotron (12 to 17) */       \
