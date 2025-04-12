@@ -300,7 +300,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
 
     if(gameskill == sk_ultranm)
     {
-        if((actor->type == MT_PAIN) && dist < 110)
+        if(actor->type == MT_PAIN && dist < 110)
         {
             dist = 110;
         }
@@ -313,6 +313,10 @@ static boolean P_CheckMissileRange (mobj_t *actor)
                  actor->type == MT_HEAD || actor->type == MT_UNDEAD) && dist < 140)
         {
             dist = 140;
+        }
+        else if (dist < 75)
+        {
+            dist = 75;
         }
     }
 
