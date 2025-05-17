@@ -1188,7 +1188,7 @@ void P_DamageMobj (mobj_t *target, const mobj_t *inflictor, mobj_t *source, int 
         }
         else
         {
-            if(P_Random() < (target->type == MT_VILE || target->type == MT_UNDEAD ? 202 : 128))
+            if(P_Random() < (target->type == MT_VILE || target->type == MT_UNDEAD ? 220 : 128))
             {
                 target->flags |= MF_JUSTHIT;  // set flag
             }
