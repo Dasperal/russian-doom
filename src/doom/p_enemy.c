@@ -311,9 +311,13 @@ static boolean P_CheckMissileRange (mobj_t *actor)
             dist = 125;
         }
         else if((actor->type == MT_CYBORG || actor->type == MT_BRUISER || actor->type == MT_KNIGHT ||
-                 actor->type == MT_HEAD || actor->type == MT_UNDEAD) && dist < 140)
+                 actor->type == MT_HEAD) && dist < 140)
         {
             dist = 140;
+        }
+        else if(actor->type == MT_UNDEAD)
+        {
+            dist = 210;
         }
         else if (dist < 75)
         {
