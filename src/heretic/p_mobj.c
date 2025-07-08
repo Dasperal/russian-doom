@@ -952,7 +952,12 @@ void P_MobjThinker(thinker_t *thinker)
         {
             return;
         }
-        if (!respawnmonsters)
+        if(!respawnmonsters ||
+            (gameskill == sk_ultranm && (
+                mobj->type == MT_HEAD ||
+                mobj->type == MT_MINOTAUR ||
+                mobj->type == MT_SORCERER1 ||
+                mobj->type == MT_SORCERER2)))
         {
             return;
         }
