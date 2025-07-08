@@ -125,8 +125,9 @@ boolean P_GiveAmmo(player_t * player, ammotype_t ammo, int count)
     {
         return (false);
     }
-    if (gameskill == sk_baby || gameskill == sk_nightmare)
-    {                           // extra ammo in baby mode and nightmare mode
+    if (gameskill == sk_baby || gameskill == sk_nightmare || (gameskill == sk_ultranm && respawnmonsters))
+    {
+        // extra ammo in baby mode, nightmare mode and skill 6 with respawn
         count += count >> 1;
     }
     prevAmmo = player->ammo[ammo];
