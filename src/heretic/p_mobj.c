@@ -24,6 +24,7 @@
 #include "i_system.h"
 #include "p_local.h"
 #include "sounds.h"
+#include "sk_unm.h"
 #include "s_sound.h"
 #include "jn.h"
 
@@ -952,12 +953,7 @@ void P_MobjThinker(thinker_t *thinker)
         {
             return;
         }
-        if(!respawnmonsters ||
-            (gameskill == sk_ultranm && (
-                mobj->type == MT_HEAD ||
-                mobj->type == MT_MINOTAUR ||
-                mobj->type == MT_SORCERER1 ||
-                mobj->type == MT_SORCERER2)))
+        if(!respawnmonsters || unm_no_respawn(mobj->type))
         {
             return;
         }
