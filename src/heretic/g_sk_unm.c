@@ -15,8 +15,9 @@
 
 #include "l_sk_unm.h"
 #include "g_sk_unm.h"
+#include "sk_unm.h"
 
-#include "info.h"
+#include "hr_local.h"
 #include "m_fixed.h"
 
 #define ENUMERATE_UNM_CHANGES(O)                                                      \
@@ -60,3 +61,37 @@ O(MT_HEAD, painchance, - 22)             /* Iron Lich (32 to 10) */
 #define SKIP(O)
 
 UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, SKIP)
+
+boolean unm_no_respawn(const mobjtype_t type)
+{
+    if(gameskill != sk_ultranm)
+    {
+        // Not sill 6 - default behaviour, respawn
+        return false;
+    }
+
+    if(type == MT_SORCERER1)
+    {
+        // D'Sparil's serpent - don't respawn
+        return true;
+    }
+
+    if(gamemap != 8)
+    {
+        // Not a boss level - respawn
+        return false;
+    }
+
+    static mobjtype_t bossType[6] = {
+        MT_HEAD,
+        MT_MINOTAUR,
+        MT_SORCERER2,
+        MT_HEAD,
+        MT_MINOTAUR,
+        -1
+    };
+
+    // if current boss - don't respawn,
+    // if not - respawn
+    return type == bossType[gameepisode - 1];
+}

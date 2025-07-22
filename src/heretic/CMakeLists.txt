@@ -9,7 +9,7 @@ add_library(heretic STATIC
             deh_thing.c
             deh_weapon.c
             f_finale.c
-            g_sk_unm.c
+            g_sk_unm.c          sk_unm.h
             g_game.c
                                 hr_local.h
             hr_main.c
