@@ -125,11 +125,28 @@ boolean P_GiveAmmo(player_t * player, ammotype_t ammo, int count)
     {
         return (false);
     }
-    if (gameskill == sk_baby || gameskill == sk_nightmare || (gameskill == sk_ultranm && respawnmonsters))
+
+    switch(gameskill)
     {
-        // extra ammo in baby mode, nightmare mode and skill 6 with respawn
-        count += count >> 1;
+        case sk_baby:
+        case sk_nightmare:
+        {
+            // extra ammo on skill 1 and 5 (baby mode, nightmare mode)
+            count += count >> 1;
+        }
+        case sk_ultranm: if(respawnmonsters)
+        {
+            // double ammo on skill 6 with respawn
+            count = count << 1;
+        }
+        // else fall through
+        default:
+        {
+            // normal ammo on skill 2-4 and 6 without respawn
+            break;
+        }
     }
+
     prevAmmo = player->ammo[ammo];
 
     player->ammo[ammo] += count;
