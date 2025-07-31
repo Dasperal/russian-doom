@@ -922,25 +922,20 @@ void A_Chase (mobj_t *actor)
     }
 
     // check for missile attack
-    if (actor->info->missilestate)
+    if(actor->info->missilestate)
     {
-        if((gameskill < sk_nightmare
-            || (gameskill == sk_ultranm
-                && (actor->type == MT_VILE
-                    || actor->type == MT_BABY
-                    || actor->type == MT_UNDEAD
-                    || actor->type == MT_HEAD)))
-        && !fastparm && actor->movecount)
+        if((gameskill < sk_nightmare || gameskill == sk_ultranm)
+           && !fastparm && actor->movecount)
         {
             goto nomissile;
         }
 
-        if (!P_CheckMissileRange (actor))
+        if(!P_CheckMissileRange(actor))
         {
             goto nomissile;
         }
 
-        P_SetMobjState (actor, actor->info->missilestate);
+        P_SetMobjState(actor, actor->info->missilestate);
         actor->flags |= MF_JUSTATTACKED;
 
         return;
