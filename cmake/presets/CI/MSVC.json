@@ -26,6 +26,34 @@
         "lhs": "$penv{CI}",
         "rhs": "true"
       }
+    },
+    {
+      "name": "ci-msvc-arm32",
+      "inherits": ["msvc-arm32", "ci", "ci-vcpkg"],
+      "displayName": "Windows AArch32 (CI)",
+      "description": "Configuration for Windows AArch32 CI Dev builds",
+      "cacheVariables": {
+        "RD_TEST_WITH_GDB": "OFF"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm64",
+      "inherits": ["msvc-arm64", "ci", "ci-vcpkg"],
+      "displayName": "Windows AArch64 (CI)",
+      "description": "Configuration for Windows AArch64 CI Dev builds",
+      "cacheVariables": {
+        "RD_TEST_WITH_GDB": "OFF"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
     }
   ],
   "buildPresets": [
@@ -48,6 +76,32 @@
       "inherits": ["dev"],
       "displayName": "Windows (CI|MSVC|x64|Dev)",
       "description": "Workflow for CI Dev builds for Windows using MSVC x64 toolchain",
+      "jobs": 4,
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm32-dev",
+      "configurePreset": "ci-msvc-arm32",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch32 (CI|Dev)",
+      "description": "Cmake build configuration for Windows AArch32 CI Dev builds",
+      "jobs": 4,
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm64-dev",
+      "configurePreset": "ci-msvc-arm64",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch64 (CI|Dev)",
+      "description": "Cmake build configuration for Windows AArch64 CI Dev builds",
       "jobs": 4,
       "condition": {
         "type": "equals",
@@ -86,6 +140,36 @@
         "lhs": "$penv{CI}",
         "rhs": "true"
       }
+    },
+    {
+      "name": "ci-msvc-arm32-dev",
+      "configurePreset": "ci-msvc-arm32",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch64 (CI|Dev)",
+      "description": "Cmake test configuration for Windows AArch32 CI Dev builds",
+      "output": {
+        "outputOnFailure": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm64-dev",
+      "configurePreset": "ci-msvc-arm64",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch64 (CI|Dev)",
+      "description": "Cmake test configuration for Windows AArch64 CI Dev builds",
+      "output": {
+        "outputOnFailure": true
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
     }
   ],
   "packagePresets": [
@@ -108,6 +192,32 @@
       "inherits": ["dev"],
       "displayName": "Windows (CI|MSVC|x64|Dev)",
       "description": "Workflow for CI Dev builds for Windows using MSVC x64 toolchain",
+      "generators": ["ZIP"],
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm32-dev",
+      "configurePreset": "ci-msvc-arm32",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch32 (CI|Dev)",
+      "description": "Cmake package configuration for Windows AArch32 CI Dev builds",
+      "generators": ["ZIP"],
+      "condition": {
+        "type": "equals",
+        "lhs": "$penv{CI}",
+        "rhs": "true"
+      }
+    },
+    {
+      "name": "ci-msvc-arm64-dev",
+      "configurePreset": "ci-msvc-arm64",
+      "inherits": ["dev"],
+      "displayName": "Windows AArch64 (CI|Dev)",
+      "description": "Cmake package configuration for Windows AArch64 CI Dev builds",
       "generators": ["ZIP"],
       "condition": {
         "type": "equals",
@@ -152,6 +262,44 @@
         {
           "type": "test",
           "name": "ci-msvc-64-dev"
+        }
+      ]
+    },
+    {
+      "name": "ci-msvc-arm32-dev",
+      "displayName": "Windows AArch32 (CI|Dev)",
+      "description": "Workflow for Windows AArch32 CI Dev builds",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "ci-msvc-arm32"
+        },
+        {
+          "type": "build",
+          "name": "ci-msvc-arm32-dev"
+        },
+        {
+          "type": "test",
+          "name": "ci-msvc-arm32-dev"
+        }
+      ]
+    },
+    {
+      "name": "ci-msvc-arm64-dev",
+      "displayName": "Windows AArch64 (CI|Dev)",
+      "description": "Workflow for Windows AArch64 CI Dev builds",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "ci-msvc-arm64"
+        },
+        {
+          "type": "build",
+          "name": "ci-msvc-arm64-dev"
+        },
+        {
+          "type": "test",
+          "name": "ci-msvc-arm64-dev"
         }
       ]
     }

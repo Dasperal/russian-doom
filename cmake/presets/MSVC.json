@@ -26,6 +26,28 @@
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
       }
+    },
+    {
+      "name": "msvc-arm32",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "architecture": "ARM",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "msvc-arm64",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "architecture": "ARM64",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
     }
   ]
 }

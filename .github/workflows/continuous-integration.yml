@@ -31,6 +31,20 @@ jobs:
             cmake_preset: 'ci-msvc-64-dev'
             build_suffix: "x64"
             msvc_triplet_path: 'cmake/triplets/x64-windows.cmake'
+          -
+            display_name: "Windows | AArch32"
+            runner: "windows-11-arm"
+            cmake_preset: 'ci-msvc-arm32-dev'
+            build_suffix: "aarch32"
+            # msvc_triplet_path: '${{ VCPKG_INSTALLATION_ROOT }}/triplets/community/arm-windows.cmake'
+            msvc_triplet_path: 'C:/vcpkg/triplets/community/arm-windows.cmake'
+          -
+            display_name: "Windows | AArch64"
+            runner: "windows-11-arm"
+            cmake_preset: 'ci-msvc-arm64-dev'
+            build_suffix: "aarch64"
+            # msvc_triplet_path: '${{ VCPKG_INSTALLATION_ROOT }}/triplets/arm64-windows.cmake'
+            msvc_triplet_path: 'C:/vcpkg/triplets/arm64-windows.cmake'
 
     permissions:
       actions: write
