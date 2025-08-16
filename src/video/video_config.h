@@ -20,6 +20,54 @@
 
 #include <stdint.h>
 
+typedef enum
+{
+    direct_x11,
+    direct_x12,
+    direct_x,
+    metal,
+    opengl,
+    opengles2,
+    vulkan,
+    gpu,
+    software
+} render_drivers_t;
+
+typedef struct
+{
+    char* display_name;
+} render_driver_option_t;
+
+static const render_driver_option_t render_driver_options[] = {
+    {
+        display_name: "Direct X 11"
+    },
+    {
+        display_name: "Direct X 12"
+    },
+    {
+        display_name: "Direct X"
+    },
+    {
+        display_name: "Metal"
+    },
+    {
+        display_name: "OpenGL"
+    },
+    {
+        display_name: "OpenGLES 2"
+    },
+    {
+        display_name: "Vulkan"
+    },
+    {
+        display_name: "GPU"
+    },
+    {
+        display_name: "Software"
+    }
+};
+
 extern const char** available_render_drivers;
 extern int8_t num_of_available_render_drivers;
 extern char* render_driver_option;
