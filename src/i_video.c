@@ -1731,14 +1731,7 @@ void I_InitGraphics(void)
 
 void I_ToggleVsync (void)
 {
-    if (opengles_renderer)
-    {
-        SDL_GL_SetSwapInterval(vsync);
-    }
-    else
-    {
-        SDL_RenderSetVSync(renderer, vsync);
-    }
+    SDL_RenderSetVSync(renderer, vsync);
 }
 
 // [crispy] re-initialize only the parts of the rendering stack that are really necessary
