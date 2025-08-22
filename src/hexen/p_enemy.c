@@ -3640,7 +3640,7 @@ void A_EttinAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     if(P_CheckMeleeRange(actor))
     {
         if(gameskill == sk_ultranm)
-            P_DamageMobj(actor->target, actor, actor, HITDICE(5));
+            P_DamageMobj(actor->target, actor, actor, HITDICE(5) + 3);
         else
             P_DamageMobj(actor->target, actor, actor, HITDICE(2));
     }
