@@ -672,8 +672,8 @@ boolean PIT_CheckThing(mobj_t * thing)
                 min_multiplier = 3;
             }
 
-            damage = (tmthing->damage > 5 ? 6 : 0)
-                     + ((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage;
+            damage = (((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage)
+                        + ((tmthing->damage == 5) ? 2 : 0);
         }
         else
         {
