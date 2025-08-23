@@ -242,7 +242,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
         // else
         // on skill 6
         const int rand = P_Random();
-        if(rand > 205)
+        if(rand > 156)
         {
             actor->flags &= ~MF_JUSTHIT;
             return true;
