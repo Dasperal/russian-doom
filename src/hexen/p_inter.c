@@ -2045,24 +2045,24 @@ void P_DamageMobj
             player->armorpoints[ARMOR_AMULET];
         savedPercent = AutoArmorSave[player->class] + armor_saved_percent;
 
-        if(gameskill == sk_ultranm && damage < 10000)
+        if(gameskill == sk_ultranm && armor_saved_percent == 0 && damage < 10000)
         {
             switch(player->class)
             {
-                case PCLASS_CLERIC: if(armor_saved_percent == 0)
+                case PCLASS_CLERIC:
                 {
                     // Cleric just don't have a class armor bonus without armor items
                     savedPercent = 0;
                     break;
                 }
-                case PCLASS_MAGE: if(armor_saved_percent == 0)
+                case PCLASS_MAGE:
                 {
                     // Mage takes 15% + 1 more damage without armor items
                     savedPercent = 0;
                     damage = (damage * 115) / 100 + 1;
                     break;
                 }
-                case PCLASS_PIG: if(armor_saved_percent == 0)
+                case PCLASS_PIG:
                 {
                     // Pig takes 20% + 1 more damage without armor items
                     savedPercent = 0;

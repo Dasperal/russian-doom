@@ -1290,6 +1290,38 @@ void SB_PaletteFlash(boolean forceChange)
     }
 }
 
+static fixed_t calculate_total_armor_save(void)
+{
+    const fixed_t armor_saved_percent =
+            CPlayer->armorpoints[ARMOR_ARMOR] +
+            CPlayer->armorpoints[ARMOR_SHIELD] +
+            CPlayer->armorpoints[ARMOR_HELMET] +
+            CPlayer->armorpoints[ARMOR_AMULET];
+    if(gameskill == sk_ultranm && armor_saved_percent == 0)
+    {
+        switch(CPlayer->class)
+        {
+            case PCLASS_CLERIC:
+            {
+                // Cleric just don't have a class armor bonus without armor items
+                return 0;
+            }
+            case PCLASS_MAGE:
+            {
+                // Mage takes 15% + 1 more damage without armor items
+                return -15 * FRACUNIT;
+            }
+            case PCLASS_PIG:
+            {
+                // Pig takes 20% + 1 more damage without armor items
+                return -20 * FRACUNIT;
+            }
+            default: break;
+        }
+    }
+    return AutoArmorSave[CPlayer->class] + armor_saved_percent;
+}
+
 /*
 ================================================================================
 =
@@ -1310,11 +1342,7 @@ enum
 
 static byte *SBar_MainColor (int element)
 {
-    int armor = AutoArmorSave[CPlayer->class]
-              + CPlayer->armorpoints[ARMOR_ARMOR]
-              + CPlayer->armorpoints[ARMOR_SHIELD]
-              + CPlayer->armorpoints[ARMOR_HELMET]
-              + CPlayer->armorpoints[ARMOR_AMULET];
+    const fixed_t armor = calculate_total_armor_save();
     
     if (!sbar_colored || vanillaparm)
     {
@@ -1415,11 +1443,7 @@ static byte *SBar_MainColor (int element)
 
 static byte *SBar_FullScreenColor (int element)
 {
-    int armor = AutoArmorSave[CPlayer->class]
-              + CPlayer->armorpoints[ARMOR_ARMOR]
-              + CPlayer->armorpoints[ARMOR_SHIELD]
-              + CPlayer->armorpoints[ARMOR_HELMET]
-              + CPlayer->armorpoints[ARMOR_AMULET];
+    const fixed_t armor = calculate_total_armor_save();
     
     if (!sbar_colored || vanillaparm)
     {
@@ -1813,11 +1837,7 @@ void DrawMainBar(void)
         UpdateState |= I_STATBAR;
     }
     // Armor
-    temp = AutoArmorSave[CPlayer->class]
-        + CPlayer->armorpoints[ARMOR_ARMOR] +
-        CPlayer->armorpoints[ARMOR_SHIELD] +
-        CPlayer->armorpoints[ARMOR_HELMET] +
-        CPlayer->armorpoints[ARMOR_AMULET];
+    temp = calculate_total_armor_save();
     if (oldarmor != temp)
     {
         oldarmor = temp;
@@ -1913,11 +1933,7 @@ void DrawKeyBar(void)
         oldkeys = CPlayer->keys;
         UpdateState |= I_STATBAR;
     }
-    temp = AutoArmorSave[CPlayer->class]
-        + CPlayer->armorpoints[ARMOR_ARMOR] +
-        CPlayer->armorpoints[ARMOR_SHIELD] +
-        CPlayer->armorpoints[ARMOR_HELMET] +
-        CPlayer->armorpoints[ARMOR_AMULET];
+    temp = calculate_total_armor_save();
     
     if (oldarmor != temp)
     {
@@ -2102,11 +2118,7 @@ void DrawFullScreenStuff(void)
     int i;
     int x;
     int temp;
-    int armor = AutoArmorSave[CPlayer->class] +
-                CPlayer->armorpoints[ARMOR_ARMOR] +
-                CPlayer->armorpoints[ARMOR_SHIELD] +
-                CPlayer->armorpoints[ARMOR_HELMET] +
-                CPlayer->armorpoints[ARMOR_AMULET];
+    const fixed_t armor = calculate_total_armor_save();
 
     UpdateState |= I_FULLSCRN;
 
