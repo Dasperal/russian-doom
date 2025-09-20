@@ -339,9 +339,7 @@ static boolean P_CheckMissileRange (mobj_t *actor)
 
 static boolean P_Move (mobj_t*	actor)
 {
-    // warning: 'catch', 'throw', and 'try' are all C++ reserved words
-    fixed_t tryx, tryy;
-    boolean try_ok, good;
+    boolean good;
 
     if (actor->movedir == DI_NODIR)
     {
@@ -355,9 +353,13 @@ static boolean P_Move (mobj_t*	actor)
                         "Некорректный actor->movedir!");
     }
 
-    tryx = actor->x + actor->info->speed*xspeed[actor->movedir];
-    tryy = actor->y + actor->info->speed*yspeed[actor->movedir];
-    try_ok = P_TryMove (actor, tryx, tryy);
+    const fixed_t try_x = actor->x + actor->info->speed*xspeed[actor->movedir];
+    const fixed_t try_y = actor->y + actor->info->speed*yspeed[actor->movedir];
+    const fixed_t try_x_s6 = actor->x + 10 * xspeed[actor->movedir];
+    const fixed_t try_y_s6 = actor->y + 10 * yspeed[actor->movedir];
+    const boolean try_ok =
+        P_TryMove(actor, try_x, try_y) ||
+        (gameskill == sk_ultranm && P_TryMove(actor, try_x_s6, try_y_s6));
 
     if (!try_ok)
     {
