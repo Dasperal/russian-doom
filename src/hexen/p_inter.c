@@ -1968,6 +1968,10 @@ void P_DamageMobj
                     default:
                         break;
                 }
+                if(gameskill == sk_ultranm)
+                {
+                    damage += 3;
+                }
                 break;
             case MT_CSTAFF_MISSILE:
                 // Cleric Serpent Staff does poison damage
