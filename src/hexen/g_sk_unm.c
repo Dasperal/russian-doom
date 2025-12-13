@@ -23,11 +23,11 @@
 #define ENUMERATE_UNM_CHANGES(O)                                                             \
 /* Monster's speed */                                                                        \
 O(MT_FIREDEMON, speed, + 7)                  /* Affrit (13 to 20) */                         \
-O(MT_ETTIN, speed, + 5)                      /* Ettin (13 to 18) */                          \
+O(MT_ETTIN, speed, + 8)                      /* Ettin (13 to 21) */                          \
 O(MT_ETTIN_MASH, speed, + 10)                /* Phantasmal Ettin (13 to 23) */               \
-O(MT_CENTAUR, speed, + 12)                   /* Centaur (13 to 25) */                        \
+O(MT_CENTAUR, speed, + 15)                   /* Centaur (13 to 28) */                        \
 O(MT_CENTAUR_MASH, speed, + 17)              /* Phantasmal Centaur (13 to 30) */             \
-O(MT_CENTAURLEADER, speed, + 10)             /* Slaughtaur (10 to 20) */                     \
+O(MT_CENTAURLEADER, speed, + 13)             /* Slaughtaur (10 to 23) */                     \
 O(MT_DEMON, speed, + 10)                     /* Green Chaos Serpent (13 to 23) */            \
 O(MT_DEMON2, speed, + 10)                    /* Brown Chaos Serpent (13 to 23) */            \
 O(MT_DEMON_MASH, speed, + 15)                /* Phantasmal Green Chaos Serpent (13 to 28) */ \
