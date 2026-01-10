@@ -1970,7 +1970,7 @@ void P_DamageMobj
                 }
                 if(gameskill == sk_ultranm)
                 {
-                    damage += 1;
+                    damage += 2 + (P_Random() > 145 ? 1 : 0);
                 }
                 break;
             case MT_CSTAFF_MISSILE:
