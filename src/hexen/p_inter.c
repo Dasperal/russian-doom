@@ -1950,7 +1950,7 @@ void P_DamageMobj
                 damage >>= 1;
                 if(gameskill == sk_ultranm)
                 {
-                    damage += 6;
+                    damage += 5;
                 }
                 break;
             case MT_SHARDFX1:
