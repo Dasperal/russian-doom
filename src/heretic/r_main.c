@@ -50,6 +50,7 @@ int *flipscreenwidth;
 int *flipviewwidth;
 
 // [JN] FOV from DOOM Retro, Woof! and Nugget Doom
+static fixed_t fovscale;
 float  fov_diff;   // [Nugget] Used for some corrections
 
 // [JN] LOOKDIR variables for high/quad resolution, used only for rendering.
@@ -441,7 +442,7 @@ static void R_InitTextureMapping (void)
         // [crispy] calculate sky angle for drawing horizontally linear skies.
         // Taken from GZDoom and refactored for integer math.
         linearskyangle[x] = ((viewwidth / 2 - x) * ((screenwidth << 6) / viewwidth))
-                                                 * (ANG90 / (SCREENWIDTH << 6));
+                                                 * (ANG90 / (SCREENWIDTH << 6)) / fovdiff;
     }
 
     // Take out the fencepost cases from viewangletox.
@@ -580,6 +581,7 @@ void R_ExecuteSetViewSize (void)
 {
     fixed_t cosadj, dy;
     int i, j, level;
+    double	WIDEFOVDELTA;  // [JN] FOV from DOOM Retro and Nugget Doom
 
     setsizeneeded = false;
 
@@ -618,20 +620,34 @@ void R_ExecuteSetViewSize (void)
 
     // [JN] FOV from DOOM Retro and Nugget Doom
     fov_diff = (float) 90 / field_of_view;
+    if(aspect_ratio >= 2)
+    {
+        // fov * 0.82 is vertical FOV for 4:3 aspect ratio
+        WIDEFOVDELTA = (atan(SCREENWIDTH / ((SCREENHEIGHT * 1.2)
+                     / tan(field_of_view * 0.82 * M_PI / 360.0))) * 360.0 / M_PI) - field_of_view;
+    }
+    else
+    {
+        WIDEFOVDELTA = 0;
+    }
 
     centery = viewheight / 2;
     centerx = viewwidth / 2;
     centerxfrac = centerx << FRACBITS;
     centeryfrac = centery << FRACBITS;
 
-    if (aspect_ratio >= 2)
-    {
-        projection = MIN(centerxfrac, (((320 << hires)>>detailshift)/2)<<FRACBITS);
-    }
-    else
-    {
-        projection = centerxfrac;
-    }
+//    if (aspect_ratio >= 2)
+//    {
+//        projection = MIN(centerxfrac, (((320 << hires)>>detailshift)/2)<<FRACBITS);
+//    }
+//    else
+//    {
+//        projection = centerxfrac;
+//    }
+
+    // [JN] FOV from DOOM Retro and Nugget Doom
+    fovscale = finetangent[(int)(FINEANGLES / 4 + (field_of_view + WIDEFOVDELTA) * FINEANGLES / 360 / 2)];
+    projection = FixedDiv(centerxfrac, fovscale);
 
     if (!detailshift)
     {

@@ -2598,6 +2598,8 @@ static void M_RD_DiminishedLighting()
 static void M_RD_FOV(const Direction_t direction)
 {
     RD_Menu_SlideInt(&field_of_view, 45, 120, direction);
+
+    R_ExecuteSetViewSize();
 }
 
 static void M_RD_WindowBorder()
