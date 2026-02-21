@@ -394,6 +394,8 @@ extern int crosshair_shape;
 extern int crosshair_type;
 extern int crosshair_scale;
 extern int crosshair_opacity;
+extern int autoaim_horizonal;
+extern int autoaim_vertical;
 
 // Gameplay: Gameplay
 extern int default_skill;

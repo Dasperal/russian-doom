@@ -672,6 +672,8 @@ static default_t defaults_list[] =
     CONFIG_VARIABLE_INT(crosshair_type),
     CONFIG_VARIABLE_INT(crosshair_scale),
     CONFIG_VARIABLE_INT(crosshair_opacity),
+    CONFIG_VARIABLE_INT(autoaim_horizonal),
+    CONFIG_VARIABLE_INT(autoaim_vertical),
 
     // Gameplay: Gameplay
     CONFIG_VARIABLE_INT(default_skill),

@@ -234,6 +234,9 @@ int crosshair_shape = 0;
 int crosshair_type = 1;
 int crosshair_scale = 0;
 int crosshair_opacity = 8;
+// [kmeaw] Autoaim horizonal and vertical: Both enabled by default.
+int autoaim_horizonal = 1;
+int autoaim_vertical = 1;
 
 // Gameplay: Gameplay
 int fix_map_errors = 1;
@@ -422,6 +425,8 @@ void D_BindVariables(void)
     M_BindIntVariable("crosshair_type",         &crosshair_type);
     M_BindIntVariable("crosshair_scale",        &crosshair_scale);
     M_BindIntVariable("crosshair_opacity",      &crosshair_opacity);
+    M_BindIntVariable("autoaim_horizonal",      &autoaim_horizonal);
+    M_BindIntVariable("autoaim_vertical",       &autoaim_vertical);
 
     // Multiplayer chat macros
     for (i=0; i<10; ++i)
