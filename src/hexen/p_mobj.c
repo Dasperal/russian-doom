@@ -2624,33 +2624,41 @@ mobj_t *P_SpawnMissileAngleSpeed(mobj_t * source, mobjtype_t type,
 mobj_t *P_SpawnPlayerMissile(mobj_t * source, mobjtype_t type)
 {
     angle_t an;
-    fixed_t x, y, z, slope;
+    fixed_t x, y, z, slope, factor;
+
+    if(aspect_ratio >= 2)
+    {
+        // [JN] Wide screen: new magic number :(
+        factor = 177;
+    }
+    else
+    {
+        factor = (screenblocks <= 10) ? 158 : 146;
+    }
 
     // Try to find a target
     an = source->angle;
     slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT);
     if (!linetarget)
     {
-        an += 1 << 26;
-        slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT);
-        if (!linetarget)
+        if(vanilla_gameplay_feature(autoaim_horizonal))
         {
-            an -= 2 << 26;
+            an += 1 << 26;
             slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+            if(!linetarget)
+            {
+                an -= 2 << 26;
+                slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT);
+            }
+            if(!linetarget)
+            {
+                an = source->angle;
+                slope = ((source->player->lookdir / MLOOKUNIT) << FRACBITS) / factor;
+            }
         }
-        if (!linetarget)
+        else
         {
-            an = source->angle;
-            if (aspect_ratio >= 2)
-            {
-                // [JN] Wide screen: new magic number :(
-                slope = ((source->player->lookdir / MLOOKUNIT) << FRACBITS) / 177;
-            }
-            else
-            {
-                slope = ((source->player->lookdir / MLOOKUNIT) << FRACBITS) /
-                        (screenblocks <= 10 ? 158 : 146);
-            }
+            slope = ((source->player->lookdir / MLOOKUNIT) << FRACBITS) / factor;
         }
     }
     x = source->x;
