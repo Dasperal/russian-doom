@@ -785,25 +785,28 @@ void A_Raise(mobj_t *actor, player_t *player, pspdef_t *psp)
 
 void P_BulletSlope(mobj_t * mo)
 {
-    angle_t an;
-
-//
-// see which target is to be aimed at
-//
-    an = mo->angle;
+    // see which target is to be aimed at
+    angle_t an = mo->angle;
     bulletslope = P_AimLineAttack(mo, an, 16 * 64 * FRACUNIT);
     if (!linetarget)
     {
-        an += 1 << 26;
-        bulletslope = P_AimLineAttack(mo, an, 16 * 64 * FRACUNIT);
-        if (!linetarget)
+        if(vanilla_gameplay_feature(autoaim_horizonal))
         {
-            an -= 2 << 26;
+            an += 1 << 26;
             bulletslope = P_AimLineAttack(mo, an, 16 * 64 * FRACUNIT);
+            if (!linetarget)
+            {
+                an -= 2 << 26;
+                bulletslope = P_AimLineAttack(mo, an, 16 * 64 * FRACUNIT);
+            }
+            if (!linetarget)
+            {
+                an = mo->angle;
+                bulletslope = (mo->player->lookdir << FRACBITS) / 173;
+            }
         }
-        if (!linetarget)
+        else
         {
-            an += 2 << 26;
             bulletslope = (mo->player->lookdir << FRACBITS) / 173;
         }
     }
