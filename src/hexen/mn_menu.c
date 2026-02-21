@@ -240,6 +240,8 @@ static void M_RD_CrossHairShape(Direction_t direction);
 static void M_RD_CrossHairType();
 static void M_RD_CrossHairScale();
 static void M_RD_CrossHairOpacity(Direction_t direction);
+static void M_RD_AutoAimVertical();
+static void M_RD_AutoAimHorizonal();
 int CrosshairShowcaseTimeout;
 
 // Gameplay (page 3)
@@ -1329,9 +1331,9 @@ static MenuItem_t Gameplay3Items[] = {
     I_SWITCH("INDICATION:",     "BYLBRFWBZ:",          M_RD_CrossHairType),    // ИНДИКАЦИЯ
     I_SWITCH("INCREASED SIZE:", "EDTKBXTYYSQ HFPVTH:", M_RD_CrossHairScale),   // УВЕЛИЧЕННЫЙ РАЗМЕР
     I_LRFUNC("OPACITY:",        "YTGHJPHFXYJCNM:",     M_RD_CrossHairOpacity), // НЕПРОЗРАЧНОСТЬ
-    I_EMPTY,
-    I_EMPTY,
-    I_EMPTY,
+    I_TITLE( "AUTO-AIMING",     "FDNJGHBWTKBDFYBT"), // АВТОПРИЦЕЛИВАНИЕ
+    I_SWITCH("VERTICAL:",       "DTHNBRFKMYJT:",       M_RD_AutoAimVertical),   // ВЕРТИКАЛЬНОЕ
+    I_SWITCH("HORIZONTAL:",     "UJHBPJYNFKMYJT:",     M_RD_AutoAimHorizonal),  // ГОРИЗОНТАЛЬНОЕ
     I_EMPTY,
     I_SETMENU("FIRST PAGE >", "GTHDFZ CNHFYBWF `",     &Gameplay1Menu), // ПЕРВАЯ СТРАНИЦА >
     I_SETMENU("< PREV PAGE",  "^ GHTLSLEOFZ CNHFYBWF", &Gameplay2Menu)  // < ПРЕДЫДУЩАЯ СТРАНИЦА
@@ -4715,6 +4717,16 @@ static void M_RD_CrossHairOpacity(Direction_t direction)
     Crosshair_DefineOpacity();
 }
 
+static void M_RD_AutoAimVertical()
+{
+    autoaim_vertical ^= 1;
+}
+
+static void M_RD_AutoAimHorizonal()
+{
+    autoaim_horizonal ^= 1;
+}
+
 
 // -----------------------------------------------------------------------------
 // DrawGameplay2Menu
@@ -4764,6 +4776,17 @@ static void DrawGameplay3Menu(void)
         // Increased size
         RD_M_DrawTextSmallENG(crosshair_scale ? "ON" : "OFF", 146 + wide_delta, 102,
                               crosshair_scale ? CR_GREEN : CR_RED);
+
+        //
+        // AUTO-AIMING
+        //
+
+        // Vertical
+        RD_M_DrawTextSmallENG(autoaim_vertical ? "ON" : "OFF", 100 + wide_delta, 132,
+                              autoaim_vertical ? CR_GREEN : CR_RED);
+        // Horizonal
+        RD_M_DrawTextSmallENG(autoaim_horizonal ? "ON" : "OFF", 115 + wide_delta, 142,
+                              autoaim_horizonal ? CR_GREEN : CR_RED);
     }
     else
     {
@@ -4808,6 +4831,17 @@ static void DrawGameplay3Menu(void)
         // Увеличенный размер
         RD_M_DrawTextSmallRUS(crosshair_scale ? "DRK" : "DSRK", 181 + wide_delta, 102,
                               crosshair_scale ? CR_GREEN : CR_RED);
+
+        //
+        // АВТОПРИЦЕЛИВАНИЕ
+        //
+
+        // Вертикальное
+        RD_M_DrawTextSmallRUS(autoaim_vertical ? "DRK" : "DSRK", 136 + wide_delta, 132,
+                              autoaim_vertical ? CR_GREEN : CR_RED);
+        // Горизонтальное
+        RD_M_DrawTextSmallRUS(autoaim_horizonal ? "DRK" : "DSRK", 149 + wide_delta, 142,
+                              autoaim_horizonal ? CR_GREEN : CR_RED);
     }
 
     // Draw crosshair background.
