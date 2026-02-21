@@ -1652,8 +1652,21 @@ fixed_t P_AimLineAttack(mobj_t * t1, angle_t angle, fixed_t distance)
     x2 = t1->x + (distance >> FRACBITS) * finecosine[angle];
     y2 = t1->y + (distance >> FRACBITS) * finesine[angle];
     shootz = t1->z + (t1->height >> 1) + 8 * FRACUNIT;
-    topslope = 100 * FRACUNIT / 160;    // can't shoot outside view angles
-    bottomslope = -100 * FRACUNIT / 160;
+
+    if (!t1->player || vanilla_gameplay_feature(autoaim_vertical))
+    {
+        // Not a player or vertical autoaim enabled
+        // can't shoot outside view angles
+        topslope = 100 * FRACUNIT / 160;
+        bottomslope = -100 * FRACUNIT / 160;
+    }
+    else
+    {
+        // Player and vertical autoaim disabled
+        topslope = ((t1->player->lookdir) << FRACBITS) / 173 + 5;
+        bottomslope = ((t1->player->lookdir) << FRACBITS) / 173 - 5;
+    }
+
     attackrange = distance;
     linetarget = NULL;
 
