@@ -204,6 +204,9 @@ int secret_notification = 1;
 int show_all_artifacts = 0;
 int show_artifacts_timer = 0;
 int negative_health = 0;
+// [kmeaw] Autoaim horizonal and vertical: Both enabled by default.
+int autoaim_horizonal = 1;
+int autoaim_vertical = 1;
 
 // Gameplay: Crosshair
 int crosshair_draw = 0;
@@ -1133,13 +1136,15 @@ void D_BindVariables(void)
     M_BindIntVariable("show_all_artifacts",     &show_all_artifacts);
     M_BindIntVariable("show_artifacts_timer",   &show_artifacts_timer);
     M_BindIntVariable("negative_health",        &negative_health);
+    M_BindIntVariable("autoaim_horizonal",      &autoaim_horizonal);
+    M_BindIntVariable("autoaim_vertical",       &autoaim_vertical);
 
     // Gameplay: Crosshair
     M_BindIntVariable("crosshair_draw",         &crosshair_draw);
     M_BindIntVariable("crosshair_shape",        &crosshair_shape);
     M_BindIntVariable("crosshair_opacity",      &crosshair_opacity);
     M_BindIntVariable("crosshair_scale",        &crosshair_scale);
-    M_BindIntVariable("crosshair_type",         &crosshair_type); 
+    M_BindIntVariable("crosshair_type",         &crosshair_type);
 
     // Gameplay: Gameplay
     M_BindIntVariable("default_skill",          &default_skill);

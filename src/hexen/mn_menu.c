@@ -5925,6 +5925,8 @@ void M_RD_BackToDefaults_Recommended (void)
     Crosshair_DefinePatch();
     Crosshair_DefineOpacity();
     Crosshair_DefineDrawingFunc();
+    autoaim_horizonal    = 1;
+    autoaim_vertical     = 1;
     // Gameplay (5)
     flip_levels          = 0;
     no_internal_demos    = 0;
@@ -6045,6 +6047,8 @@ static void M_RD_BackToDefaults_Original(void)
     Crosshair_DefinePatch();
     Crosshair_DefineOpacity();
     Crosshair_DefineDrawingFunc();
+    autoaim_horizonal    = 1;
+    autoaim_vertical     = 1;
     // Gameplay (5)
     flip_levels          = 0;
     no_internal_demos    = 0;

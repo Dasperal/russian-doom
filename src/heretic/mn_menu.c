@@ -5850,6 +5850,8 @@ static void M_RD_BackToDefaults_Recommended(void)
     sbar_colored         = 0;
     sbar_colored_gem     = 0;
     negative_health      = 0;
+    autoaim_horizonal    = 1;
+    autoaim_vertical     = 1;
     ammo_widget          = 0;
     ammo_widget_colored  = 0;
     crosshair_draw       = 0;
@@ -6011,6 +6013,8 @@ static void M_RD_BackToDefaults_Original(void)
     sbar_colored         = 0;
     sbar_colored_gem     = 0;
     negative_health      = 0;
+    autoaim_horizonal    = 1;
+    autoaim_vertical     = 1;
     ammo_widget          = 0;
     ammo_widget_colored  = 0;
     crosshair_draw       = 0;

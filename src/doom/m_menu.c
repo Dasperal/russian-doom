@@ -6291,6 +6291,8 @@ static void M_RD_BackToDefaults_Recommended()
     negative_health     = 0;
     infragreen_visor    = 0;
     horizontal_autoaim  = 3;
+    autoaim_horizonal   = 1;
+    autoaim_vertical    = 1;
 
     // Gameplay: Physical
     improved_collision   = 1;
@@ -6495,6 +6497,8 @@ static void M_RD_BackToDefaults_Original()
     negative_health     = 0;
     infragreen_visor    = 0;
     horizontal_autoaim  = 3;
+    autoaim_horizonal   = 1;
+    autoaim_vertical    = 1;
 
     // Gameplay: Gameplay
     default_skill        = 2;
