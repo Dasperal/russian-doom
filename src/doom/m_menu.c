@@ -4855,15 +4855,15 @@ static void M_RD_Draw_Gameplay_4(void)
         }
         else
         {
-            RD_M_DrawTextSmallENG(horizontal_autoaim == 0 ? "hitscans only" : 
-                                  horizontal_autoaim == 1 ? "projectiles only" :
-                                  horizontal_autoaim == 2 ? "off" : 
-                                                            "on", 195 + wide_delta, 135,
-                                                  netgame ? CR_DARKRED :
-                                  horizontal_autoaim == 0 ? CR_DARKGREEN :
-                                  horizontal_autoaim == 1 ? CR_DARKGREEN :
-                                  horizontal_autoaim == 2 ? CR_DARKRED : 
-                                                            CR_GREEN);
+            RD_M_DrawTextSmallENG(autoaim_horizonal == 0 ? "off" :
+                                  autoaim_horizonal == 1 ? "projectiles only" :
+                                  autoaim_horizonal == 2 ? "hitscans only" :
+                                                           "on",
+                                  195 + wide_delta, 135,
+                                  autoaim_horizonal == 0 ? CR_DARKRED :
+                                  autoaim_horizonal == 1 ? CR_DARKGREEN :
+                                  autoaim_horizonal == 2 ? CR_DARKGREEN :
+                                                           CR_GREEN);
         }
 
         //
@@ -4956,15 +4956,15 @@ static void M_RD_Draw_Gameplay_4(void)
         }
         else
         {
-            RD_M_DrawTextSmallRUS(horizontal_autoaim == 0 ? "[bncrfys" :  // хитсканы
-                                  horizontal_autoaim == 1 ? "cyfhzls" :   // снаряды
-                                  horizontal_autoaim == 2 ? "dsrk" : 
-                                                            "drk", 204 + wide_delta, 135,
-                                                  netgame ? CR_DARKRED :
-                                  horizontal_autoaim == 0 ? CR_DARKGREEN :
-                                  horizontal_autoaim == 1 ? CR_DARKGREEN :
-                                  horizontal_autoaim == 2 ? CR_DARKRED : 
-                                                            CR_GREEN);
+            RD_M_DrawTextSmallRUS(autoaim_horizonal == 0 ? "dsrk" :     // выкл
+                                  autoaim_horizonal == 1 ? "cyfhzls" :  // снаряды
+                                  autoaim_horizonal == 2 ? "[bncrfys" : // хитсканы
+                                                           "drk",       // вкл
+                                  204 + wide_delta, 135,
+                                  autoaim_horizonal == 0 ? CR_DARKRED :
+                                  autoaim_horizonal == 1 ? CR_DARKGREEN :
+                                  autoaim_horizonal == 2 ? CR_DARKGREEN :
+                                                           CR_GREEN);
         }
 
 
@@ -5427,7 +5427,7 @@ static void M_RD_Change_InfraGreenVisor()
 
 static void M_RD_Change_HorizontalAiming(Direction_t direction)
 {
-    RD_Menu_SpinInt(&horizontal_autoaim, 0, 3, direction);
+    RD_Menu_SpinInt(&autoaim_horizonal, 0, 3, direction);
 }
 
 //
@@ -6290,8 +6290,7 @@ static void M_RD_BackToDefaults_Recommended()
     secret_notification = 1;
     negative_health     = 0;
     infragreen_visor    = 0;
-    horizontal_autoaim  = 3;
-    autoaim_horizonal   = 1;
+    autoaim_horizonal   = 3;
     autoaim_vertical    = 1;
 
     // Gameplay: Physical
@@ -6496,8 +6495,7 @@ static void M_RD_BackToDefaults_Original()
     secret_notification = 0;
     negative_health     = 0;
     infragreen_visor    = 0;
-    horizontal_autoaim  = 3;
-    autoaim_horizonal   = 1;
+    autoaim_horizonal   = 3;
     autoaim_vertical    = 1;
 
     // Gameplay: Gameplay
