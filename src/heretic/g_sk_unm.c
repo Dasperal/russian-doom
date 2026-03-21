@@ -38,9 +38,6 @@ O(MT_HEAD, speed, + 9)                   /* Iron Lich (6 to 15) */              
 O(MT_MINOTAUR, speed, + 5)               /* Maolotaur (16 to 21) */                   \
 O(MT_SORCERER1, speed, + 5)              /* D'Sparil (riding) (16 to 21) */           \
 O(MT_SORCERER2, speed, + 6)              /* D'Sparil (walking) (14 to 20) */          \
-/* Monster's missiles speed */                                                        \
-O(MT_KNIGHTAXE, speed, + (7 * FRACUNIT)) /* Undead Warrior green axe (9 to 16) */     \
-O(MT_REDAXE, speed, + (6 * FRACUNIT))    /* Undead Warrior red axe (9 to 15) */       \
 /* Monster's damage */                                                                \
 O(MT_IMPBALL, damage, + 1)               /* Fire Gargolye fireball (1 to 2) */        \
 O(MT_MUMMYFX1, damage, + 1)              /* Nitrogolem Ghost fireball (4 to 5) */     \
@@ -58,9 +55,18 @@ O(MT_HEADFX3, damage, + 3)               /* Iron Lich firewall (5 to 8) */      
 /* Monster's painchance */                                                            \
 O(MT_HEAD, painchance, - 22)             /* Iron Lich (32 to 10) */
 
-#define SKIP(O)
+/* Monster's missiles speed */
+#define ENUMERATE_UNM_PROJECTILE_SPEED_CHANGES(O) \
+O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 7) /* KNIGHTAXE Undead Warrior green axe (9 to 16) */ \
+O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 6)    /* MT_REDAXE Undead Warrior red axe (9 to 15) */
 
-UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, SKIP)
+extern struct
+{
+    int type;   // mobjtype_t
+    int speed[2];
+} MonsterMissileInfo[];
+
+UNM_IMPLEMENT(ENUMERATE_UNM_CHANGES, ENUMERATE_UNM_PROJECTILE_SPEED_CHANGES)
 
 boolean unm_no_respawn(const mobjtype_t type)
 {
