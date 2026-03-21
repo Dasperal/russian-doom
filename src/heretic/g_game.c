@@ -49,7 +49,7 @@ static void G_DoCompleted (void);
 static void G_DoWorldDone (void);
 static void G_DoSaveGame (void);
 
-static struct
+struct
 {
     int type;   // mobjtype_t
     int speed[2];
@@ -1858,6 +1858,20 @@ void G_InitNew(skill_t skill, int episode, int map, int fast_monsters)
     {
         respawnmonsters = false;
     }
+
+    // [JN] Make sure speeds are really only applied once.
+    static boolean attrs_saved;
+    if (!attrs_saved)
+    {
+        // First, keep original or given by Hehacked mobj info as separated values.
+        // FIXME: Move UNM_Save_Atters call to bootstrap sequence after Dehacked is loaded, but before game starts
+        UNM_Save_Atters();
+        attrs_saved = true;
+    }
+
+    // [JN] Ultra-Nightmare definitions
+    UNM_Apply_Restore_Atters(skill);
+
     // Set monster missile speeds
     // [JN] Speed up for 5th and 6th skill levels
     speed = (skill == sk_nightmare || skill == sk_ultranm || fast_monsters);
@@ -1872,19 +1886,6 @@ void G_InitNew(skill_t skill, int episode, int map, int fast_monsters)
         players[i].playerstate = PST_REBORN;
         players[i].didsecret = false;
     }
-
-    // [JN] Make sure speeds are really only applied once.
-    static boolean attrs_saved;
-    if (!attrs_saved)
-    {
-        // First, keep original or given by Hehacked mobj info as separated values.
-        // FIXME: Move UNM_Save_Atters call to bootstrap sequence after Dehacked is loaded, but before game starts
-        UNM_Save_Atters();
-        attrs_saved = true;
-    }
-
-    // [JN] Ultra-Nightmare definitions
-    UNM_Apply_Restore_Atters(skill);
 
     // Set up a bunch of globals
     usergame = true;            // will be set false if a demo
