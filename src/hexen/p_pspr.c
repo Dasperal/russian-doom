@@ -1320,10 +1320,11 @@ void A_FPunchAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
     damage = 40 + (P_Random() & 15);
     power = 2 * FRACUNIT;
     PuffType = MT_PUNCHPUFF;
+    const fixed_t distance = gameskill == sk_ultranm ? 1.5 * MELEERANGE : 2 * MELEERANGE;
     for (i = 0; i < 16; i++)
     {
         angle = pmo->angle + i * (ANG45 / 16);
-        slope = P_AimLineAttack(pmo, angle, 2 * MELEERANGE);
+        slope = P_AimLineAttack(pmo, angle, distance);
         if (linetarget)
         {
             player->mo->special1.i++;
@@ -1333,7 +1334,7 @@ void A_FPunchAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
                 power = 6 * FRACUNIT;
                 PuffType = MT_HAMMERPUFF;
             }
-            P_LineAttack(pmo, angle, 2 * MELEERANGE, slope, damage);
+            P_LineAttack(pmo, angle, distance, slope, damage);
             if (linetarget->flags & MF_COUNTKILL || linetarget->player)
             {
                 P_ThrustMobj(linetarget, angle, power);
@@ -1342,7 +1343,7 @@ void A_FPunchAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
             goto punchdone;
         }
         angle = pmo->angle - i * (ANG45 / 16);
-        slope = P_AimLineAttack(pmo, angle, 2 * MELEERANGE);
+        slope = P_AimLineAttack(pmo, angle, distance);
         if (linetarget)
         {
             pmo->special1.i++;
@@ -1352,7 +1353,7 @@ void A_FPunchAttack(mobj_t *actor, player_t *player, pspdef_t *psp)
                 power = 6 * FRACUNIT;
                 PuffType = MT_HAMMERPUFF;
             }
-            P_LineAttack(pmo, angle, 2 * MELEERANGE, slope, damage);
+            P_LineAttack(pmo, angle, distance, slope, damage);
             if (linetarget->flags & MF_COUNTKILL || linetarget->player)
             {
                 P_ThrustMobj(linetarget, angle, power);
