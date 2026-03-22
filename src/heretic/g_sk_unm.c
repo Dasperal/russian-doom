@@ -57,8 +57,8 @@ O(MT_HEAD, painchance, - 22)             /* Iron Lich (32 to 10) */
 
 /* Monster's missiles speed */
 #define ENUMERATE_UNM_PROJECTILE_SPEED_CHANGES(O) \
-O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 7) /* KNIGHTAXE Undead Warrior green axe (9 to 16) */ \
-O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 6)    /* MT_REDAXE Undead Warrior red axe (9 to 15) */
+O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 6) /* KNIGHTAXE Undead Warrior's green axe (9 to 15) */ \
+O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 4)    /* MT_REDAXE Undead Warrior's red axe (9 to 13) */
 
 extern struct
 {
