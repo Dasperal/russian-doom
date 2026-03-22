@@ -41,7 +41,7 @@ O(MT_SORCERER2, speed, + 6)              /* D'Sparil (walking) (14 to 20) */    
 /* Monster's damage */                                                                \
 O(MT_IMPBALL, damage, + 1)               /* Fire Gargolye fireball (1 to 2) */        \
 O(MT_MUMMYFX1, damage, + 1)              /* Nitrogolem Ghost fireball (4 to 5) */     \
-O(MT_KNIGHTAXE, damage, + 2)             /* Undead Warrior green axe (3 to 5) */      \
+O(MT_KNIGHTAXE, damage, + 2)             /* Undead Warrior's green axe (2 to 4) */    \
 O(MT_REDAXE, damage, + 2)                /* Undead Warrior red axe (7 to 9) */        \
 O(MT_BEASTBALL, damage, + 2)             /* Weredragon fireball (4 to 6) */           \
 O(MT_SNAKEPRO_A, damage, + 1)            /* Ophidian fireball A (1 to 2) */           \
