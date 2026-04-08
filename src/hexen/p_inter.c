@@ -2042,40 +2042,11 @@ void P_DamageMobj
     //
     if (player)
     {
-        const fixed_t armor_saved_percent =
-            player->armorpoints[ARMOR_ARMOR] +
-            player->armorpoints[ARMOR_SHIELD] +
-            player->armorpoints[ARMOR_HELMET] +
-            player->armorpoints[ARMOR_AMULET];
-        savedPercent = AutoArmorSave[player->class] + armor_saved_percent;
-
-        if(gameskill == sk_ultranm && armor_saved_percent == 0 && damage < 10000)
-        {
-            switch(player->class)
-            {
-                case PCLASS_CLERIC:
-                {
-                    // Cleric just don't have a class armor bonus without armor items
-                    savedPercent = 0;
-                    break;
-                }
-                case PCLASS_MAGE:
-                {
-                    // Mage takes 15% + 1 more damage without armor items
-                    savedPercent = 0;
-                    damage = (damage * 115) / 100 + 1;
-                    break;
-                }
-                case PCLASS_PIG:
-                {
-                    // Pig takes 20% + 1 more damage without armor items
-                    savedPercent = 0;
-                    damage = (damage * 120) / 100 + 1;
-                    break;
-                }
-                default: break;
-            }
-        }
+        savedPercent = AutoArmorSave[player->class] +
+                       player->armorpoints[ARMOR_ARMOR] +
+                       player->armorpoints[ARMOR_SHIELD] +
+                       player->armorpoints[ARMOR_HELMET] +
+                       player->armorpoints[ARMOR_AMULET];
 
         if (savedPercent)
         {                       // armor absorbed some damage
@@ -2105,6 +2076,23 @@ void P_DamageMobj
             }
             damage -= saved >> FRACBITS;
         }
+
+        if(gameskill == sk_ultranm)
+        {
+            if(savedPercent < 1 * FRACUNIT)
+            {
+                damage += 3;
+            }
+            else if(savedPercent < 6 * FRACUNIT)
+            {
+                damage += 2;
+            }
+            else if(savedPercent < 11 * FRACUNIT)
+            {
+                damage += 1;
+            }
+        }
+
         if (damage >= player->health
             && ((gameskill == sk_baby) || deathmatch) && !player->morphTics)
         {                       // Try to use some inventory health

@@ -1292,34 +1292,11 @@ void SB_PaletteFlash(boolean forceChange)
 
 static fixed_t calculate_total_armor_save(void)
 {
-    const fixed_t armor_saved_percent =
-            CPlayer->armorpoints[ARMOR_ARMOR] +
-            CPlayer->armorpoints[ARMOR_SHIELD] +
-            CPlayer->armorpoints[ARMOR_HELMET] +
-            CPlayer->armorpoints[ARMOR_AMULET];
-    if(gameskill == sk_ultranm && armor_saved_percent == 0)
-    {
-        switch(CPlayer->class)
-        {
-            case PCLASS_CLERIC:
-            {
-                // Cleric just don't have a class armor bonus without armor items
-                return 0;
-            }
-            case PCLASS_MAGE:
-            {
-                // Mage takes 15% + 1 more damage without armor items
-                return -15 * FRACUNIT;
-            }
-            case PCLASS_PIG:
-            {
-                // Pig takes 20% + 1 more damage without armor items
-                return -20 * FRACUNIT;
-            }
-            default: break;
-        }
-    }
-    return AutoArmorSave[CPlayer->class] + armor_saved_percent;
+    return AutoArmorSave[CPlayer->class] +
+           CPlayer->armorpoints[ARMOR_ARMOR] +
+           CPlayer->armorpoints[ARMOR_SHIELD] +
+           CPlayer->armorpoints[ARMOR_HELMET] +
+           CPlayer->armorpoints[ARMOR_AMULET];
 }
 
 /*
