@@ -456,7 +456,7 @@ boolean PIT_CheckThing(mobj_t * thing)
             }
             const int rand = P_Random();
             const int max_multiplier = 8 - min_multiplier;
-            if(rand > 40)
+            if(rand > 80)
             {
                 damage = (((rand % max_multiplier) + 1 + min_multiplier) * tmthing->damage)
                          + ((tmthing->damage == 5) ? 2 : 0);
@@ -465,9 +465,9 @@ boolean PIT_CheckThing(mobj_t * thing)
             {
                 const int damage_min = tmthing->damage * (1 + min_multiplier);
                 const int damage_range = tmthing->damage * max_multiplier;
-                if(damage_range > 40)
+                if(damage_range > 80)
                 {
-                    damage = damage_min + (rand % 40) + (damage_range - 39); // -40 + 1 = -39
+                    damage = damage_min + (rand % 80) + (damage_range - 79); // -80 + 1 = -79
                 }
                 else
                 {
