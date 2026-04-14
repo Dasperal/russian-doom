@@ -5084,7 +5084,7 @@ void A_KoraxChase(mobj_t* actor, player_t* player, pspdef_t* psp)
     // Teleport
     if(actor->health < teleport_health)
     {
-        if(P_Random() < (gameskill == sk_ultranm ? 17 : 10))
+        if(P_Random() < (gameskill == sk_ultranm ? 12 : 10))
         {
             lastfound = actor->special1.i;
             spot = P_FindMobjFromTID(KORAX_TELEPORT_TID, &lastfound);
