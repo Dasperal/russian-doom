@@ -63,7 +63,7 @@ O(MT_KORAX, spawnhealth, + 13000)            /* Korax health (5000 to 18000) */ 
 O(MT_KORAX, painchance, - 16)                /* Korax painchance (20 to 4) */
 
 #define ENUMERATE_UNM_MANA_USAGE_CHANGES(O) \
-O(Wraithverge_mana_usage, WeaponManaUse[PCLASS_CLERIC][WP_FOURTH], + 16) /* Wraithverge (18 to 34) */
+O(Wraithverge_mana_usage, WeaponManaUse[PCLASS_CLERIC][WP_FOURTH], + 15) /* Wraithverge (18 to 33) */
 
 extern int WeaponManaUse[NUMCLASSES][NUMWEAPONS];
 
