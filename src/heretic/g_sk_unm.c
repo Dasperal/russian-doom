@@ -57,8 +57,13 @@ O(MT_HEAD, painchance, - 22)             /* Iron Lich (32 to 10) */
 
 /* Monster's missiles speed */
 #define ENUMERATE_UNM_PROJECTILE_SPEED_CHANGES(O) \
-O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 6) /* KNIGHTAXE Undead Warrior's green axe (9 to 15) */ \
-O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 4)    /* MT_REDAXE Undead Warrior's red axe (9 to 13) */
+O(MT_IMPBALL_speed, MonsterMissileInfo[0].speed[1], + 1)    /* Gargoyle fireball speed (20 to 21) */               \
+O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 9)  /* Undead Warrior's green axe (18 to 27) */            \
+O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 2)     /* Undead Warrior's red axe speed (18 to 20) */        \
+O(MT_BEASTBALL_speed, MonsterMissileInfo[4].speed[1], + 2)  /* Weredragon fireball speed (20 to 22) */             \
+O(MT_WIZFX1_speed, MonsterMissileInfo[5].speed[1], + 2)     /* Disciple of D'Sparil projectile speed (24 to 26) */ \
+O(MT_SNAKEPRO_A_speed, MonsterMissileInfo[6].speed[1], + 2) /* Ophidian fireball A (20 to 22) */                   \
+O(MT_SNAKEPRO_B_speed, MonsterMissileInfo[7].speed[1], + 2) /* Ophidian fireball B (20 to 22) */
 
 extern struct
 {
