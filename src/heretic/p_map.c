@@ -449,14 +449,31 @@ boolean PIT_CheckThing(mobj_t * thing)
         // Do damage
         if(gameskill == sk_ultranm && thing->type == MT_PLAYER)
         {
-            int min_multiplier = (tmthing->damage / 4);
+            int min_multiplier = tmthing->damage / 4;
             if(min_multiplier > 3)
             {
                 min_multiplier = 3;
             }
-
-            damage = (((P_Random() % (8 - min_multiplier)) + 1 + min_multiplier) * tmthing->damage)
-                        + ((tmthing->damage == 5) ? 2 : 0);
+            const int rand = P_Random();
+            const int max_multiplier = 8 - min_multiplier;
+            if(rand > 40)
+            {
+                damage = (((rand % max_multiplier) + 1 + min_multiplier) * tmthing->damage)
+                         + ((tmthing->damage == 5) ? 2 : 0);
+            }
+            else
+            {
+                const int damage_min = tmthing->damage * (1 + min_multiplier);
+                const int damage_range = tmthing->damage * max_multiplier;
+                if(damage_range > 40)
+                {
+                    damage = damage_min + (rand % 40) + (damage_range - 39); // -40 + 1 = -39
+                }
+                else
+                {
+                    damage = damage_min + (rand % damage_range) + 1;
+                }
+            }
         }
         else
         {
