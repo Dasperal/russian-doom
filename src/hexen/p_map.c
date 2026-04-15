@@ -664,7 +664,8 @@ boolean PIT_CheckThing(mobj_t * thing)
         && (thing->type == MT_PLAYER_FIGHTER ||
             thing->type == MT_PLAYER_CLERIC ||
             thing->type == MT_PLAYER_MAGE ||
-            thing->type == MT_PIGPLAYER))
+            thing->type == MT_PIGPLAYER)
+        && tmthing->damage > 0)
         {
             int min_multiplier = tmthing->damage / 4;
             if(min_multiplier > 3)
