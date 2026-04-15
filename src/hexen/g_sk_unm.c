@@ -43,7 +43,7 @@ O(MT_BISH_FX, speed, + (3 * FRACUNIT))       /* Dark Bishop fireball (10 to 13) 
 O(MT_DEMONFX1, speed, + (3 * FRACUNIT))      /* Green Chaos Serpent fireball (15 to 18) */   \
 O(MT_DEMON2FX1, speed, + (3 * FRACUNIT))     /* Brown Chaos Serpent fireball (15 to 18) */   \
 O(MT_WRAITHFX1, speed, + (3 * FRACUNIT))     /* Reiver fireball (14 to 17) */                \
-O(MT_CENTAUR_FX, speed, + (3 * FRACUNIT))    /* Slaughtaur fireball (20 to 23) */            \
+O(MT_CENTAUR_FX, speed, + (6 * FRACUNIT))    /* Slaughtaur fireball (20 to 26) */            \
 O(MT_SERPENTFX, speed, + (3 * FRACUNIT))     /* Stalker fireball (15 to 18) */               \
 O(MT_ICEGUY_FX, speed, + (3 * FRACUNIT))     /* Wendige fireball 1 (14 to 17) */             \
 O(MT_ICEGUY_FX2, speed, + (3 * FRACUNIT))    /* Wendige fireball 2 (10 to 13) */             \
