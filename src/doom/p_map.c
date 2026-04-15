@@ -428,7 +428,7 @@ static boolean PIT_CheckThing (mobj_t *thing)
         }
 
         // damage / explode
-        if(gameskill == sk_ultranm && thing->type == MT_PLAYER)
+        if(gameskill == sk_ultranm && thing->type == MT_PLAYER && tmthing->info->damage > 0)
         {
             int min_multiplier = tmthing->info->damage / 4;
             if(min_multiplier > 3)
