@@ -62,8 +62,8 @@ O(MT_KNIGHTAXE_speed, MonsterMissileInfo[2].speed[1], + 5)  /* Undead Warrior's 
 O(MT_REDAXE_speed, MonsterMissileInfo[3].speed[1], + 2)     /* Undead Warrior's red axe speed (18 to 20) */        \
 O(MT_BEASTBALL_speed, MonsterMissileInfo[4].speed[1], + 4)  /* Weredragon fireball speed (20 to 24) */             \
 O(MT_WIZFX1_speed, MonsterMissileInfo[5].speed[1], + 3)     /* Disciple of D'Sparil projectile speed (24 to 27) */ \
-O(MT_SNAKEPRO_A_speed, MonsterMissileInfo[6].speed[1], + 3) /* Ophidian fireball A (20 to 23) */                   \
-O(MT_SNAKEPRO_B_speed, MonsterMissileInfo[7].speed[1], + 3) /* Ophidian fireball B (20 to 23) */
+O(MT_SNAKEPRO_A_speed, MonsterMissileInfo[6].speed[1], + 4) /* Ophidian fireball A (20 to 24) */                   \
+O(MT_SNAKEPRO_B_speed, MonsterMissileInfo[7].speed[1], + 4) /* Ophidian fireball B (20 to 24) */
 
 extern struct
 {
