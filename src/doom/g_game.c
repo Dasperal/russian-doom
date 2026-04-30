@@ -200,6 +200,7 @@ int             bodyqueslot;
 
 // [crispy] make sure "fast" parameters are really only applied once
 static boolean fast_applied;
+static byte speed_applied = 0;
 
 int G_CmdChecksum (ticcmd_t* cmd) 
 { 
@@ -2055,29 +2056,52 @@ void G_DoSelectiveGame (int choice)
 
     // Do not modify fastparm parameter
     // [crispy] make sure "fast" parameters are really only applied once
-    if ((selective_fast || gameskill == sk_nightmare || gameskill == sk_ultranm) && !fast_applied)
+    if((selective_fast || gameskill == sk_nightmare || gameskill == sk_ultranm) && !fast_applied)
     {
-        for (i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
-        // [crispy] Fix infinite loop caused by Demon speed bug
-        if (states[i].tics > 1)
+        for(i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
         {
-            states[i].tics >>= 1;
+            // [crispy] Fix infinite loop caused by Demon speed bug
+            if(states[i].tics > 1)
+            {
+                states[i].tics >>= 1;
+            }
         }
 
+        fast_applied = true;
+    }
+    else if(!selective_fast && gameskill != sk_nightmare && gameskill != sk_ultranm && fast_applied)
+    {
+        for(i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
+        {
+            states[i].tics <<= 1;
+        }
+
+        fast_applied = false;
+    }
+
+    if(speed_applied != 2 && gameskill == sk_ultranm)
+    {
+        mobjinfo[MT_TROOPSHOT].speed = 23 * FRACUNIT;   // Imp (20 to 23)
+        mobjinfo[MT_HEADSHOT].speed = 23 * FRACUNIT;    // Cacodemon (20 to 23)
+        mobjinfo[MT_BRUISERSHOT].speed = 25 * FRACUNIT; // Knight / Baron (20 to 25)
+
+        speed_applied = 2;
+    }
+    else if(speed_applied != 1 && gameskill != sk_ultranm && (selective_fast || gameskill == sk_nightmare))
+    {
         mobjinfo[MT_BRUISERSHOT].speed = 20*FRACUNIT;
         mobjinfo[MT_HEADSHOT].speed = 20*FRACUNIT;
         mobjinfo[MT_TROOPSHOT].speed = 20*FRACUNIT;
 
-        fast_applied = true;
+        speed_applied = 1;
     }
-    else if (!selective_fast && gameskill != sk_nightmare && gameskill != sk_ultranm && fast_applied)
+    else if(speed_applied != 0 && !selective_fast && gameskill != sk_nightmare && gameskill != sk_ultranm)
     {
-        for (i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
-        states[i].tics <<= 1;
         mobjinfo[MT_BRUISERSHOT].speed = 15*FRACUNIT;
         mobjinfo[MT_HEADSHOT].speed = 10*FRACUNIT;
         mobjinfo[MT_TROOPSHOT].speed = 10*FRACUNIT;
-        fast_applied = false;
+
+        speed_applied = 0;
     }
 
     // Health
@@ -2221,29 +2245,52 @@ G_InitNew
     respawnmonsters = false;
 
     // [crispy] make sure "fast" parameters are really only applied once
-    if ((fastparm || skill == sk_nightmare || skill == sk_ultranm) && !fast_applied)
+    if((fastparm || skill == sk_nightmare || skill == sk_ultranm) && !fast_applied)
     {
-        for (i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
-	    // [crispy] Fix infinite loop caused by Demon speed bug
-	    if (states[i].tics > 1)
-	    {
-	    states[i].tics >>= 1;
-	    }
+        for(i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
+        {
+            // [crispy] Fix infinite loop caused by Demon speed bug
+            if(states[i].tics > 1)
+            {
+                states[i].tics >>= 1;
+            }
+        }
 
+        fast_applied = true;
+    }
+    else if(!fastparm && skill != sk_nightmare && skill != sk_ultranm && fast_applied)
+    {
+        for(i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
+        {
+            states[i].tics <<= 1;
+        }
+
+        fast_applied = false;
+    }
+
+    if(speed_applied != 2 && skill == sk_ultranm)
+    {
+        mobjinfo[MT_TROOPSHOT].speed = 23 * FRACUNIT;   // Imp (20 to 23)
+        mobjinfo[MT_HEADSHOT].speed = 23 * FRACUNIT;    // Cacodemon (20 to 23)
+        mobjinfo[MT_BRUISERSHOT].speed = 25 * FRACUNIT; // Knight / Baron (20 to 25)
+
+        speed_applied = 2;
+    }
+    else if(speed_applied != 1 && skill != sk_ultranm && (fastparm || skill == sk_nightmare))
+    {
         mobjinfo[MT_BRUISERSHOT].speed = 20*FRACUNIT;
         mobjinfo[MT_HEADSHOT].speed = 20*FRACUNIT;
         mobjinfo[MT_TROOPSHOT].speed = 20*FRACUNIT;
 
-        fast_applied = true;
+        speed_applied = 1;
     }
-    else if (!fastparm && skill != sk_nightmare && skill != sk_ultranm && fast_applied)
+    else if(speed_applied != 0 && !fastparm && skill != sk_nightmare && skill != sk_ultranm)
     {
-        for (i=S_SARG_RUN1 ; i<=S_SARG_PAIN2 ; i++)
-        states[i].tics <<= 1;
         mobjinfo[MT_BRUISERSHOT].speed = 15*FRACUNIT;
         mobjinfo[MT_HEADSHOT].speed = 10*FRACUNIT;
         mobjinfo[MT_TROOPSHOT].speed = 10*FRACUNIT;
-        fast_applied = false;
+
+        speed_applied = 0;
     }
 
     // [JN] Make sure speeds are really only applied once.

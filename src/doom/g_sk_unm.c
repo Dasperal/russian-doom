@@ -38,8 +38,8 @@ O(MT_SPIDER, speed, + 5)                 /* Spider Mastermind (12 to 17) */ \
 O(MT_CYBORG, speed, + 4)                 /* Cyberdemon (16 to 20) */        \
 O(MT_WOLFSS, speed, + 5)                 /* Wolf SS (8 to 13) */            \
 /* Monster's missiles speed */                                              \
-O(MT_ARACHPLAZ, speed, + (5 * FRACUNIT)) /* Arachnotron (25 to 30) */       \
-O(MT_FATSHOT, speed, + (5 * FRACUNIT))   /* Mancubus (20 to 25) */          \
+O(MT_ARACHPLAZ, speed, + (3 * FRACUNIT)) /* Arachnotron (25 to 28) */       \
+O(MT_FATSHOT, speed, + (2 * FRACUNIT))   /* Mancubus (20 to 22) */          \
 /* Monster's damage */                                                      \
 O(MT_TROOPSHOT, damage, + 1)             /* Imp (3 to 4) */                 \
 O(MT_HEADSHOT, damage, + 1)              /* Cacodemon (5 to 6) */           \
