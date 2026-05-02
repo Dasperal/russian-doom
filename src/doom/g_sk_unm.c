@@ -21,11 +21,11 @@
 
 #define ENUMERATE_UNM_CHANGES(O)                                            \
 /* Monster's speed */                                                       \
-O(MT_POSSESSED, speed, + 4)              /* Zombieman (8 to 12) */          \
-O(MT_SHOTGUY, speed, + 4)                /* Shotgun guy (8 to 12) */        \
-O(MT_CHAINGUY, speed, + 4)               /* Chaingunner (8 to 12) */        \
+O(MT_POSSESSED, speed, + 6)              /* Zombieman (8 to 14) */          \
+O(MT_SHOTGUY, speed, + 6)                /* Shotgun guy (8 to 14) */        \
+O(MT_CHAINGUY, speed, + 5)               /* Chaingunner (8 to 13) */        \
 O(MT_TROOP, speed, + 5)                  /* Imp (8 to 13) */                \
-O(MT_SKULL, speed, + 6)                  /* Lost Soul (8 to 14) */          \
+O(MT_SKULL, speed, + 8)                  /* Lost Soul (8 to 16) */          \
 O(MT_HEAD, speed, + 6)                   /* Cacodemon (8 to 14) */          \
 O(MT_PAIN, speed, + 4)                   /* Pain Elemental (8 to 12) */     \
 O(MT_KNIGHT, speed, + 6)                 /* Hell Knight (8 to 14) */        \
