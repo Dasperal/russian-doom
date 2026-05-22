@@ -1578,6 +1578,12 @@ void A_GenWizard(mobj_t *actor, player_t *player, pspdef_t *psp)
         P_RemoveMobj(mo);
         return;
     }
+    if(gameskill == sk_ultranm)
+    {
+        mo->spawnpoint.x = actor->x >> FRACBITS;
+        mo->spawnpoint.y = actor->y >> FRACBITS;
+    }
+
     actor->momx = actor->momy = actor->momz = 0;
     P_SetMobjState(actor, mobjinfo[actor->type].deathstate);
     actor->flags &= ~MF_MISSILE;
